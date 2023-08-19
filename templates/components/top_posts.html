@@ -1,0 +1,54 @@
+{% load static %}
+<!--------------------------------------- rec_posts --------------------------------------->
+<section
+  id="rec_posts"
+  class="px-8 py-40 w-full max-w-[1350px] mx-auto bg-white w-full text-left"
+>
+  <div class="w-full my-4 flex justify-between items-center">
+    <h3 class="text-black text-lg font-bold">Articles récents</h3>
+    <a class="hover:text-green-500" href="{% url 'blog' %}"
+      ><i class="fa-solid fa-angles-right text-lg"></i>
+    </a>
+  </div>
+
+  {% if not rec_posts %} {% include 'components/no_data.html' %} {% else %}
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    {% for item in rec_posts %}
+    <div
+      class="relative flex flex-col bg-blue-50 hover:shadow-md hover:bg-blue-100 rounded-md transition duration-300 ease-in-out overflow-hidden group"
+    >
+      {% if user.role.sec_level >= 6 %}
+      <a
+        class="absolute top-4 right-4 px-3 py-2 bg-blue-50 hover:bg-blue-200 z-30 text-black rounded-full transition duration-300 ease-in-out"
+        href="{% url 'edit_blogpost' item.id %}"
+        ><i class="fa-solid fa-pen-to-square text-sm"></i
+      ></a>
+      {% endif %}
+      <a href="{% url 'blogpost' item.id  %}">
+        {% if not item.image %}
+        <img
+          class="h-20 w-full object-cover"
+          src="{% static 'imgs/mugger.jpg' %}"
+          alt="blogpost image"
+        />
+        {% else %}
+        <img
+          class="h-40 w-full object-cover"
+          src="{{item.image.url}}"
+          alt="blogpost image"
+        />
+        {% endif %}
+        <div class="p-4 flex flex-col justify-between">
+          <h4 class="text-black font-bold">{{item.title|truncatechars:30}}</h4>
+          <p class="py-2 text-sm text-gray-800">
+            {{item.content|truncatechars:50}}
+          </p>
+        </div>
+      </a>
+    </div>
+
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>

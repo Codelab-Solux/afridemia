@@ -1,0 +1,40 @@
+{% load static %}
+<!--------------------------------------- rec_ads --------------------------------------->
+<section id="rec_ads" class="py-40 w-full bg-blue-950">
+  <div class="p-8 w-full max-w-[1350px] mx-auto w-full text-white">
+    <div class="w-full my-4 flex justify-between items-center">
+      <h3 class="text-lg font-bold">Demandes et Offres récentes</h3>
+      <a class="" href="{% url 'adverts' %}"
+        ><i class="fa-solid fa-angles-right text-lg"></i>
+      </a>
+    </div>
+
+    {% if not rec_ads %} {% include 'components/no_data.html' %} {% else %}
+
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {% for item in rec_ads %}
+      <div
+        class="relative h-full flex flex-col bg-gray-200 hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden"
+      >
+        {% if item.author == user %}
+        <a
+          class="absolute top-4 right-4 px-3 py-2 text-black bg-gray-200 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+          href="{% url 'edit_advert' item.id %}"
+          ><i class="fa-solid fa-pen-to-square text-sm"></i
+        ></a>
+        {% endif %}
+        <a href="{% url 'advert' item.id  %}">
+          <div class="p-4 flex justify-between items-center gap-2 group">
+            <i
+              class="fa-solid fa-bullhorn text-gray-300 text-3xl group-hover:text-sky-400"
+            ></i>
+            <p class="text-black">{{item.title|truncatechars:50}}</p>
+          </div>
+        </a>
+      </div>
+
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</section>

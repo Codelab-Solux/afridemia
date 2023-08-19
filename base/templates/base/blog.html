@@ -1,0 +1,76 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="px-8 w-full max-w-[1350px] mx-auto">
+  <!--------------------------------------- mini navbar --------------------------------------->
+  <nav
+    class="mb-4 mx-auto py-2 flex justify-between items-center gap-4 items-center text-xs w-full max-w-[1350px]"
+  >
+    <div class="flex items-center gap-4">
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'home' %}"
+        ><i class="fa-solid fa-house"></i>
+      </a>
+      /
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'blog' %}"
+        >Blog</a
+      >
+    </div>
+    <div class="flex justify-between items-center gap-4">
+      {% if user.is_staff %}
+      <a
+        href="{% url 'create_blogpost' %}"
+        class="px-4 py-3 bg-sky-100 text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
+        >Nouvel article<i class="fa-solid fa-plus ml-2"></i
+      ></a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <!--------------------------------------- blogposts --------------------------------------->
+  <section id="blogposts" class="bg-white w-full text-left">
+    <div class="w-full mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for item in blogposts %}
+        <div
+          class="relative flex flex-col bg-green-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+        >
+          {% if user.is_staff %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 bg-white hover:bg-green-100 z-30 rounded-full transition duration-300 ease-in-out"
+            href="{% url 'edit_blogpost' item.id %}"
+            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+          ></a>
+          {% endif %}
+          <a href="{% url 'blogpost' item.id  %}">
+            {% if not item.image %}
+            <img
+              class="h-20 w-full object-cover"
+              src="{% static 'imgs/blog.jpg' %}"
+              alt="blogpost image"
+            />
+            {% else %}
+            <img
+              class="h-20 w-full object-cover"
+              src="{{item.image.url}}"
+              alt="blogpost image"
+            />
+            {% endif %}
+            <div class="p-4 flex flex-col justify-between">
+              <h4 class="text-black font-bold">
+                {{item.title|truncatechars:30}}
+              </h4>
+              <p class="py-2 text-sm text-gray-800">
+                {{item.content|truncatechars:100}}
+              </p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock %}

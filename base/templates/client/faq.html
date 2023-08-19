@@ -1,0 +1,334 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<script>
+  import { Collapse, initTE } from "tw-elements";
+
+  initTE({ Collapse });
+</script>
+
+<!-- start banner -->
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-16">
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="img/faq.jpg"
+            alt=""
+            class="rounded-t-lg w-full"
+            style="width: 400px"
+          />
+        </div>
+      </div>
+      <div class="">
+        <h1
+          class="text-black my-4 text-5xl font-bold leading-tight"
+          style="font-size: 60px"
+        >
+          Réponses à vos questions les plus fréquentes
+        </h1>
+
+        <p class="leading-normal text-2xl mb-8">
+          Trouvez toutes les réponses à vos interrogations grâce à notre Foire
+          aux questions. Simplifiez votre expérience sur Livre d'Afrique en
+          obtenant des informations claires et utiles.
+        </p>
+
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- and banner -->
+
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="flex flex-col md:flex-row mt-4 ml-4 mb-4">
+      <div
+        class="order-2 md:order-1 md:w-1/3 mt-8 md:mt-0"
+        style="height: 500px; float: left; position: sticky; top: 40px"
+      >
+        <div
+          class="max-w-md mx-auto p-4"
+          style="margin-left: -20px; max-width: 10px"
+        >
+          <form class="flex items-center">
+            <input
+              type="text"
+              class="px-2 py-2 border border-gray-300 rounded-l-md focus:ring-green-300 focus:border-green-300 flex-grow"
+              placeholder="Rechercher..."
+            />
+            <button
+              type="submit"
+              class="bg-green-300 text-white px-2 py-2 rounded-r-md hover:bg-green-400 focus:ring-green-300 focus:ring-opacity-50"
+            >
+              Rechercher
+            </button>
+          </form>
+        </div>
+
+        <ul class="mt-4">
+          <li class="mt-4 font-semibold">Communauté</li>
+          <li class="mt-4 font-semibold">loren ipsun</li>
+          <li class="mt-4 font-semibold">loren dalor</li>
+          <li class="mt-4 font-semibold">loren sit amet</li>
+          <li class="mt-4 font-semibold">loren dalor</li>
+          <li class="mt-4 font-semibold">Communauté</li>
+        </ul>
+      </div>
+
+      <div class="order-2 md:order-1 md:w-2/3">
+        <div class="accordion">
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">1.</span>
+              Qu'est-ce qu'Afridemia ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Afridemia est une application de recherche d'écoles et
+                d'enseignants de tous les niveaux. Elle permet aux utilisateurs
+                de trouver des informations sur les écoles, de rechercher des
+                enseignants qualifiés et de faciliter la mise en relation entre
+                les deux.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">2. </span> Comment fonctionne Afridemia ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Afridemia fonctionne en recueillant des informations sur les
+                écoles et les enseignants et en les organisant dans une base de
+                données conviviale. Les utilisateurs peuvent effectuer des
+                recherches personnalisées en utilisant divers critères tels que
+                la localisation, le niveau d'enseignement et les programmes
+                d'études pour trouver les écoles qui correspondent le mieux à
+                leurs besoins. Les enseignants peuvent créer des profils
+                détaillés et postuler aux offres d'emploi disponibles.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">3. </span> Comment puis-je rechercher des écoles
+              sur Afridemia ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Pour rechercher des écoles sur Afridemia, vous pouvez utiliser
+                la fonction de recherche sur la page d'accueil. Vous pouvez
+                spécifier des critères tels que la localisation géographique, le
+                niveau d'enseignement, les programmes d'études et les
+                installations. Les résultats de recherche afficheront les écoles
+                correspondant à vos critères.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">4. </span>Comment puis-je rechercher des
+              enseignants sur Afridemia ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Pour rechercher des enseignants sur Afridemia, vous pouvez
+                utiliser la fonction de recherche dédiée aux enseignants. Vous
+                pouvez spécifier des critères tels que les niveaux
+                d'enseignement, les matières enseignées et les compétences
+                pédagogiques. Les résultats de recherche afficheront les
+                enseignants correspondant à vos critères.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">5. </span> Comment créer un profil d'enseignant
+              sur Afridemia ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Pour créer un profil d'enseignant sur Afridemia, vous devez vous
+                inscrire en tant qu'enseignant sur la plateforme. Vous devrez
+                fournir des informations telles que vos qualifications, votre
+                expérience, vos compétences pédagogiques et vos préférences
+                d'enseignement. Une fois votre profil créé, il sera visible par
+                les écoles à la recherche d'enseignants.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">6. </span> Les écoles doivent-elles s'inscrire
+              sur Afridemia pour apparaître dans les résultats de recherche ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, les écoles doivent s'inscrire sur Afridemia pour être
+                répertoriées dans les résultats de recherche. Les écoles peuvent
+                créer des profils détaillés qui fournissent des informations sur
+                leur historique, leurs programmes, leurs installations et leur
+                personnel enseignant. Cela permet aux utilisateurs de trouver
+                des écoles pertinentes lors de leurs recherches.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">7. </span>Est-ce que Afridemia propose des
+              écoles de tous les niveaux d'enseignement ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, Afridemia propose des écoles de tous les niveaux
+                d'enseignement, de la maternelle à l'université. Vous pouvez
+                spécifier le niveau d'enseignement souhaité lors de votre
+                recherche pour obtenir des résultats adaptés à vos besoins.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">8. </span>Afridemia est-elle disponible dans
+              tous les pays ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, Afridemia vise à être disponible dans plusieurs pays.
+                Cependant, la disponibilité spécifique peut varier en fonction
+                des régions. Veuillez vérifier sur le site officiel d'Afridemia
+                pour connaître les pays où l'application est actuellement
+                disponible.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">9. </span> Est-ce que Afridemia vérifie les
+              informations fournies par les écoles et les enseignants ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                : Afridemia fait de son mieux pour vérifier les informations
+                fournies par les écoles et les enseignants. Cependant, il est
+                recommandé aux utilisateurs de procéder à leurs propres
+                vérifications et de prendre des décisions éclairées lorsqu'ils
+                choisissent une école ou un enseignant. Afridemia ne peut
+                garantir l'exactitude de toutes les informations fournies.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">10. </span> Comment puis-je contacter l'équipe
+              d'Afridemia en cas de problème ou de question supplémentaire ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Pour contacter l'équipe d'Afridemia, vous pouvez vous rendre sur
+                la page de contact du site officiel. Vous y trouverez les
+                informations de contact telles qu'une adresse e-mail ou un
+                formulaire de contact. N'hésitez pas à les contacter en leur
+                fournissant les détails de votre problème ou de votre question,
+                et ils vous répondront dans les meilleurs délais.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">11. </span> Afridemia propose-t-elle des outils
+              supplémentaires pour aider les étudiants et les enseignants dans
+              leur parcours éducatif ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, Afridemia vise à fournir des outils et des ressources
+                supplémentaires pour aider les étudiants et les enseignants dans
+                leur parcours éducatif. Cela peut inclure des articles
+                éducatifs, des guides de carrière, des conseils pédagogiques et
+                d'autres ressources pertinentes. Veuillez consulter le site
+                d'Afridemia pour accéder à ces fonctionnalités supplémentaires.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">12. </span>Est-ce que Afridemia propose des
+              informations sur les frais de scolarité des écoles ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, Afridemia s'efforce de fournir des informations sur les
+                frais de scolarité des écoles lorsqu'elles sont disponibles.
+                Cependant, veuillez noter que les frais de scolarité peuvent
+                varier et il est conseillé de contacter directement l'école pour
+                obtenir les informations les plus récentes et précises
+                concernant les frais.
+              </p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">13. </span>Comment puis-je signaler un problème
+              ou un abus concernant une école ou un enseignant sur Afridemia ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, Afridemia vise à être disponible dans plusieurs pays.
+                Cependant, la disponibilité spécifique peut varier en fonction
+                des régions. Veuillez vérifier sur le site officiel d'Afridemia
+                pour connaître les pays où l'application est actuellement
+                disponible.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">14. </span> Est-ce que Afridemia propose des
+              avis d'étudiants ou de parents d'élèves sur les écoles
+              répertoriées ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Oui, Afridemia encourage les étudiants et les parents d'élèves à
+                partager leurs avis sur les écoles répertoriées. Ces avis
+                peuvent fournir des informations précises sur leur expérience et
+                aider les autres utilisateurs à prendre des décisions informées.
+                Sur Afridemia, vous pouvez consulter les avis d'étudiants et de
+                parents d'élèves sur les profils des écoles. Vous pouvez
+                également être invité à laisser votre propre avis après avoir
+                interagi avec une école.
+              </p>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <div class="accordion-header font-semibold">
+              <span class="num">15. </span> Est-ce que Afridemia garantit la
+              qualité des écoles et des enseignants répertoriés ?
+            </div>
+            <div class="accordion-content">
+              <p>
+                Afridemia fournit des informations sur les écoles et les
+                enseignants afin de faciliter la recherche et la mise en
+                relation, mais elle ne peut pas garantir la qualité de chaque
+                école ou enseignant répertorié. Il est important que les
+                utilisateurs fassent leurs propres recherches, posent des
+                questions et prennent en compte divers facteurs lorsqu'ils
+                prennent des décisions éducatives.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

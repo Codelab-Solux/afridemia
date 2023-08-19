@@ -1,0 +1,607 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+
+<div class="px-8 w-full max-w-[1350px] mx-auto">
+  <!--------------------------------------- mini navbar --------------------------------------->
+
+  <nav class="mb-4 mx-auto py-2 flex gap-4 items-center text-xs w-full">
+
+    <a
+      class="hover:text-green-300 transition ease-in duration-300"
+      href="{% url 'home' %}"
+      ><i class="fa-solid fa-house"></i>
+    </a>
+    /
+    <a
+      class="hover:text-green-400 transition ease-in duration-300"
+      href="{% url 'schools' %}"
+      >Ecoles</a
+    >
+    /
+    <span class="text-blue-950 font-black">{{school.name}}</span>
+  </nav>
+
+  <!--------------------------------------- banner section --------------------------------------->
+
+  <div>
+    {% if school.banner %}
+    <img
+      class="w-full h-[500px] rounded-md object-cover"
+      src="{{school.banner.url}}"
+      alt="image"
+    />
+    {% else %}
+    <img
+      class="w-full h-[500px] rounded-md object-cover"
+      src="{% static 'imgs/uni.jpg' %}"
+      alt="image"
+    />
+    {% endif %}
+  </div>
+
+  <!--------------------------------------- hero section --------------------------------------->
+
+  <div
+    class="mt-8 p-10 mx-auto border-2 hover:border-blue-950 w-full transition duration-300 ease-in-out rounded-md"
+  >
+    <article
+      class="flex flex-col text-left justify-between items-start text-left"
+    >
+      <div class="flex justify-between items-center w-full">
+        <div class="flex items-center gap-4">
+          <div>
+            {% if school.crest %}
+            <img
+              class="w-full h-20 rounded-full object-cover"
+              src="{{school.crest.url}}"
+              alt="image"
+            />
+            {% else %}
+            <img
+              class="w-full h-20 rounded-full object-cover"
+              src="{% static 'imgs/crest.jpg' %}"
+              alt="image"
+            />
+            {% endif %}
+          </div>
+          <div class="flex-col gap-4">
+            <h2 class="mb-2 text-3xl text-black font-bold">{{school.name}}</h2>
+            <div>
+              <span class="text-truncate me-3"
+                ><i class="fa fa-bullhorn mr-2 text-black"></i>
+                <em class="text-green-400 font-bold">"{{school.moto|title}}" </em>
+              </span>
+              <span class="text-truncate me-3"
+                ><i class="fa fa-trowel-bricks mr-2 text-black"></i>Fondée en
+                {{school.year_founded}}</span
+              >
+            </div>
+          </div>
+        </div>
+        <p class="text-sm">
+          Ouvert de
+          <span class="text-black font-bold">
+            {{school.opening_hour}} à {{school.closing_hour}}
+          </span>
+        </p>
+      </div>
+      <!--  -->
+      <p class="p-4 my-2 bg-blue-50 rounded-md text-gray-600">
+        {{school.description}}
+      </p>
+      <!--  -->
+      <div class="my-4 grid md:grid-cols-2 gap-4">
+        <div class="p-4 bg-blue-950 rounded-md">
+          <p class="text-white text-xl font-bold">Niveaux d'Education</p>
+          <ul class="my-4 flex flex-wrap gap-4">
+            {% for obj in school.levels.all %}
+            <!--  -->
+            <li class="px-4 py-2 rounded-md bg-white text-black">
+              {{obj.name|title}}
+            </li>
+            <!--  -->
+            {% endfor %}
+          </ul>
+        </div>
+        {% if prereg_form %}
+        <div class="p-6 bg-green-100 rounded-md">
+          <h3 class="mb-4 text-black text-xl font-bold">
+            Formulaire de Préinscription
+          </h3>
+
+          <form
+            class="w-full flex flex-col justify-between gap-2 text-sm"
+            method="POST"
+            action=""
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+            <!--  -->
+            <div class="flex flex-col md:grid grid-cols-2 flex-wrap gap-2">
+              <div>
+                <h3 class="mb-1">{{prereg_form.classroom.label}}</h3>
+                {{prereg_form.classroom}}
+              </div>
+              <div>
+                <h3 class="mb-1">{{prereg_form.last_school.label}}</h3>
+                {{prereg_form.last_school}}
+              </div>
+              <div>
+                <h3 class="mb-1">{{prereg_form.last_name.label}}</h3>
+                {{prereg_form.last_name}}
+              </div>
+              <div>
+                <h3 class="mb-1">{{prereg_form.first_name.label}}</h3>
+                {{prereg_form.first_name}}
+              </div>
+              <div>
+                <h3 class="mb-1">{{prereg_form.phone.label}}</h3>
+                {{prereg_form.phone}}
+              </div>
+              <div>
+                <h3 class="mb-1">{{prereg_form.email.label}}</h3>
+                {{prereg_form.email}}
+              </div>
+            </div>
+            <div>
+              <h3 class="mb-1">{{prereg_form.comment.label}}</h3>
+              {{prereg_form.comment}}
+            </div>
+            <div class="flex gap-4 items-end">
+              <input
+                class="px-8 py-2 bg-blue-950 text-white hover:bg-green-600 rounded-md cursor-pointer"
+                type="submit"
+                value="Enregistrer"
+              />
+              <a
+                class="bg-white px-8 py-2 rounded-md hover:bg-red-700 hover:text-white"
+                href="{{request.META.HTTP_REFERER}}"
+              >
+                Annuler
+              </a>
+            </div>
+          </form>
+        </div>
+        {% endif %}
+      </div>
+      <!--  -->
+      <div class="flex gap-2 w-full">
+        {% if is_manager %}
+        <a
+          href="{% url 'edit_school' school.id %}"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-red-700"
+          ><i class="fa-solid fa-pen-to-square"></i
+        ></a>
+        {% endif %}
+        <!-- <a
+          href="#schools"
+          class="mt-4 px-4 py-3 rounded-md flex justify-between items-center text-black hover:text-white bg-green-200 hover:bg-green-600"
+          ><i class="fa-solid fa-message"></i
+        ></a> -->
+        <a
+          href="https://wa.me/{{school.whatsapp}}"
+          class="mt-4 px-4 py-3 rounded-md text-white hover:text-white bg-green-500 hover:bg-green-700"
+          target="_blank"
+        >
+          <i class="fab fa-whatsapp"></i>
+        </a>
+        <a
+          href="https://tel.me/{{school.telegram}}"
+          class="mt-4 px-4 py-3 rounded-md text-white hover:text-white bg-sky-500 hover:bg-sky-700"
+          target="_blank"
+        >
+          <i class="fa fa-paper-plane"></i>
+        </a>
+        <a
+          href="tel:{{school.tel}}"
+          class="mt-4 px-4 py-3 rounded-md text-white hover:text-white bg-blue-900 hover:bg-blue-950"
+          target="_blank"
+        >
+          <i class="fa fa-phone"></i>
+        </a>
+      </div>
+    </article>
+  </div>
+
+  <!--------------------------------------- tabs section --------------------------------------->
+
+  <section class="my-8 tab flex gap-4 max-w-[1050px] mx-auto text-gray-700">
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'overview')"
+    >
+      Aperçue
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'academia')"
+      id="defaultOpen"
+    >
+      Académie
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'teachers')"
+    >
+      Enseignants
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'structures')"
+    >
+      Structures
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'articles')"
+    >
+      Articles
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'gallery')"
+    >
+      Gallerie
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'performance')"
+    >
+      Performance
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'preregs')"
+    >
+      Préinscription
+    </button>
+  </section>
+
+  <!--------------------------------------- more info --------------------------------------->
+
+  <section>
+    <div
+      id="overview"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      <div class="flex gap-8">
+        <div class="w-full flex flex-col">
+          <h2 class="pb-2 font-bold text-xl text-black">Historique</h2>
+          <p class="mb-4 p-4 bg-gray-50 rounded-md">{{school.history}}</p>
+          <h2 class="pb-2 font-bold text-xl text-black">
+            Message de la direction
+          </h2>
+          <p class="mb-4 p-4 bg-gray-50 rounded-md">{{school.mgt_quote}}</p>
+        </div>
+        <div class="w-full max-w-[400px] flex flex-col gap-8">
+          <div class="p-8 bg-blue-50 rounded-md">
+            <h2 class="pb-2 font-bold text-xl text-black">Informations</h2>
+            <ul class="flex flex-col gap-2">
+              <li>
+                <i class="fa fa-phone text-black mr-2"></i>
+                {{school.tel}}
+              </li>
+              <li>
+                <i class="fa fa-phone text-black mr-2"></i>
+                {{school.cel}}
+              </li>
+              <li>
+                <i class="fa fa-paper-plane text-black mr-2"></i>
+                {{school.email}}
+              </li>
+              <li>
+                <i class="fa fa-user text-black mr-2"></i>
+                {{school.teacher_count}} Proffesseurs
+              </li>
+              <li>
+                <i class="fa fa-user text-black mr-2"></i>
+                {{school.teacher_count}} Etudiants
+              </li>
+              <li>
+                <i class="fa fa-clock text-black mr-2"></i>
+                {{school.curriculums}} Parcours
+              </li>
+              <li>
+                <i class="fa fa-users text-black mr-2"></i>
+                {{school.faculties}} Filières
+              </li>
+              <li>
+                <i class="fa fa-map-marker-alt text-black mr-2"></i
+                >{{school.address}}
+              </li>
+
+              <li></li>
+            </ul>
+          </div>
+          <!--  -->
+          <div class="p-8 bg-blue-50 rounded-md">
+            <h2 class="pb-2 font-bold text-xl text-black">Description</h2>
+            <p class="m-0">{{school.description}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!--------------------------------------- academia section --------------------------------------->
+
+    <div
+      id="academia"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      <h3 class="pb-2 font-bold text-xl text-black">Pédaogie</h3>
+      <p class="my-4 bg-gray-50 p-4 rounded-md">{{school.pedagogy}}</p>
+      <h3 class="pb-2 font-bold text-xl text-black">Salles de classes</h3>
+      {% if not classrooms %} {% include 'components/no_data.html' %} {% else %}
+      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+        {% for obj in classrooms %}
+        <div
+          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+        >
+          {% if obj.image %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+          {% else %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{% static 'imgs/classroom.jpg' %}"
+            alt="image"
+          />
+          {% endif %}
+          <div class="p-4 flex flex-col gap-2 text-gray-700">
+            <h4 class="text-xl text-black font-bold">
+              {{obj.name}} {% if obj.serie %}
+              <span class="text-green-400">{{obj.serie}}</span>
+              {% endif %}
+            </h4>
+
+            <p>Effectif : <span class="font-bold">{{obj.size}}</span></p>
+            <p>
+              Frais de Scolarité : <span class="font-bold">{{obj.fees}}</span>
+            </p>
+            <p>{{obj.overview}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+  <!--------------------------------------- teachers section --------------------------------------->
+
+    <div
+      id="teachers"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      {% if not teachers %} {% include 'components/no_data.html' %} {% else %}
+      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+        {% for obj in teachers %}
+        <div
+          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+        >
+          {% if obj.image %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+          {% else %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{% static 'imgs/teacher.jpg' %}"
+            alt="image"
+          />
+          {% endif %}
+          <div class="p-4 flex flex-col gap-2 text-gray-700">
+            <h2 class="text-xl text-black font-bold" class="font-bold">
+              {{obj.designation}} {{obj.fullname}}
+            </h2>
+            <p>Martières : <span class="font-bold">{{obj.subjects}}</span></p>
+            <p>{{obj.overview}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+      <!--------------------------------------- structures section --------------------------------------->
+
+    <div
+      id="structures"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      {% if not structures %} {% include 'components/no_data.html' %} {% else %}
+      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+        {% for obj in structures %}
+        <div
+          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+        >
+          {% if obj.image %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+          {% else %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{% static 'imgs/lab.jpg' %}"
+            alt="image"
+          />
+          {% endif %}
+          <div class="p-4 flex flex-col gap-2 text-gray-700">
+            <h3 class="text-xl text-black font-bold" class="font-bold">
+              {{obj.get_genre_display}} {{obj.label}}
+            </h>
+            <p>{{obj.overview}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+      <!--------------------------------------- articles section --------------------------------------->
+
+    <div
+      id="articles"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      {% if not articles %} {% include 'components/no_data.html' %} {% else %}
+      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+        {% for obj in articles %}
+        <div
+          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+        >
+          {% if obj.image %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+          {% else %}
+          <img
+            class="w-full h-40 object-cover"
+            src="{% static 'imgs/writer.jpg' %}"
+            alt="image"
+          />
+          {% endif %}
+          <div class="p-4 flex flex-col gap-2 text-gray-700">
+            <h3 class="text-xl text-black font-bold" class="font-bold">
+              {{obj.title}}
+            </h3>
+            {% if obj.subtitle %} <p>{{obj.subtitle}}</p> {% endif %}
+            <p>{{obj.content|truncatechars:100}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+      <!--------------------------------------- gallery section --------------------------------------->
+
+    <div
+      id="gallery"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+                  <img
+            class="w-full h-60 object-cover rounded-md"
+            src="{% static 'imgs/corridor.jpg' %}"
+            alt="image"
+          />
+                    <img
+            class="w-full h-60 object-cover rounded-md"
+            src="{% static 'imgs/preschool.jpg' %}"
+            alt="image"
+          />
+                    <img
+            class="w-full h-60 object-cover rounded-md"
+            src="{% static 'imgs/sch-1.jpg' %}"
+            alt="image"
+          />
+                    <img
+            class="w-full h-60 object-cover rounded-md"
+            src="{% static 'imgs/sch-2.jpg' %}"
+            alt="image"
+          />
+      </div>
+    </div>
+
+      <!--------------------------------------- performance section --------------------------------------->
+
+    <div
+      id="performance"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      <h3>Examens</h3>
+      <div class="h-80">
+        <canvas class="text-gray-200" id="pass_rate_chart"></canvas>
+      </div>
+    </div>
+
+      <!--------------------------------------- pre registration section --------------------------------------->
+
+    <div
+      id="preregs"
+      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      {% if not preregs %} {% include 'components/no_data.html' %} {% else %}
+      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+        {% for obj in preregs %}
+        <div
+          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+        >
+          <img
+            class="w-full h-40 object-cover"
+            src="{% static 'imgs/gradcap.avif' %}"
+            alt="image"
+          />
+          <div class="p-4 flex flex-col gap-2 text-gray-700">
+            <h3 class="text-xl text-black font-bold" class="font-bold">
+              {{obj.last_name}} {{obj.first_name}} <span class="text-sm"> ({{obj.get_gender_display}})</span>
+            </h3>
+            <p>
+              {{obj.classroom.name}}
+              <span class="text-green-400">{{obj.classroom.serie}}</span>
+            </p>
+            <p>{{obj.last_school}}</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+<script>
+
+  var ctx = document.getElementById("pass_rate_chart");
+  var activ_chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: [{% for obj in exam_stats %} '{{obj.exam}}', {% endfor %}],
+      datasets: [
+        {
+          label: "Candidats",
+          data: [{% for obj in exam_stats %} '{{obj.candidates}}', {% endfor %}],
+        backgroundColor: [
+          
+          'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+          'rgb(54, 162, 235)',
+        ],
+        borderWidth: 3,
+        },
+        {
+          label: "Réussites",
+          data: [{% for obj in exam_stats %} '{{obj.pass_rate}}', {% endfor %}],
+        backgroundColor: [
+          'rgba(75, 192, 192, 0.2)',
+        ],
+        borderColor: [
+          'rgb(75, 192, 192)',
+        ],
+        borderWidth: 3,
+        },
+        {
+          label: "Echecs",
+          data: [{% for obj in exam_stats %} '{{obj.fail_rate}}', {% endfor %} ],
+        backgroundColor: [
+      'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+      'rgb(255, 99, 132)',
+        ],
+        borderWidth: 3,
+        },
+      ],
+    },
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,376 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<!--  -->
+<script src="https://cdn.cinetpay.com/seamless/main.js"></script>
+<script>
+  function checkout(price) {
+    CinetPay.setConfig({
+      apikey: "8147832776464ac622a6806.22624295", //   YOUR APIKEY
+      site_id: "364469", //YOUR_SITE_ID
+      notify_url: "http://mondomaine.com/notify/",
+      mode: "PRODUCTION",
+    });
+    console.log("price is :", price);
+    CinetPay.getCheckout({
+      transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
+      amount: price,
+      currency: "XOF",
+      channels: "ALL",
+      description: "Abonement d'ecole",
+      //Fournir ces variables pour le paiements par carte bancaire
+      // customer_name: "Joe", //Le nom du client
+      // customer_surname: "Down", //Le prenom du client
+      // customer_email: "down@test.com", //l'email du client
+      // customer_phone_number: "088767611", //l'email du client
+      // customer_address: "BP 0024", //addresse du client
+      // customer_city: "Lome", // La ville du client
+      // customer_country: "CM", // le code ISO du pays
+      // customer_state: "CM", // le code ISO l'état
+      // customer_zip_code: "06510", // code postal
+    });
+    CinetPay.waitResponse(function (data) {
+      if (data.status == "REFUSED") {
+        if (alert("Votre paiement a échoué")) {
+          window.location.reload();
+        }
+      } else if (data.status == "ACCEPTED") {
+        if (alert("Votre paiement a été effectué avec succès")) {
+          window.location.reload();
+        }
+      }
+    });
+    CinetPay.onError(function (data) {
+      console.log(data);
+    });
+  }
+</script>
+<div class="px-8 w-full max-w-[1350px] mx-auto">
+  <div class="mb-8 tab flex gap-4 max-w-[400px] mx-auto text-gray-700">
+    <button
+      class="tablinks px-4 py-2 bg-gray-100 hover:bg-blue-950 hover:text-white rounded-md"
+      onclick="openTab(event, 'sch_pricing')"
+      id="defaultOpen"
+    >
+      Tariff des institus
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-100 hover:bg-blue-950 hover:text-white rounded-md"
+      onclick="openTab(event, 'tut_pricing')"
+    >
+      Tarrif des enseignants
+    </button>
+  </div>
+  <!-- Pricing -->
+  <div class="tabcontent" id="sch_pricing">
+    <div class="grid lg:grid-cols-3 gap-4 mx-auto">
+      <!-- basic -->
+      <div
+        class="p-4 border-2 rounded-md"
+        data-wow-delay="0.1s"
+        style="max-width: 600px"
+      >
+        <h3 class="mb-3 text-lg text-blue-950 font-bold">
+          Offre basique (Gratuit)
+          <!-- <span class="p-2 bg-green-300 rounded-md"></span> -->
+        </h3>
+
+        <ul class="test-xs text-gray-400">
+          <li class="text-black flex justify-between items-center">
+            Création de profil <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Présence sur la liste des écoles
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Messagerie interne <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Préinscription <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Profil de l’école en vedette <br />
+            <!-- (en tête de liste des recherche) -->
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Postuler aux demandes des parents <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Recommandations du profil aux visiteurs
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Réception des notifications des demandes
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Publications des actualités <i class="fa-solid fa-cancel"></i>
+          </li>
+        </ul>
+
+        <h3 class="bg-sky-300 rounded-md py-2 px-4 mt-3 text-black">
+          Souscrit
+        </h3>
+      </div>
+      <!-- pro -->
+      <div
+        class="p-4 border-2 rounded-md"
+        data-wow-delay="0.1s"
+        style="max-width: 600px"
+      >
+        <h3 class="mb-3 text-lg text-blue-950 font-bold">
+          Offre professionnelle (120000 francs/an)
+          <!-- <span class="p-2 bg-green-300 rounded-md"></span> -->
+        </h3>
+        <ul class="test-xs text-gray-400">
+          <li class="text-black flex justify-between items-center">
+            Création de profil <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Présence sur la liste des écoles
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Messagerie interne <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Préinscription <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Profil de l’école en vedette <br />
+            <!-- (en tête de liste des recherche) -->
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Postuler aux demandes des parents
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Recommandations du profil aux visiteurs
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Réception des notifications des demandes
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Publications des actualités <i class="fa-solid fa-cancel"></i>
+          </li>
+        </ul>
+        <button
+          class="bg-green-100 hover:bg-green-300 rounded-md py-2 px-4 mt-3 text-black"
+          onclick="checkout(120000)"
+        >
+          Souscrire
+        </button>
+      </div>
+      <!-- premium -->
+      <div
+        class="p-4 border-2 rounded-md"
+        data-wow-delay="0.1s"
+        style="max-width: 600px"
+      >
+        <h3 class="mb-3 text-lg text-blue-950 font-bold">
+          Offre V.I.P (180000 francs/an)
+          <!-- <span class="p-2 bg-green-300 rounded-md"></span> -->
+        </h3>
+        <ul class="test-xs text-gray-400">
+          <li class="text-black flex justify-between items-center">
+            Création de profil <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Présence sur la liste des écoles
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Messagerie interne <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Préinscription <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Profil de l’école en vedette <br />
+            <!-- (en tête de liste des recherche) -->
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Postuler aux demandes des parents
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Recommandations du profil aux visiteurs
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Réception des notifications des demandes
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Publications des actualités
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+        </ul>
+        <button
+          class="bg-green-100 hover:bg-green-300 rounded-md py-2 px-4 mt-3 text-black"
+          onclick="checkout(120000)"
+        >
+          Souscrire
+        </button>
+      </div>
+    </div>
+  </div>
+  <!----------------------------------------------------------------- tutors pricing -------------------------------------------------------------------------------->
+  <div class="tabcontent" id="tut_pricing">
+    <div class="grid lg:grid-cols-3 gap-4 mx-auto">
+      <div
+        class="p-4 border-2 rounded-md"
+        data-wow-delay="0.1s"
+        style="max-width: 600px"
+      >
+        <h3 class="mb-3 text-lg text-blue-950 font-bold">
+          Offre basique (Gratuit)
+          <!-- <span class="p-2 bg-green-300 rounded-md"></span> -->
+        </h3>
+        <ul class="test-xs text-gray-400">
+          <li class="text-black flex justify-between items-center">
+            Création de profil <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Présence sur la liste des enseignants
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Messagerie interne <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Profil de l’enseignant en vedette <br />
+            <!-- (en tête de liste des recherche) -->
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+
+          <li class="flex justify-between items-center">
+            Publication des actualités
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Postuler aux demandes des parents
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Recommandations aux ecoles
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Actualités en vedette
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+        </ul>
+        <h3 class="bg-sky-300 rounded-md py-2 px-4 mt-3 text-black">
+          Souscrit
+        </h3>
+      </div>
+      <!-- pro -->
+      <div
+        class="p-4 border-2 rounded-md"
+        data-wow-delay="0.1s"
+        style="max-width: 600px"
+      >
+        <h3 class="mb-3 text-lg text-blue-950 font-bold">
+          Offre professionnelle (35000 francs/an)
+          <!-- <span class="p-2 bg-green-300 rounded-md"></span> -->
+        </h3>
+        <ul class="test-xs text-gray-400">
+          <li class="text-black flex justify-between items-center">
+            Création de profil <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Présence sur la liste des enseignants
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Messagerie interne <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Profil de l’enseignant en vedette <br />
+            <!-- (en tête de liste des recherche) -->
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Publication des actualités
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Postuler aux demandes des parents
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Recommandations aux ecoles
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+          <li class="flex justify-between items-center">
+            Actualités en vedette
+            <i class="fa-solid fa-cancel"></i>
+          </li>
+        </ul>
+        <button
+          class="bg-green-100 hover:bg-green-300 rounded-md py-2 px-4 mt-3 text-black"
+          onclick="checkout(120000)"
+        >
+          Souscrire
+        </button>
+      </div>
+      <!-- premium -->
+      <div
+        class="p-4 border-2 rounded-md"
+        data-wow-delay="0.1s"
+        style="max-width: 600px"
+      >
+        <h3 class="mb-3 text-lg text-blue-950 font-bold">
+          Offre V.I.P (50000 francs/an)
+          <!-- <span class="p-2 bg-green-300 rounded-md"></span> -->
+        </h3>
+        <ul class="test-xs text-gray-400">
+          <li class="text-black flex justify-between items-center">
+            Création de profil <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Présence sur la liste des enseignants
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Messagerie interne <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Profil de l’enseignant en vedette <br />
+            <!-- (en tête de liste des recherche) -->
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Publication des actualités
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Postuler aux demandes des parents
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Recommandations aux ecoles
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+          <li class="text-black flex justify-between items-center">
+            Actualités en vedette
+            <i class="fa-solid fa-check text-green-400"></i>
+          </li>
+        </ul>
+        <button
+          class="bg-green-100 hover:bg-green-300 rounded-md py-2 px-4 mt-3 text-black"
+          onclick="checkout(120000)"
+        >
+          Souscrire
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
