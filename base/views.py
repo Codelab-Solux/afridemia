@@ -257,8 +257,6 @@ def tutor(req, pk):
 @login_required(login_url='login')
 def create_tutor(req):
     user = req.user
-    # if user.role.sec_level != 2:
-    #     return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = TutortForm()
     if req.method == 'POST':
@@ -276,7 +274,7 @@ def create_tutor(req):
 def edit_tutor(req, pk):
     user = req.user
     curr_tut = Tutor.objects.get(id=pk)
-    if curr_tut.user != user:
+    if curr_tut.user != user and not user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = ForumArticleForm(instance=curr_tut)
@@ -288,6 +286,7 @@ def edit_tutor(req, pk):
     context = {
         "edit_tutor_page": "active", "title": 'edit_tutor', "user": user, "form": form, "curr_tut": curr_tut}
     return render(req, 'base/tutor.html', context)
+
 
 # --------------------------------------------------------------------forum CRUD--------------------------------------------------------
 
@@ -325,8 +324,6 @@ def forum_article(req, pk):
 @login_required(login_url='login')
 def create_forum_article(req):
     user = req.user
-    if user.role.sec_level < 2:
-        return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = ForumArticleForm()
     if req.method == 'POST':
@@ -348,7 +345,7 @@ def create_forum_article(req):
 def edit_forum_article(req, pk):
     user = req.user
     curr_tut = ForumArticle.objects.get(id=pk)
-    if curr_tut.user != user:
+    if curr_tut.author != user and not user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = ForumArticleForm(instance=curr_tut)

@@ -1,4 +1,4 @@
-from http.client import HTTPResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
 from .forms import *
 from django.shortcuts import render, redirect
@@ -224,6 +224,46 @@ def edit_school(req, pk):
         "stats_form": stats_form,
     }
     return render(req, 'schools/edit_sch.html', context)
+
+
+@login_required(login_url='login')
+def verify_school(req, pk):
+    user = req.user
+    obj = School.objects.get(id=pk)
+    if not user.is_staff:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    if req.method == 'POST':
+        try:
+            if obj.is_verified == False:
+                School.objects.filter(id=pk).update(is_verified=True)
+            else:
+                School.objects.filter(id=pk).update(is_verified=False)
+        except School.DoesNotExist:
+            return HttpResponse('School not found', status=404)
+        except Exception:
+            return HttpResponse('Internal Error', status=500)
+    return redirect(req.META.get('HTTP_REFERER', '/'))
+
+
+@login_required(login_url='login')
+def feature_school(req, pk):
+    user = req.user
+    obj = School.objects.get(id=pk)
+    if not user.is_staff:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    if req.method == 'POST':
+        try:
+            if obj.is_featured == False:
+                School.objects.filter(id=pk).update(is_featured=True)
+            else:
+                School.objects.filter(id=pk).update(is_featured=False)
+        except School.DoesNotExist:
+            return HttpResponse('School not found', status=404)
+        except Exception:
+            return HttpResponse('Internal Error', status=500)
+    return redirect(req.META.get('HTTP_REFERER', '/'))
 
 
 def sch_list(req):

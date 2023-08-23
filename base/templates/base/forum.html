@@ -28,56 +28,55 @@
     </div>
   </nav>
 
+  <p class="mb-4 w-full max-w-lg text-lg">
+    Un espace pour partager, discuter et apprendre ensemble. Rejoignez notre
+    communauté et participez aux conversations éducatives passionnantes.
+  </p>
   <!--------------------------------------- articles --------------------------------------->
-  <section id="articles" class="bg-white w-full text-left">
-    <div class="w-full mx-auto flex gap-8">
+  <section id="articles" class="w-full text-left">
+    <div class="w-full mx-auto flex flex-col-reverse lg:flex-row gap-8">
       <div class="w-full">
         {% for obj in articles %}
         <div
-          class="relative border-2 bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+          class="relative bg-green-100 hover:bg-white hover:shadow-lg rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
-          {% if user.role.sec_level >= 6 %}
+          {% if obj.author == user or user.is_superuser %}
           <a
-            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+            class="absolute top-4 right-4 px-3 py-2 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
             href="{% url 'edit_forum_article' obj.id %}"
             ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
           ></a>
           {% endif %}
           <a href="{% url 'forum_article' obj.id  %}" class="flex">
-            {% if not obj.image %}
             <img
-              class="relative h-40 w-40 object-cover"
+              class="h- w-40 object-cover"
               src="{% static 'imgs/forum.webp' %}"
               alt="article image"
             />
-            {% else %}
-            <img
-              class="h-40 w-40 object-cover"
-              src="{{obj.image.url}}"
-              alt="article image"
-            />
-            {% endif %}
             <div class="p-4 flex flex-col justify-between">
-              <h4 class="text-blue-950 font-bold">
-                {{obj.title|truncatechars:30}}
-              </h4>
-              <p class="pt-2 text-sm">{{obj.content|truncatechars:300}}</p>
+              <h4 class="text-black text-2xl font-bold">{{obj.title}}</h4>
+              <p class="pt-2 text-sm">{{obj.content|truncatechars:200}}</p>
             </div>
           </a>
         </div>
         {% endfor %}
       </div>
 
-      <div class="bg-blue-50 p-6 w-full max-w-[400px] rounded-md">
+      <div class="bg-blue-50 p-6 w-full lg:max-w-[400px] rounded-md">
         <h3 class="text-blue-950 font-bold">Matières</h3>
-        <div class="my-4 flex flex-wrap gap-2">
+        <div class="my-4 grid grid-cols-2 gap-2">
           {% for obj in subjects %}
           <!--  -->
           <a
             href="{% url 'tutors' %}?query={{obj.name}}"
-            class="px-4 py-2 rounded-md text-sm text-gray-700 bg-white hover:bg-blue-100 hover:text-black transition duration-300 ease-in-out"
+            class="px-4 py-2 flex justify-between items-center gap-4 rounded-md text-sm text-gray-700 bg-white hover:bg-blue-200 hover:text-black transition duration-300 ease-in-out"
           >
             {{obj.name}}
+            <img
+              class="h-7 xl:h-10 object-contain"
+              src="{{obj.image.url}}"
+              alt="image"
+            />
           </a>
           <!--  -->
           {% endfor %}

@@ -1,0 +1,159 @@
+{% extends 'dash_head.html' %} {% load static %}
+<div></div>
+{% block content %}
+
+<div class="p-6 w-full mx-auto max-w-[1350px]">
+  <!--------------------------------------- mini navbar --------------------------------------->
+  <nav
+    class="mx-auto flex flex-col gap-4 text-xs w-full max-w-[1350px]"
+  >
+    <div class="flex flex-col gap-4 w-full">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-3">
+        {% if has_school %}
+        <div class="flex gap-2">
+          <a
+            href="{% url 'my_school' %}"
+            class="p-4 bg-sky-100 text-black hover:bg-sky-300 rounded-md transition duration-300 ease-in-out"
+            ><i class="fa-solid fa-graduation-cap"></i>
+          </a>
+        </div>
+        {% else %}
+        <a
+          href="{% url 'create_school' %}"
+          class="p-4 bg-sky-100 flex items-center text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
+          >Nouvelle école<i
+            class=" fa-solid fa-plus ml-2"
+          ></i>
+        </a>
+        {% endif %}
+              <!------------------ search form ------------------->
+        <form
+          id="search_box"
+          class="max-w-3xl flex flex-col md:flex-row gap-2 justify-between"
+        >
+          <input
+            type="text"
+            name="query"
+            id="querier"
+            class="px-2 py-1 text-black w-full max-w-80 rounded-md border-2 outline-none"
+            placeholder="Ecole / Adresse"
+          />
+          <select 
+              type="text"
+              name="query"
+              id="querier"
+              class="px-2 py-1 text-black w-full rounded-md  border-2 outline-none">
+              <option value="">Status</option>
+               {% for obj in edu_levels %}
+                <option value="{{obj.name}}">{{obj.name}}</option>
+               {% endfor %}
+          </select>
+          <select 
+              type="text"
+              name="query"
+              id="querier"
+              class="px-2 py-1 text-black w-full rounded-md  border-2 outline-none">
+              <option value="">Niveaux d'etudes</option>
+               {% for obj in edu_levels %}
+                <option value="{{obj.name}}">{{obj.name}}</option>
+               {% endfor %}
+          </select>
+          <select 
+              type="text"
+              name="query"
+              id="querier"
+              class="px-2 py-1 text-black w-full rounded-md  border-2 outline-none">
+              <option value="">Pays</option>
+               {% for obj in countries %}
+                <option value="{{obj.name}}">{{obj.name}}</option>
+               {% endfor %}
+          </select>
+          <button
+            class="group px-4 py-3 text-sm bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md transition duration-300 ease-in-out"
+            type="submit"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <div class="my-4 flex flex-wrap gap-2">
+    {% for obj in levels %}
+    <!--  -->
+    <a
+      href="{% url 'dash_schools' %}?query={{obj.name}}"
+      class="px-4 py-1 flex justify-between items-center gap-4 rounded-md text-xs text-gray-700 bg-gray-100 hover:bg-green-200 hover:text-black transition duration-300 ease-in-out"
+    >
+      {{obj.name}}
+      <img
+        class="h-7 object-contain"
+        src="{{obj.image.url}}"
+        alt="image"
+      />
+    </a>
+    <!--  -->
+    {% endfor %}
+  </div>
+  <!--------------------------------------- schools --------------------------------------->
+  <section id="schools" class="w-full text-left">
+      <div class="w-full mx-auto">
+        {% if not schools %}
+        {% include 'components/no_data.html' %}
+        {% else %}
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4">
+          {% for obj in schools %}
+          <div
+          class="relative flex flex-col bg-blue-50  hover:bg-white  hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+          >      
+          <!--  -->
+          {% if obj.is_verified %}
+          <span class="absolute z-30 text-xs text-white top-4 left-4 px-2 py-1 bg-green-500 rounded-md">Vérifiée</span>
+          {% else %}
+          <span class="absolute z-30 text-xs text-white top-4 left-4 px-2 py-1 bg-sky-500 rounded-md">Non-vérifiée</span>
+          {% endif %}
+          {% if obj.manager == user %}
+            <a
+            class="absolute top-4 right-4 px-3 py-2 bg-white hover:bg-green-300 z-30 rounded-full transition duration-300 ease-in-out"
+              href="{% url 'edit_school' obj.id %}"
+              ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+            ></a>
+            {% endif %}
+            <div class="absolute top-[128px] right-4 left-4 px-4 py-2 w flex bg-white text-black text-xs rounded-t-md justify-between items-center z-30">
+              <p class=""><i class="fa-solid fa-chalkboard-user text-sky-500"></i> {{obj.teacher_count}}</p>
+              <p class=""><i class="fa-solid fa-graduation-cap text-sky-500"></i> {{obj.student_count}}</p>
+              <p class=""><i class="fa-solid fa-bookmark text-sky-500"></i> {{obj.formation_count}}</p>
+            </div>
+            <a href="{% url 'school' obj.id %}">
+              <div class="w-full max-h-40 overflow-hidden">
+                {% if obj.thumbnail %}
+                  <img
+                    class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
+                    src="{{obj.thumbnail.url}}"
+                    alt="welcome image"
+                  />
+                  {% else %}
+                  <img
+                    class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
+                    src="{% static 'imgs/uni.jpg' %}"
+                    alt="school image"
+                  />
+                  {% endif %}
+              </div>
+                <div class="px-4 py-2 rounded-b-md">
+                  <h4 class="text-black text-md font-bold">{{obj.name}}</h4>
+                  <p class="text-gray-800 text-sm">
+                  <i class="fa-solid fa-location-dot text-sky-500"></i> {{obj.address}}</p>
+              </div>
+            </a >
+          </div> 
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock %}

@@ -11,7 +11,7 @@
           alt="Leparle"
         />
         <img
-          class="w-60 hidden md:inline"
+          class="md:inline w-40 hidden lg:w-60"
           src="{% static 'imgs/afdm-logo.png' %}"
           alt="Leparle"
         />
@@ -27,39 +27,44 @@
       >
         <a
           href="{% url 'home' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{home_page}}"
           >Accueil</a
         >
         <a
           href="{% url 'schools' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{schools_page}}"
           >Ecoles</a
         >
         <a
           href="{% url 'tutors' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{tutors_page}}"
           >Enseignants</a
         >
         <a
           href="{% url 'blog' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{blog_page}}"
           >Blog</a
         >
         <a
           href="{% url 'adverts' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{adverts_page}}"
           >Annonces</a
         >
         <a
           href="{% url 'forum' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{forum_page}}"
           >Forum</a
         >
         <a
           href="{% url 'pricing' %}"
-          class="hover:text-black px-3 py-2 my-2 w-full"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{pricing_page}}"
           >Tarif</a
         >
+        <a
+          href="{% url 'pricing' %}"
+          class="hover:text-green-400 px-3 py-2 w-full transition ease-in duration-200"
+          ><i class="fa-solid fa-bell text-2xl"></i
+        ></a>
       </ul>
       {% if user.is_authenticated %}
       <div class="lg:ml-4">
@@ -109,7 +114,7 @@
               ><i class="fa-solid fa-users mr-2"></i>Utilisateurs</a
             >
             <a
-              href="{% url 'users' %}"
+              href="{% url 'dashboard' %}"
               class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
               role="menuitem"
               tabindex="-1"
@@ -137,7 +142,7 @@
       </div>
       {% else %}
       <a
-        class="lg:ml-4 px-4 py-2 rounded-lg border border-2 border-white bg-blue-950 hover:bg-green-300 hover:text-black text-white transition ease-in duration-200"
+        class="lg:ml-4 px-4 py-2 rounded-lg border border-2 border-white bg-blue-950 hover:bg-green-300 text-white hover:text-black transition ease-in duration-200"
         href="{% url 'login' %}"
         >Connexion</a
       >

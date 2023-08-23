@@ -2,16 +2,21 @@
 <!--------------------------------------- schools --------------------------------------->
 <section id="schools" class="bg-white w-full">
   <div class="p-8 py-40 w-full max-w-[1350px] mx-auto text-left">
-    <div class="w-full my-4 flex justify-between items-center">
-      <h3 class="text-black text-lg font-bold">Etablissements recommandés</h3>
+    <div class="w-full my-2 flex justify-between items-center">
+      <h3 class="text-3xl text-black font-bold">Etablissements recommandés</h3>
       <a
-        class="hidden md:inline text-blue-950 hover:text-sky-500"
+        class="hidden md:inline text-blue-950 hover:bg-sky-500 px-4 py-2 rounded-md"
         href="{% url 'schools' %}"
         ><i class="fa-solid fa-angles-right text-lg"></i>
       </a>
     </div>
+    <p class="mb-4 w-full max-w-lg text-lg">
+      Découvrez votre chemin vers l'excellence éducative avec nos écoles
+      recommandées, où chaque avenir trouve sa voie.
+    </p>
+
     {% if not schools %} {% include 'components/no_data.html' %} {% else %}
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {% for obj in schools %}
       <div
         class="relative flex flex-col bg-blue-50 hover:shadow-md hover:bg-blue-100 rounded-md transition duration-300 ease-in-out overflow-hidden group"

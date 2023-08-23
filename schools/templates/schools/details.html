@@ -3,26 +3,79 @@
 <div class="px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
 
-  <nav class="mb-4 mx-auto py-2 flex gap-4 items-center text-xs w-full">
+  <nav class="mb-4 mx-auto py-2 flex items-center justify-between text-xs w-full">
+    <div class="flex gap-4 items-center">
+      <a
+        class="hover:text-green-300 transition ease-in duration-300"
+        href="{% url 'home' %}"
+        ><i class="fa-solid fa-house"></i>
+      </a>
+      /
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'schools' %}"
+        >Ecoles</a
+      >
+      /
+      <span class="text-blue-950 font-black">{{school.name}}</span>
+    </div>
 
-    <a
-      class="hover:text-green-300 transition ease-in duration-300"
-      href="{% url 'home' %}"
-      ><i class="fa-solid fa-house"></i>
-    </a>
-    /
-    <a
-      class="hover:text-green-400 transition ease-in duration-300"
-      href="{% url 'schools' %}"
-      >Ecoles</a
-    >
-    /
-    <span class="text-blue-950 font-black">{{school.name}}</span>
+    {% if user.is_staff %}
+    <div class="flex gap-2 items-center">
+      <form action="{% url 'verify_school' school.id %}" method="POST">
+        {% csrf_token %}
+        <!--  -->
+        {% if school.is_verified == False %}
+          <input
+            type="submit"
+            value="Vérifier"
+            class="px-4 py-2 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+          />
+          {% else %}
+          <input
+            type="submit"
+            value="Ne pas vérifier"
+            class="px-4 py-2 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+          />
+        {% endif %}
+      </form>
+
+    <!--  -->
+
+      <form action="{% url 'feature_school' school.id %}" method="POST">
+        {% csrf_token %}
+          <!--  -->
+        {% if school.is_featured == False %}
+          <input
+            type="submit"
+            value="Mettre en vedette"
+            class="px-4 py-2 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+          />
+          {% else %}
+          <input
+            type="submit"
+            value="Ne pas mettre en vedette"
+            class="px-4 py-2 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+          />
+        {% endif %}
+      </form>
+    </div>
+    {% endif %}
   </nav>
 
   <!--------------------------------------- banner section --------------------------------------->
 
-  <div>
+  <div class="relative">
+    {% if school.is_verified == False %}
+    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-sky-500 text-white text-md">
+      En cours de vérification
+    </span>
+    {% else %}
+    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-green-500 text-white text-md">
+      Vérifiée
+    </span>
+    {% endif %}
+
     {% if school.banner %}
     <img
       class="w-full h-[500px] rounded-md object-cover"
@@ -41,7 +94,7 @@
   <!--------------------------------------- hero section --------------------------------------->
 
   <div
-    class="mt-8 p-10 mx-auto border-2 hover:border-blue-950 w-full transition duration-300 ease-in-out rounded-md"
+    class="mt-8 mx-auto lg:p-10 lg:border lg:hover:border-blue-950 w-full transition duration-300 ease-in-out rounded-md"
   >
     <article
       class="flex flex-col text-left justify-between items-start text-left"
@@ -65,32 +118,29 @@
           </div>
           <div class="flex-col gap-4">
             <h2 class="mb-2 text-3xl text-black font-bold">{{school.name}}</h2>
-            <div>
-              <span class="text-truncate me-3"
+              <p class="text-truncate me-3"
                 ><i class="fa fa-bullhorn mr-2 text-black"></i>
                 <em class="text-green-400 font-bold">"{{school.moto|title}}" </em>
-              </span>
-              <span class="text-truncate me-3"
+          </p>
+              <p class="text-truncate me-3"
                 ><i class="fa fa-trowel-bricks mr-2 text-black"></i>Fondée en
-                {{school.year_founded}}</span
-              >
-            </div>
+                {{school.year_founded}}</p>
+              <p class="text-sm">
+                Ouvert de
+                <span class="text-black font-bold">
+                  {{school.opening_hour}} à {{school.closing_hour}}
+                </span>
+              </p>
           </div>
         </div>
-        <p class="text-sm">
-          Ouvert de
-          <span class="text-black font-bold">
-            {{school.opening_hour}} à {{school.closing_hour}}
-          </span>
-        </p>
       </div>
       <!--  -->
       <p class="p-4 my-2 bg-blue-50 rounded-md text-gray-600">
         {{school.description}}
       </p>
       <!--  -->
-      <div class="my-4 grid md:grid-cols-2 gap-4">
-        <div class="p-4 bg-blue-950 rounded-md">
+      <div class="my-4 grid md:grid-cols-2 gap-6">
+        <div class="p-4 bg-blue-950 rounded-md w-full">
           <p class="text-white text-xl font-bold">Niveaux d'Education</p>
           <ul class="my-4 flex flex-wrap gap-4">
             {% for obj in school.levels.all %}
@@ -103,7 +153,7 @@
           </ul>
         </div>
         {% if prereg_form %}
-        <div class="p-6 bg-green-100 rounded-md">
+        <div class="p-6 bg-green-100 rounded-md w-full">
           <h3 class="mb-4 text-black text-xl font-bold">
             Formulaire de Préinscription
           </h3>
@@ -204,17 +254,17 @@
 
   <!--------------------------------------- tabs section --------------------------------------->
 
-  <section class="my-8 tab flex gap-4 max-w-[1050px] mx-auto text-gray-700">
+  <section class="my-8 p-4 bg-sky-200 rounded-md tab flex flex-wrap gap-4 justify-between items-center w-full mx-auto text-gray-700">
     <button
       class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
       onclick="openTab(event, 'overview')"
+      id="defaultOpen"
     >
       Aperçue
     </button>
     <button
       class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
       onclick="openTab(event, 'academia')"
-      id="defaultOpen"
     >
       Académie
     </button>
@@ -248,12 +298,6 @@
     >
       Performance
     </button>
-    <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
-      onclick="openTab(event, 'preregs')"
-    >
-      Préinscription
-    </button>
   </section>
 
   <!--------------------------------------- more info --------------------------------------->
@@ -261,9 +305,9 @@
   <section>
     <div
       id="overview"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
-      <div class="flex gap-8">
+      <div class="flex flex-col-reverse lg:flex-row gap-8">
         <div class="w-full flex flex-col">
           <h2 class="pb-2 font-bold text-xl text-black">Historique</h2>
           <p class="mb-4 p-4 bg-gray-50 rounded-md">{{school.history}}</p>
@@ -272,10 +316,10 @@
           </h2>
           <p class="mb-4 p-4 bg-gray-50 rounded-md">{{school.mgt_quote}}</p>
         </div>
-        <div class="w-full max-w-[400px] flex flex-col gap-8">
+        <div class="w-full lg:max-w-[400px] grid md:grid-cols-2 lg:grid-cols-1 gap-8">
           <div class="p-8 bg-blue-50 rounded-md">
             <h2 class="pb-2 font-bold text-xl text-black">Informations</h2>
-            <ul class="flex flex-col gap-2">
+            <ul class="flex flex-col gap-2 text-sm">
               <li>
                 <i class="fa fa-phone text-black mr-2"></i>
                 {{school.tel}}
@@ -315,7 +359,7 @@
           <!--  -->
           <div class="p-8 bg-blue-50 rounded-md">
             <h2 class="pb-2 font-bold text-xl text-black">Description</h2>
-            <p class="m-0">{{school.description}}</p>
+            <p class="text-sm">{{school.description}}</p>
           </div>
         </div>
       </div>
@@ -325,7 +369,7 @@
 
     <div
       id="academia"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <h3 class="pb-2 font-bold text-xl text-black">Pédaogie</h3>
       <p class="my-4 bg-gray-50 p-4 rounded-md">{{school.pedagogy}}</p>
@@ -372,7 +416,7 @@
 
     <div
       id="teachers"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       {% if not teachers %} {% include 'components/no_data.html' %} {% else %}
       <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
@@ -410,7 +454,7 @@
 
     <div
       id="structures"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       {% if not structures %} {% include 'components/no_data.html' %} {% else %}
       <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
@@ -447,7 +491,7 @@
 
     <div
       id="articles"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       {% if not articles %} {% include 'components/no_data.html' %} {% else %}
       <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
@@ -485,7 +529,7 @@
 
     <div
       id="gallery"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
                   <img
@@ -515,7 +559,7 @@
 
     <div
       id="performance"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <h3>Examens</h3>
       <div class="h-80">
@@ -527,7 +571,7 @@
 
     <div
       id="preregs"
-      class="tabcontent p-8 border border-2 hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       {% if not preregs %} {% include 'components/no_data.html' %} {% else %}
       <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
@@ -603,5 +647,6 @@
       ],
     },
   });
+  
 </script>
 {% endblock %}

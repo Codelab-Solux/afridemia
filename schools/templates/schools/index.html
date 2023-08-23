@@ -22,49 +22,61 @@
     </div>
 
     <div class="flex flex-col gap-4 w-full">
-      <h2 class="text-xl font-bold text-black">Rechercher votre institu ideal</h2>
-      <div class="flex flex-col md:flex-row justify-between gap-3">
-        {% if has_school %}
+      <p class="my-4 w-full max-w-lg text-lg">
+        Découvrez des écoles qui façonnent des futurs brillants. Trouvez votre prochaine destination éducative avec notre recherche simplifiée.
+      </p>
+      <div class="flex flex-col md:flex-row justify-between items-center gap-3">
         <div class="flex gap-2">
-
-          <a
-            href="{% url 'my_school' %}"
-            class="px-4 py-3 bg-sky-100 text-black hover:bg-sky-300 rounded-md transition duration-300 ease-in-out"
-            ><i class="fa-solid fa-graduation-cap"></i></a>
+          {% if user.is_staff %}
             <a
-              href="{% url 'create_school' %}"
-              class="px-4 py-3 bg-green-100 flex items-center text-black hover:bg-green-200 rounded-md transition duration-300 ease-in-out"
+              href="{% url 'dashboard' %}"
+              class="p-4 bg-green-100 flex items-center text-black hover:bg-green-200 rounded-md transition duration-300 ease-in-out"
               >Tableau de bord<i
-                class=" fa-solid fa-plus ml-2"
-              ></i
-            ></a>
+                class=" fa-solid fa-dashboard ml-2"
+              ></i>
+            </a>
+            {% endif %}
+            <!--  -->
+          {% if has_school %}
+          <a
+          href="{% url 'my_school' %}"
+          class="p-4 bg-sky-100 text-black hover:bg-sky-300 rounded-md transition duration-300 ease-in-out"
+          ><i class="fa-solid fa-graduation-cap"></i>
+        </a>
+          {% else %}
+          <a
+            href="{% url 'create_school' %}"
+            class="p-4 bg-sky-100 flex items-center text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
+            >Nouvelle école<i
+              class=" fa-solid fa-plus ml-2"
+            ></i>
+          </a>
+          {% endif %}
         </div>
-        {% else %}
-        <a
-          href="{% url 'create_school' %}"
-          class="px-4 py-3 bg-sky-100 flex items-center text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
-          >Nouvelle école<i
-            class=" fa-solid fa-plus ml-2"
-          ></i
-        ></a>
-        {% endif %}
               <!------------------ search form ------------------->
         <form
           id="search_box"
-          class="bottom-20 w-full max-w-[800px] flex flex-row gap-3 justify-between"
+          class="p-4 bg-green-200 rounded-md max-w-3xl flex gap-3 justify-between"
         >
           <input
             type="text"
             name="query"
             id="querier"
-            class="px-4 py-2 border-2 focus:border-blue-950 text-black w-full rounded-md outline-none"
+            class="px-4 py-2 text-black w-full rounded-md outline-none"
             placeholder="Ecole"
+          />
+          <input
+            type="text"
+            name="query"
+            id="querier"
+            class="px-4 py-2 text-black w-full rounded-md outline-none"
+            placeholder="Adresse"
           />
           <select 
               type="text"
               name="query"
               id="querier"
-              class="px-4 py-2 border-2 focus:border-blue-950 text-black w-full rounded-md outline-none">
+              class="px-4 py-2 text-black w-full rounded-md outline-none">
               <option value="">Niveaux d'etudes</option>
                {% for obj in edu_levels %}
                 <option value="{{obj.name}}">{{obj.name}}</option>
@@ -74,7 +86,7 @@
               type="text"
               name="query"
               id="querier"
-              class="px-4 py-2 border-2 focus:border-blue-950 text-black w-full rounded-md outline-none">
+              class="px-4 py-2 text-black w-full rounded-md outline-none">
               <option value="">Pays</option>
                {% for obj in countries %}
                 <option value="{{obj.name}}">{{obj.name}}</option>

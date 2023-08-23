@@ -16,32 +16,19 @@
         href="{% url 'forum' %}"
         >Forum</a
       >
-      /
+      / {% if curr_article %}
       <span class="hidden md:inline text-blue-950 font-black"
         >{{curr_article.title}}</span
       >
-    </div>
-    <form
-      id="search_box"
-      class="p-1 w-[400px] max-w-xl border border-2 border-gray-100 rounded-xl flex flex-row justify-between"
-    >
-      <input
-        type="text"
-        name="query"
-        id="querier"
-        required
-        class="px-4 py-2 bg-gray-100 text-black w-full rounded-l-lg outline-none"
-        placeholder="Recherchez..."
-      />
-      <button
-        class="group px-4 py-2 text-sm bg-blue-950 hover:bg-amber-400 text-white hover:text-black rounded-r-lg transition duration-300 ease-in-out"
-        type="submit"
+      {% else %}
+      <span class="hidden md:inline text-blue-950 font-black"
+        >Nouvel Article</span
       >
-        <i class="fa-solid fa-magnifying-glass"></i>
-      </button>
-    </form>
+      {% endif %}
+    </div>
   </nav>
 
+  {% if not form %}
   <!--------------------------------------- forum article layout --------------------------------------->
 
   <div class="my-4 flex flex-col lg:flex-row justify-between items-start gap-8">
@@ -56,33 +43,23 @@
       ></a>
       {% endif %}
       <!--  -->
-      {% if not curr_article.image %}
       <img
         class="h-80 w-full rounded-md object-cover"
         src="{% static 'imgs/forum.webp' %}"
         alt="forum article image"
       />
-      {% else %}
-      <img
-        class="h-80 w-full rounded-md object-cover"
-        src="{{item.image.url}}"
-        alt="forum article image"
-      />
-      {% endif %}
-      <h4 class="mt-4 text-blue-950 text-3xl font-bold">
-        {{curr_article.title}}
-      </h4>
+      <h4 class="mt-4 text-black text-3xl font-bold">{{curr_article.title}}</h4>
       <!-- <p class="py-2 text-md">{{curr_article.subtitle}}</p> -->
-      <div class="mt-4 p-6 border-2 flex flex-col justify-between rounded-md">
-        <p class="text-lg text-gray-700">{{curr_article.content}}</p>
-      </div>
+      <!-- <div class="mt-4 p-6 border-2 flex flex-col justify-between rounded-md"> -->
+      <p class="mt-2 text-lg">{{curr_article.content}}</p>
+      <!-- </div> -->
     </div>
 
     <!--------------------------------------- other forum articles --------------------------------------->
 
     <div class="p-4 h-[400px] w-full lg:w-[400px] bg-gray-100 rounded-md">
       <h3 class="mb-2 mx-auto text-gray-700 text-2xl font-black">
-        Autre articles
+        Articles connexes
       </h3>
       <div
         class="flex flex-col md:grid grid-cols-2 lg:grid-cols-1 justify-between gap-8 w-full"
@@ -92,19 +69,11 @@
           class="relative w-full flex flex-col border border-2 bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
           <a href="{% url 'forum_article' obj.id  %}">
-            {% if not item.image %}
             <img
-              class="relative h-40 w-full object-cover"
+              class="relative h-20 w-full object-cover"
               src="{% static 'imgs/forum.webp' %}"
               alt="forum article image"
             />
-            {% else %}
-            <img
-              class="h-40 w-full object-cover"
-              src="{{item.image.url}}"
-              alt="forum article image"
-            />
-            {% endif %}
             <div class="p-4 flex flex-col justify-between">
               <h4 class="text-blue-950 font-bold">
                 {{obj.title|truncatechars:30}}
@@ -117,6 +86,58 @@
       </div>
     </div>
   </div>
+
+  {% else %}
+
+  <p class="my-4 w-full max-w-lg text-lg">
+    Partagez vos connaissances et perspectives éducatives. Contribuez au savoir
+    collectif en ajoutant un article à notre blog.
+  </p>
+
+  <div class="mx-auto rounded grid md:grid-cols-2 gap-8">
+    <article class="p-8 bg-gray-100 rounded-md">
+      {% if curr_ad %}
+      <h3 class="mb-4 text-black text-2xl font-bold">Modifier Cet Article</h3>
+      {% else %}
+      <h3 class="mb-4 text-black text-2xl font-bold">Ajouter Un Article</h3>
+      {% endif %}
+
+      <div class="mx-auto w-full rounded-md">
+        <form
+          class="w-full"
+          method="POST"
+          action=""
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {% for field in form %}
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{field.label}}</h3>
+            {{field}}
+          </div>
+          {% endfor %}
+          <div class="mt-4 flex gap-4 items-end">
+            <input
+              class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
+              type="submit"
+              value="Enregistrer"
+            />
+            <a
+              class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+              href="{{request.META.HTTP_REFERER}}"
+            >
+              Annuler
+            </a>
+          </div>
+        </form>
+      </div>
+    </article>
+    <img
+      class="w-full h-full rounded-md object-cover"
+      src="{% static 'imgs/forum.webp' %}"
+      alt="image"
+    />
+  </div>
+  {%endif%}
 </div>
 
 {% endblock %}

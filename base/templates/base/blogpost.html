@@ -2,7 +2,7 @@
 <div class="px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav
-    class="mx-auto py-2 flex justify-between items-center gap-2 items-center text-xs w-full max-w-[1350px]"
+    class="mb-4 mx-auto py-2 flex justify-between items-center gap-2 items-center text-xs w-full max-w-[1350px]"
   >
     <div class="flex gap-4 items-center">
       <a
@@ -108,6 +108,11 @@
   <!--------------------------------------- blog form --------------------------------------->
 
   {% else %}
+  <p class="my-4 w-full max-w-lg">
+    Partagez vos connaissances et perspectives éducatives. Contribuez au savoir
+    collectif en ajoutant un article à notre blog.
+  </p>
+
   <div class="mx-auto rounded grid md:grid-cols-2 gap-8">
     <article class="p-8 bg-green-100 rounded-md">
       {% if curr_ad %}
@@ -115,13 +120,6 @@
       {% else %}
       <h3 class="mb-4 text-black text-2xl font-bold">Ajouter Un Article</h3>
       {% endif %}
-
-      <p class="my-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem sint
-        inventore fugiat eum vel. Accusamus excepturi eos harum at quidem
-        perspiciatis vitae, doloremque voluptate sunt ad fugit beatae repellat!
-        Suscipit.
-      </p>
 
       <div class="mx-auto w-full rounded-md">
         <form

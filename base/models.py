@@ -20,15 +20,20 @@ durations = (
     ('year', "Année"),
 )
 
+subscription_types = (
+    ('school', 'Ecole'),
+    ('tutor', 'Enseignant'),
+)
+
 
 class Plan(models.Model):
     name = models.CharField(max_length=128)
     price = models.IntegerField(default='0')
-    # category = models.CharField(
-    #     max_length=50, null=True, default='free', choices=categories)
+    type = models.CharField(max_length=50, blank=True,
+                            null=True, choices=subscription_types, default='')
 
     def __str__(self):
-        return f'{self.name} ({self.price})'
+        return f'{self.name}-{self.type} ({self.price})'
 
 
 class Subscription(models.Model):
@@ -39,7 +44,7 @@ class Subscription(models.Model):
     active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.user.email
+        return f'{self.user.email}-{self.plan}'
 
 
 class Blogpost(models.Model):
@@ -98,6 +103,8 @@ class Tutor(models.Model):
     bio = models.TextField(blank=True, null=True)
     subjects = models.TextField(blank=True, null=True)
     grades = models.TextField(blank=True, null=True)
+    is_verified = models.BooleanField(default=False)
+    is_featured = models.BooleanField(default=False)
     years_of_experience = models.IntegerField(default='0')
     qualifications = models.CharField(max_length=255, blank=True, null=True)
     facebook_link = models.CharField(
@@ -116,6 +123,7 @@ class Tutor(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='subjects', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -136,7 +144,7 @@ class ForumArticle(models.Model):
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.author.last_name} - {self.author.first_name}'
+        return f'{self.author.last_name} - {self.title}'
 
     def get_absolute_url(self):
         return reverse('forum_article', kwargs={'pk': self.pk})

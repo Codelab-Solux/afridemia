@@ -14,17 +14,17 @@
       <a
         class="hover:text-green-400 transition ease-in duration-300"
         href="{% url 'tutors' %}"
-        >Enseignant</a
+        >Enseignants</a
       >
       /
-      <span class="text-blue-950 font-black"
+      <span class="text-black font-black"
         >{{curr_tut.user.last_name}} {{curr_tut.user.first_name}}</span
       >
     </div>
     {% if user == curr_tut.user %}
     <a
       href="{% url 'edit_tutor' curr_tut.id %}"
-      class="px-4 py-2 bg-blue-950 text-white hover:bg-amber-400 hover:text-black rounded-md flex justify-between items-center transition duration-300 ease-in-out"
+      class="px-4 py-2 bg-black text-white hover:bg-green-400 hover:text-black rounded-md flex justify-between items-center transition duration-300 ease-in-out"
       >Modifier mon profile d'enseignant<i
         class="fa-solid fa-pen-to-square ml-4"
       ></i
@@ -37,20 +37,20 @@
   <section class="mt-4 flex flex-col lg:flex-row gap-4 w-full">
     {% if not curr_tut.image %}
     <img
-      class="h-80 w-full max-w-[400px] border border-2 rounded-md object-cover"
+      class="h-80 w-full lg:max-w-[400px] border border-2 rounded-md object-cover"
       src="{% static 'imgs/tutor.jpg' %}"
       alt="tutor image"
     />
     {% else %}
     <img
-      class="h-80 w-full max-w-[400px] border border-2 rounded-md object-cover"
+      class="h-80 w-full lg:max-w-[400px] border border-2 rounded-md object-cover"
       src="{{curr_tut.image.url}}"
       alt="tutor image"
     />
     {% endif %}
     <!--  -->
     <div
-      class="w-full bg-blue-950 text-gray-300 text-sm p-4 xl:p-8 rounded-md flex flex-col"
+      class="w-full bg-blue-950 text-gray-200 text-md p-6 xl:p-8 rounded-md flex flex-col"
     >
       <h4 class="text-white text-xl font-bold flex items-center">
         {{curr_tut.civility}} {{curr_tut.user.last_name}}
@@ -58,60 +58,48 @@
         <img class="mx-2 h-4" src="{{curr_tut.country.flag}}" />
         ({{curr_tut.country}})
       </h4>
-      <p class="py-2">{{curr_tut.bio}}</p>
 
-      <div class="flex flex-col md:flex-row gap-4">
-        <div class="flex flex-col w-60">
+      <p class="py-2 text-lg">{{curr_tut.bio}}</p>
+
+      <div class="flex flex-col md:flex-row justify-between gap-4">
+        <div class="flex flex-col">
           <h4 class="mb-2 text-white text-lg font-bold">Contacts</h4>
-          <a
-            href="tel:{{curr_tut.tel}}"
-            target="_blank"
-            class="rounded-full bg-transparent hover:text-amber-400"
-          >
-            <i class="fa-solid fa-phone mr-2"></i>{{curr_tut.tel}}
-          </a>
-          <a
-            href="tel:{{curr_tut.cel}}"
-            target="_blank"
-            class="rounded-full bg-transparent hover:text-amber-400"
-          >
-            <i class="fa-solid fa-phone mr-2"></i>{{curr_tut.cel}}
-          </a>
-          <!-- <p class="py-2">
-              <i class="fa-brands fa-telegram mr-2"></i>{{curr_tut.cel}}
-            </p>
-            <p class="py-2">
-              <i class="fa-brands fa-whatsapp mr-2"></i>{{curr_tut.cel}}
-            </p> -->
+          <div class="py-2 flex flex-wrap gap-4 items-center">
+            <a
+              href="#schools"
+              class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
+              >Contacter<i class="fa-solid fa-message ml-2"></i
+            ></a>
+            <a
+              href="tel:{{curr_tut.cel}}"
+              target="_blank"
+              class="rounded-full bg-transparent hover:text-cyan-300"
+            >
+              <i class="fa-solid fa-mobile text-2xl"></i>
+            </a>
+            <a
+              href="{{curr_tut.facebook_link}}"
+              target="_blank"
+              class="hover:text-cyan-300"
+            >
+              <i class="fa-brands fa-facebook text-2xl"></i>
+            </a>
+            <a
+              href="{{curr_tut.linkedin_link}}"
+              target="_blank"
+              class="hover:text-cyan-300"
+            >
+              <i class="fa-brands fa-linkedin-in text-2xl"></i>
+            </a>
+          </div>
         </div>
-        <hr />
         <div>
           <h4 class="mb-2 text-white text-lg font-bold">Diplomes</h4>
           <p class="text-sm">{{curr_tut.qualifications}}</p>
-        </div>
-        <hr />
-        <div>
-          <h4 class="text-white text-lg font-bold">
+          <h5 class="text-cyan-300 text-md">
             {{curr_tut.years_of_experience}} an(s) d'experience
-          </h4>
+          </h5>
         </div>
-      </div>
-
-      <div class="flex gap-4">
-        <a
-          href="{{curr_tut.facebook_link}}"
-          target="_blank"
-          class="rounded-full bg-transparent hover:text-amber-400"
-        >
-          <i class="text-xl fa-brands fa-facebook"></i>
-        </a>
-        <a
-          href="{{curr_tut.linkedin_link}}"
-          target="_blank"
-          class="rounded-full bg-transparent hover:text-amber-400"
-        >
-          <i class="text-xl fa-brands fa-linkedin-in"></i>
-        </a>
       </div>
     </div>
     <!--  -->
@@ -119,58 +107,54 @@
   <!--------------------------------------- more info --------------------------------------->
   <section class="mt-4 flex flex-col md:flex-row gap-4 w-full">
     <div
-      class="p-6 bg-blue-50 w-full max-w-[400px] rounded-md flex flex-col justify-"
+      class="p-6 bg-blue-50 w-full lg:max-w-[400px] rounded-md flex flex-col justify-"
     >
-      <h4 class="text-blue-950 text-xl font-bold">Matieres</h4>
+      <h4 class="text-black text-xl font-bold">Matieres</h4>
       <p class="py-1">{{curr_tut.subjects}}</p>
-      <h4 class="text-blue-950 text-xl font-bold">Classes</h4>
+      <h4 class="text-black text-xl font-bold">Classes</h4>
       <p class="py-1">{{curr_tut.grades}}</p>
     </div>
+    <div class="w-full rounded-md">
+      <h4 class="text-black text-xl mb-4 font-bold">
+        Articles postés dans le forum
+      </h4>
 
-    <div class="w-full p-6 bg-gray-100 rounded-md">
-      <h4 class="text-blue-950 text-xl mb-4 font-bold">Articles Postés</h4>
+      {% if not rel_articles %}
+      <!--  -->
+      {% include 'components/no_data.html' %}
+      <!--  -->
+      {% else %}
 
       <div class="w-full">
         {% for obj in rel_articles %}
         <div
-          class="relative border-2 bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+          class="relative bg-green-100 hover:bg-white hover:shadow-lg rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
-          {% if user.role.sec_level >= 6 %}
+          {% if obj.author == user or user.is_superuser %}
           <a
-            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+            class="absolute top-4 right-4 px-3 py-2 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
             href="{% url 'edit_forum_article' obj.id %}"
             ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
           ></a>
           {% endif %}
           <a href="{% url 'forum_article' obj.id  %}" class="flex">
-            {% if not obj.image %}
             <img
-              class="relative h-40 w-40 object-cover"
+              class="w-40 object-cover"
               src="{% static 'imgs/forum.webp' %}"
               alt="article image"
             />
-            {% else %}
-            <img
-              class="h-40 w-40 object-cover"
-              src="{{obj.image.url}}"
-              alt="article image"
-            />
-            {% endif %}
             <div class="p-4 flex flex-col justify-between">
-              <h4 class="text-blue-950 font-bold">
-                {{obj.title|truncatechars:30}}
-              </h4>
+              <h4 class="text-black text-2xl font-bold">{{obj.title}}</h4>
               <p class="pt-2 text-sm">{{obj.content|truncatechars:300}}</p>
             </div>
           </a>
         </div>
         {% endfor %}
       </div>
+      {% endif %}
     </div>
   </section>
-
   {% else %}
-
   <section class="my-4 w-full mx-auto rounded-md">
     <div class="grid md:grid-cols-2 gap-8">
       <article>
@@ -218,7 +202,6 @@
       />
     </div>
   </section>
-
   {% endif %}
 </div>
 

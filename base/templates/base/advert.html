@@ -18,12 +18,16 @@
     / {% if curr_ad %}
     <span class="text-blue-950 font-bold">{{curr_ad.title}}</span>
     {% else %}
-    <span>Nouvel Annonce</span>
+    <span class="text-blue-950 font-bold">Nouvel Annonce</span>
     {% endif %}
   </nav>
-
   {% if not form %}
+
   <!--------------------------------------- hero section --------------------------------------->
+  <p class="mb-4 w-full max-w-lg text-lg">
+    Connectez-vous avec des parents en quête d'excellence éducative. Trouvez des
+    écoles et des enseignants privés de confiance.
+  </p>
 
   <div class="mt-4 p-4 lg:p-10 mx-auto border-2 w-full rounded-md">
     <article class="flex flex-col md:flex-row text-left gap-8 items-center">
@@ -54,8 +58,13 @@
   <!--------------------------------------- advert form --------------------------------------->
 
   {% else %}
+  <p class="mb-4 w-full max-w-lg text-lg">
+    Partagez vos besoins éducatifs avec notre communauté. Ajoutez une annonce et
+    trouvez l'école ou l'enseignant idéal.
+  </p>
+
   <div class="mx-auto rounded grid md:grid-cols-2 gap-8">
-    <article class="p-8 bg-green-100 rounded-md">
+    <article class="p-8 bg-gray-100 rounded-md">
       {% if curr_ad %}
       <h3 class="mb-4 text-black text-2xl font-bold">
         Modifier Cette {{curr_ad.get_type_display|title}}
@@ -65,13 +74,6 @@
         Ajouter Une Offre / Demande
       </h3>
       {% endif %}
-
-      <p class="my-4">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem sint
-        inventore fugiat eum vel. Accusamus excepturi eos harum at quidem
-        perspiciatis vitae, doloremque voluptate sunt ad fugit beatae repellat!
-        Suscipit.
-      </p>
 
       <div class="mx-auto w-full rounded-md">
         <form
@@ -88,7 +90,7 @@
           {% endfor %}
           <div class="mt-4 flex gap-4 items-end">
             <input
-              class="px-4 py-2 bg-blue-950 hover:bg-green-400 text-white hover:text-black rounded-md cursor-pointer"
+              class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
               type="submit"
               value="Enregistrer"
             />
