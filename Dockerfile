@@ -1,7 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM python:3.11-alpine
 ADD requirements.txt /app/requirements.txt
-COPY . .
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
     && python -m venv /env \
@@ -15,7 +14,16 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del .build-deps
 
+ADD accounts /app
 ADD afridemia /app
+ADD base /app
+ADD dashboard /app
+ADD schools /app
+ADD static /app
+ADD staticfiles /app
+ADD templates /app
+ADD uploads /app
+ADD manage.py /app/manage.py
 WORKDIR /app
 
 ENV VIRTUAL_ENV /env
