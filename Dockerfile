@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM python:3.11-alpine
 ADD requirements.txt /app/requirements.txt
-
+COPY . .
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
     && python -m venv /env \
