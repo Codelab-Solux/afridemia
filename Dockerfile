@@ -14,15 +14,15 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del .build-deps
 
-ADD accounts /app
-ADD afridemia /app
-ADD base /app
-ADD dashboard /app
-ADD schools /app
-ADD static /app
-ADD staticfiles /app
-ADD templates /app
-ADD uploads /app
+ADD accounts /app/accounts
+ADD afridemia /app/afridemia
+ADD base /app/base
+ADD dashboard /app/dashboard
+ADD schools /app/schools
+ADD static /app/static
+ADD staticfiles /app/staticfiles
+ADD templates /app/templates
+ADD uploads /app/uploads
 ADD manage.py /app/manage.py
 WORKDIR /app
 
