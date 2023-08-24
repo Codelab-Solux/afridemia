@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM python:3.11-bookworm
-ADD afridemia/requirements.txt /app/requirements.txt
+ADD requirements.txt /app/requirements.txt
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
