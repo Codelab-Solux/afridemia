@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM python:3.11-Alpine
+FROM python:3.11-alpine
 ADD requirements.txt /app/requirements.txt
 
 RUN set -ex \
