@@ -17,6 +17,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=afridemia
+    ports:
+      - 8432:5432
 
 volumes:
   postgres_data:
