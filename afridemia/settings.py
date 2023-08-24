@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'dj_database_url',
     'django_countries',
-    'storages',
+    # 'storages',
 ]
 
 MIDDLEWARE = [
