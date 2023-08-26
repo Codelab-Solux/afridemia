@@ -5,12 +5,20 @@ function toggleDropdown(e) {
     : ((e.name = "dropdownBtn"), dropdownMenu.classList.add("hidden"));
 }
 
+//  menu button mechanism ----------------------------------------------
 function toggleMenu(e) {
   e.name === "menu"
     ? ((e.name = "close"), navlinks.classList.remove("hidden"))
     : ((e.name = "menu"), navlinks.classList.add("hidden"));
 }
 
+//  notifier button mechanism ----------------------------------------------
+function toggleNotifier(e) {
+  console.log("notify me");
+  e.name === "bellBtn"
+    ? ((e.name = "close"), notifications.classList.remove("hidden"))
+    : ((e.name = "bellBtn"), notifications.classList.add("hidden"));
+}
 //  back to top button mechanism ---------------------------------------------------
 // const to_top_btn = $("#toTopBtn");
 // // When the user scrolls down 20px from the top of the document, show the button

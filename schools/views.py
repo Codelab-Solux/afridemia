@@ -1,10 +1,18 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib import messages
 from .models import *
 from .forms import *
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
+
+from pathlib import Path
+import environ
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / '.env')
 
 
 def schools(req):
@@ -21,32 +29,31 @@ def schools(req):
         | Q(moto__icontains=query)
         | Q(tel__icontains=query)
         | Q(levels__name__icontains=query),
-        is_verified=True,
     ).distinct()
 
     # # ------------------ dropdown filter
     # all_schools = School.objects.all()
     # school_filter = SchoolFilter(req.GET, queryset=all_schools)
 
-    edu_levels = EducationLevel.objects.all()
+    levels = EducationLevel.objects.all()
     ordering = ['is_featured == True']
     context = {
         "schools_page": "active",
         'title': 'schools',
         'schools': schools,
-        'edu_levels': edu_levels,
+        'levels': levels,
         "has_school": has_school,
         # "school_filter": school_filter,
         'ordering': ordering,
     }
-    # print(edu_levels)
+    # print(levels)
     return render(req, 'schools/index.html', context)
 
 
 def school(req, pk):
     is_manager = False
     user = req.user
-    school = School.objects.get(id=pk)
+    school = get_object_or_404(School, id=pk)
 
     if user == school.manager:
         is_manager = True
@@ -54,7 +61,7 @@ def school(req, pk):
     # people
     teachers = school.teacher_set.all()
     # structures
-    exam_stats = school.examstat_set.all()
+    performances = school.performance_set.all()
     classrooms = school.classroom_set.all()
     structures = school.structure_set.all()
     # information
@@ -78,7 +85,7 @@ def school(req, pk):
         'school': school,
         'teachers': teachers,
         'classrooms': classrooms,
-        'exam_stats': exam_stats,
+        'performances': performances,
         'structures': structures,
         'is_manager': is_manager,
         'articles': articles,
@@ -93,7 +100,7 @@ def school(req, pk):
 def mySchool(req):
     is_manager = False
     user = req.user
-    school = School.objects.get(manager=user)
+    school = get_object_or_404(School, manager=user)
     if not school:
         return redirect('schools')
     else:
@@ -102,7 +109,7 @@ def mySchool(req):
     # people
     teachers = school.teacher_set.all()
     # structures
-    classrooms = school.classroom_set.all()
+    Teachers = school.teacher_set.all()
     structures = school.structure_set.all()
     # information
     articles = school.schoolarticle_set.all()
@@ -111,10 +118,10 @@ def mySchool(req):
 
     context = {
         "my_school_page": "active",
-        'title': 'my_school',
+        'title': 'my school',
         'school': school,
         'teachers': teachers,
-        'classrooms': classrooms,
+        'Teachers': Teachers,
         'structures': structures,
         'is_manager': is_manager,
         'articles': articles,
@@ -139,14 +146,14 @@ def create_school(req):
             form.save()
             return redirect('my_school')
     context = {
-        "sch_create_page": "active", "title": 'add_school', "user": user, "form": form}
-    return render(req, 'schools/edit_sch.html', context)
+        "sch_create_page": "active", "title": 'add school', "user": user, "form": form}
+    return render(req, 'schools/sch_form.html', context)
 
 
 @login_required(login_url='login')
 def edit_school(req, pk):
     user = req.user
-    school = School.objects.get(manager=user, id=pk)
+    school = get_object_or_404(School, manager=user, id=pk)
     if not school:
         return redirect('schools')
 
@@ -157,79 +164,20 @@ def edit_school(req, pk):
             form.save()
             return redirect('my_school')
 
-    teacher_form = TeacherForm()
-    if req.method == 'POST':
-        teacher_form = TeacherForm(req.POST, req.FILES)
-        teacher_form.instance.school = school
-        if teacher_form.is_valid():
-            teacher_form.save()
-            return redirect(req.META.get('HTTP_REFERER', '/'))
-
-    classroom_form = ClassroomForm()
-    if req.method == 'POST':
-        classroom_form = ClassroomForm(req.POST, req.FILES)
-        classroom_form.instance.school = school
-        if classroom_form.is_valid():
-            classroom_form.save()
-            return redirect(req.META.get('HTTP_REFERER', '/'))
-
-    structure_form = StructureForm()
-    if req.method == 'POST':
-        structure_form = StructureForm(req.POST, req.FILES)
-        structure_form.instance.school = school
-        if structure_form.is_valid():
-            structure_form.save()
-            return redirect(req.META.get('HTTP_REFERER', '/'))
-
-    article_form = ArticleForm()
-    if req.method == 'POST':
-        article_form = ArticleForm(req.POST, req.FILES)
-        article_form.instance.school = school
-        if article_form.is_valid():
-            article_form.save()
-            return redirect(req.META.get('HTTP_REFERER', '/'))
-
-    photo_form = PhotoForm()
-    if req.method == 'POST':
-        photo_form = PhotoForm(req.POST, req.FILES)
-        photo_form.instance.school = school
-        if photo_form.is_valid():
-            photo_form.save()
-            return redirect(req.META.get('HTTP_REFERER', '/'))
-
-    stats_form = ExamStatForm()
-    if req.method == 'POST':
-        stats_form = ExamStatForm(req.POST, req.FILES)
-        stats_form.instance.school = school
-        if stats_form.is_valid():
-            stats_form.save()
-            return redirect(req.META.get('HTTP_REFERER', '/'))
-
-    if req.method == 'POST':
-        form = EditSchoolForm(req.POST, req.FILES, instance=school)
-        if form.is_valid():
-            form.save()
-            return redirect('my_school')
     context = {
         "sch_edit_page": "active",
-        "title": 'edit_school',
+        "title": 'edit school',
         "school": school,
         "user": user,
         "form": form,
-        "teacher_form": teacher_form,
-        "classroom_form": classroom_form,
-        "structure_form": structure_form,
-        "article_form": article_form,
-        "photo_form": photo_form,
-        "stats_form": stats_form,
     }
-    return render(req, 'schools/edit_sch.html', context)
+    return render(req, 'schools/sch_form.html', context)
 
 
 @login_required(login_url='login')
 def verify_school(req, pk):
     user = req.user
-    obj = School.objects.get(id=pk)
+    obj = get_object_or_404(School, id=pk)
     if not user.is_staff:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
@@ -249,7 +197,7 @@ def verify_school(req, pk):
 @login_required(login_url='login')
 def feature_school(req, pk):
     user = req.user
-    obj = School.objects.get(id=pk)
+    obj = get_object_or_404(School, id=pk)
     if not user.is_staff:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
@@ -266,80 +214,396 @@ def feature_school(req, pk):
     return redirect(req.META.get('HTTP_REFERER', '/'))
 
 
-def sch_list(req):
-    schools = School.objects.all()
-    context = {'schools': schools}
-    return render(req, 'components/featured_list.html', context)
+# ------------------------------------------------------classrooms CRUD--------------------------------------------------------
 
 
-# def articles(req, pk):
-#     is_manager = False
-#     school = School.objects.get(id=pk)
-#     # people
-#     articles = school.article_set.all()
-
-#     context = {
-#         "schools_page": "active",
-#         'title': 'school',
-#         'school': school,
-#         'is_manager': is_manager,
-#         'articles': articles,
-#     }
-#     return render(req, 'schools/articles.html', context)
+def classroom(req, pk):
+    curr_obj = get_object_or_404(Classroom, id=pk)
+    rel_classrooms = Classroom.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "rel_classrooms_page": "active",
+        'title': 'classroom',
+        'curr_obj': curr_obj,
+        'rel_classrooms': rel_classrooms,
+    }
+    return render(req, 'schools/classroom.html', context)
 
 
-# @login_required(login_url='login')
-# def levelsMod(req, pk):
-#     is_manager = False
-#     user = req.user
-#     if user.is_authenticated:
-#         school = School.objects.get(manager=user, id=pk)
-#         if school:
-#             is_manager = True
+@login_required(login_url='login')
+def create_classroom(req):
+    user = req.user
+    school = School.objects.get(manager=user)
+    if not school:
+        return redirect('create_school')
 
-#     all_levels = EduLevel.objects.all()
-#     context = {
-#         "schools_page": "active",
-#         'title': 'levels_mod',
-#         'school': school,
-#         'all_levels': all_levels,
-#     }
-#     # user = req.user
-#     # if user.is_authenticated:
-#     #     school = School.objects.filter(manager=user, id=pk)
-#     #     if school:
-#     #         is_manager = True
-
-#     if not is_manager:
-#         return redirect('home')
-
-#     if req.method == 'POST':
-#         if req.POST, req.FILES.get('levels'):
-#             school.levels.set(req.POST, req.FILES.get('levels').id)
-#             school.save()
-#             return redirect('my_school')
-#     else:
-#         return render(req, 'schools/levels_mod.html', context)
+    form = ClassroomForm()
+    if req.method == 'POST':
+        form = ClassroomForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/classroom/{id}'.format(id=instance.id))
+    context = {
+        "classroom_create_page": "active", "title": 'add classroom', "user": user, "form": form}
+    return render(req, 'schools/classroom.html', context)
 
 
-# # modal views
+@login_required(login_url='login')
+def edit_classroom(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(Classroom, id=pk)
+    if curr_obj.school.manager != user:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
 
-# @login_required(login_url='login')
-# def add_teacher(req):
-#     user = req.user
-#     school = School.objects.get(manager=user)
-#     if not school and user.role != 'manager':
-#         return redirect('home')
+    form = ClassroomForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = ClassroomForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
 
-#     if req.method == 'POST':
-#         form = TeacherForm(req.POST, req.FILES)
-#         print(form.instance.fullname)
-#         # if form.is_valid():
-#         #     form.instance.school = school
-#         #     form.save()
-#         #     return redirect('/')
-#         #     # return HTTPResponse(status_code=200)
-#     else:
-#         form = TeacherForm()
-#     context = {"form": form}
-#     return render(req, 'schools/teacher_form.html', context)
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/classroom/{id}'.format(id=pk))
+    context = {
+        "classroom_edit_page": "active", "title": 'add classroom', "user": user, "form": form}
+    return render(req, 'schools/classroom.html', context)
+
+
+@login_required(login_url='login')
+def delete_classroom(req, pk):
+    obj = get_object_or_404(Classroom, id=pk)
+    if req.user.is_superadmin:
+        return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+
+
+# ------------------------------------------------------teachers CRUD--------------------------------------------------------
+
+
+def teacher(req, pk):
+    curr_obj = get_object_or_404(Teacher, id=pk)
+    rel_teachers = Teacher.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "teacher_page": "active",
+        'title': 'teacher',
+        'curr_obj': curr_obj,
+        'rel_teachers': rel_teachers,
+    }
+    return render(req, 'schools/teacher.html', context)
+
+
+@login_required(login_url='login')
+def create_teacher(req):
+    user = req.user
+    school = School.objects.get(manager=user)
+    if not school:
+        return redirect('create_school')
+
+    form = TeacherForm()
+    if req.method == 'POST':
+        form = TeacherForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/teacher/{id}'.format(id=instance.id))
+    context = {
+        "teacher_create_page": "active", "title": 'add teacher', "user": user, "form": form}
+    return render(req, 'schools/teacher.html', context)
+
+
+@login_required(login_url='login')
+def edit_teacher(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(Teacher, id=pk)
+    if curr_obj.school.manager != user:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    form = TeacherForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = TeacherForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
+
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/teacher/{id}'.format(id=pk))
+    context = {
+        "teacher_edit_page": "active", "title": 'edit teacher', "user": user, "form": form}
+    return render(req, 'schools/teacher.html', context)
+
+
+@login_required(login_url='login')
+def delete_teacher(req, pk):
+    obj = get_object_or_404(Teacher, id=pk)
+    if req.user.is_superadmin:
+        return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+
+
+# ------------------------------------------------------structures CRUD--------------------------------------------------------
+
+def structure(req, pk):
+    curr_obj = get_object_or_404(Structure, id=pk)
+    rel_structures = Structure.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "rel_structures_page": "active",
+        'title': 'Structure',
+        'curr_obj': curr_obj,
+        'rel_structures': rel_structures,
+    }
+    return render(req, 'schools/structure.html', context)
+
+
+@login_required(login_url='login')
+def create_structure(req):
+    user = req.user
+    school = School.objects.get(manager=user)
+    if not school:
+        return redirect('create_school')
+
+    form = StructureForm()
+    if req.method == 'POST':
+        form = StructureForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/structure/{id}'.format(id=instance.id))
+    context = {
+        "structure_create_page": "active", "title": 'add structure', "user": user, "form": form}
+    return render(req, 'schools/structure.html', context)
+
+
+@login_required(login_url='login')
+def edit_structure(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(Structure, id=pk)
+    if curr_obj.school.manager != user:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    form = StructureForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = StructureForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
+
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/structure/{id}'.format(id=pk))
+    context = {
+        "structure_edit_page": "active", "title": 'edit structure', "user": user, "form": form}
+    return render(req, 'schools/structure.html', context)
+
+
+@login_required(login_url='login')
+def delete_structure(req, pk):
+    obj = get_object_or_404(Structure, id=pk)
+    if req.user.is_superadmin:
+        return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+
+
+# ------------------------------------------------------articles CRUD--------------------------------------------------------
+
+def article(req, pk):
+    curr_obj = get_object_or_404(SchoolArticle, id=pk)
+    rel_articles = SchoolArticle.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "rel_articles_page": "active",
+        'title': 'article',
+        'curr_obj': curr_obj,
+        'rel_articles': rel_articles,
+    }
+    return render(req, 'schools/article.html', context)
+
+
+@login_required(login_url='login')
+def create_article(req):
+    user = req.user
+    school = School.objects.get(manager=user)
+    if not school:
+        return redirect('create_school')
+
+    form = ArticleForm()
+    if req.method == 'POST':
+        form = ArticleForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/article/{id}'.format(id=instance.id))
+    context = {
+        "article_create_page": "active", "title": 'add article', "user": user, "form": form}
+    return render(req, 'schools/article.html', context)
+
+
+@login_required(login_url='login')
+def edit_article(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(SchoolArticle, id=pk)
+    if curr_obj.school.manager != user:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    form = ArticleForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = ArticleForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
+
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/article/{id}'.format(id=pk))
+    context = {
+        "article_edit_page": "active", "title": 'edit article', "user": user, "form": form}
+    return render(req, 'schools/article.html', context)
+
+
+@login_required(login_url='login')
+def delete_article(req, pk):
+    obj = get_object_or_404(SchoolArticle, id=pk)
+    if req.user.is_superadmin:
+        return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+
+
+# ------------------------------------------------------galleries CRUD--------------------------------------------------------
+
+
+def gallery(req, pk):
+    curr_obj = get_object_or_404(Gallery, id=pk)
+    rel_galleries = Gallery.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "rel_galleries_page": "active",
+        'title': 'Gallery',
+        'curr_obj': curr_obj,
+        'rel_galleries': rel_galleries,
+    }
+    return render(req, 'schools/gallery.html', context)
+
+
+@login_required(login_url='login')
+def create_gallery(req):
+    user = req.user
+    school = School.objects.get(manager=user)
+    if not school:
+        return redirect('create_school')
+
+    form = GalleryForm()
+    if req.method == 'POST':
+        form = GalleryForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/gallery/{id}'.format(id=instance.id))
+    context = {
+        "Gallery_create_page": "active", "title": 'add gallery', "user": user, "form": form}
+    return render(req, 'schools/gallery.html', context)
+
+
+@login_required(login_url='login')
+def edit_gallery(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(Gallery, id=pk)
+    if curr_obj.school.manager != user:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    form = GalleryForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = GalleryForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
+
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/gallery/{id}'.format(id=pk))
+    context = {
+        "Gallery_edit_page": "active", "title": 'edit gallery', "user": user, "form": form}
+    return render(req, 'schools/gallery.html', context)
+
+
+@login_required(login_url='login')
+def delete_gallery(req, pk):
+    user = req.user
+    obj = get_object_or_404(Gallery, id=pk)
+    if obj.school.manager != user and user.is_staff == False:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+
+
+# ------------------------------------------------------performances CRUD--------------------------------------------------------
+
+
+def performance(req, pk):
+    curr_obj = get_object_or_404(Performance, id=pk)
+    rel_performances = Performance.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "rel_performances_page": "active",
+        'title': 'Performance',
+        'curr_obj': curr_obj,
+        'rel_performances': rel_performances,
+    }
+    return render(req, 'schools/performance.html', context)
+
+
+@login_required(login_url='login')
+def create_performance(req):
+    user = req.user
+    school = School.objects.get(manager=user)
+    if not school:
+        return redirect('create_school')
+
+    form = PerformanceForm()
+    if req.method == 'POST':
+        form = PerformanceForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/performance/{id}'.format(id=instance.id))
+    context = {
+        "Performance_create_page": "active", "title": 'add performance', "user": user, "form": form}
+    return render(req, 'schools/performance.html', context)
+
+
+@login_required(login_url='login')
+def edit_performance(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(Performance, id=pk)
+    if curr_obj.school.manager != user:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    form = PerformanceForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = PerformanceForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
+
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/performance/{id}'.format(id=pk))
+    context = {
+        "Performance_edit_page": "active", "title": 'edit performance', "user": user, "form": form}
+    return render(req, 'schools/performance.html', context)
+
+
+@login_required(login_url='login')
+def delete_performance(req, pk):
+    obj = get_object_or_404(Performance, id=pk)
+    if req.user.is_superadmin:
+        return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))

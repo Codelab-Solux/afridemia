@@ -63,14 +63,14 @@ class Blogpost(models.Model):
         return reverse('blogpost', kwargs={'pk': self.pk})
 
 
-advert_types = (('demand', 'Demande'),
-                ('offer', "Offre"),)
+advert_targets = (('schools', 'Ecoles'),
+                  ('tutors', "Enseignants"),)
 
 
 class Advert(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
-    type = models.CharField(max_length=50, blank=True,
-                            null=True, choices=advert_types, default='')
+    target = models.CharField(max_length=50, blank=True,
+                              null=True, choices=advert_targets, default='')
     title = models.CharField(max_length=128)
     message = models.TextField()
     date = models.DateTimeField(auto_now=True)

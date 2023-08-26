@@ -133,7 +133,7 @@ class School(models.Model):
     crest = models.ImageField(
         upload_to='schools/crests', blank=True, null=True)
     certificate = models.FileField(
-        upload_to='schools/crests', blank=True, null=True)
+        upload_to='schools/cerificate', blank=True, null=True)
     date_added = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -141,29 +141,6 @@ class School(models.Model):
 
     def get_absolute_url(self):
         return reverse('school', kwargs={'pk': self.pk})
-
-
-class Photo(models.Model):
-    school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
-    image = models.ImageField(
-        upload_to='schools/photos', blank=True, null=True)
-
-
-class ExamStat(models.Model):
-    school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
-    exam = models.CharField(max_length=255)
-    candidates = models.IntegerField(default='0')
-    pass_rate = models.IntegerField(default='0')
-    fail_rate = models.IntegerField(default='0')
-    year = models.CharField(max_length=4, default='year')
-
-    def __str__(self):
-        return f'{self.exam} - {self.year}'
-
-    def get_absolute_url(self):
-        return reverse('exam_stat', kwargs={'pk': self.pk})
 
 
 class Teacher(models.Model):
@@ -272,16 +249,16 @@ class Classroom(models.Model):
 class Structure(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE, default=None)
-    genre = models.CharField(
+    type = models.CharField(
         max_length=50, default='', choices=infrastructures)
-    label = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     capacity = models.IntegerField(default='0')
     overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
         upload_to='schools/structures', blank=True, null=True)
 
     def __str__(self):
-        return f'{self.genre} - {self.school}'
+        return f'{self.type} {self.name} - {self.school}'
 
     def get_absolute_url(self):
         return reverse('structure', kwargs={'pk': self.pk})
@@ -301,6 +278,29 @@ class SchoolArticle(models.Model):
 
     def get_absolute_url(self):
         return reverse('school_article', kwargs={'pk': self.pk})
+
+
+class Gallery(models.Model):
+    school = models.ForeignKey(
+        School, on_delete=models.CASCADE, default=None)
+    images = models.FileField(
+        upload_to='schools/gallerie', blank=True, null=True)
+
+
+class Performance(models.Model):
+    school = models.ForeignKey(
+        School, on_delete=models.CASCADE, default=None)
+    exam = models.CharField(max_length=255)
+    candidates = models.IntegerField(default='0')
+    pass_rate = models.IntegerField(default='0')
+    fail_rate = models.IntegerField(default='0')
+    year = models.CharField(max_length=4, default='year')
+
+    def __str__(self):
+        return f'{self.exam} - {self.year}'
+
+    def get_absolute_url(self):
+        return reverse('performance', kwargs={'pk': self.pk})
 
 
 class PreRegistration(models.Model):

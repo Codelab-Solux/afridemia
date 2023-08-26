@@ -45,6 +45,7 @@ urlpatterns = [
     path('policy_security/', policy_security, name='policy_security'),
     path('terms_conditions/', terms_conditions, name='terms_conditions'),
     path('sales_conditions/', sales_conditions, name='sales_conditions'),
+    path('not_found/', not_found, name='not_found'),
 
 
 ]

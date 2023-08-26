@@ -24,6 +24,25 @@
         Découvrez des écoles qui façonnent des futurs brillants. Trouvez votre
         prochaine destination éducative avec notre recherche simplifiée.
       </p>
+      <!--------------------------------------- levels --------------------------------------->
+      <div class="my-4 flex flex-wrap gap-2">
+        {% for obj in levels %}
+        <!--  -->
+        <a
+          href="{% url 'tutors' %}?query={{obj.name}}"
+          class="px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-sky-200 hover:text-black transition duration-300 ease-in-out"
+        >
+          {{obj.name}}
+          <img
+            class="h-10 object-contain"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+        </a>
+        <!--  -->
+        {% endfor %}
+      </div>
+
       <div class="flex flex-col md:flex-row justify-between items-center gap-3">
         <div class="flex gap-2">
           {% if user.is_staff %}
@@ -56,7 +75,6 @@
           <input
             type="text"
             name="query"
-            id="querier"
             class="px-4 py-2 text-black w-full rounded-md outline-none"
             placeholder="Ecole"
           />
@@ -74,21 +92,11 @@
             class="px-4 py-2 text-black w-full rounded-md outline-none"
           >
             <option value="">Niveaux d'etudes</option>
-            {% for obj in edu_levels %}
+            {% for obj in levels %}
             <option value="{{obj.name}}">{{obj.name}}</option>
             {% endfor %}
           </select>
-          <select
-            type="text"
-            name="query"
-            id="querier"
-            class="px-4 py-2 text-black w-full rounded-md outline-none"
-          >
-            <option value="">Pays</option>
-            {% for obj in countries %}
-            <option value="{{obj.name}}">{{obj.name}}</option>
-            {% endfor %}
-          </select>
+          {% include 'components/countries.html' %}
           <button
             class="group px-4 py-3 text-sm bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md transition duration-300 ease-in-out"
             type="submit"
@@ -110,7 +118,12 @@
           class="relative flex flex-col bg-blue-50 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
           <!--  -->
-          {% if obj.manager == user %}
+          {% if obj.is_verified %}
+          <span
+            class="absolute left-4 top-4 p-2 bg-sky-500 text-white text-xs rounded-md z-30"
+            ><i class="fa-solid fa-certificate"></i
+          ></span>
+          {% endif %} {% if obj.manager == user %}
           <a
             class="absolute top-4 right-4 px-3 py-2 bg-white hover:bg-green-300 z-30 rounded-full transition duration-300 ease-in-out"
             href="{% url 'edit_school' obj.id %}"
@@ -139,13 +152,13 @@
               <img
                 class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
                 src="{{obj.thumbnail.url}}"
-                alt="welcome image"
+                alt="image"
               />
               {% else %}
               <img
                 class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
                 src="{% static 'imgs/uni.jpg' %}"
-                alt="school image"
+                alt="image"
               />
               {% endif %}
             </div>

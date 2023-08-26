@@ -49,12 +49,12 @@ class AdvertForm(forms.ModelForm):
         exclude = ('author',)
         labels = {
             'title': 'Titre',
-            'type': 'Type de Publicité',
+            'target': 'Audience',
         }
         widgets = {
             'title': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'message': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'type': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'target': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
         }
 
 

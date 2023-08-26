@@ -33,24 +33,63 @@
     à nos annonces récentes. Votre prochaine étape commence ici.
   </p>
 
-  <div class="mb-8 tab flex gap-4 max-w-[200px] mx-auto text-sm text-gray-700">
+  <div class="mb-8 tab flex gap-4 max-w-[300px] mx-auto text-sm text-gray-700">
+    <button
+      class="tablinks px-4 py-2 bg-gray-100 hover:bg-blue-950 hover:text-white rounded-md"
+      onclick="openTab(event, 'adverts')"
+      id="defaultOpen"
+    >
+      Tout
+    </button>
     <button
       class="tablinks px-4 py-2 bg-gray-100 hover:bg-blue-950 hover:text-white rounded-md"
       onclick="openTab(event, 'offers')"
-      id="defaultOpen"
     >
-      Offres
+      Enseignants
     </button>
     <button
       class="tablinks px-4 py-2 bg-gray-100 hover:bg-blue-950 hover:text-white rounded-md"
       onclick="openTab(event, 'demands')"
     >
-      Demandes
+      Ecoles
     </button>
   </div>
 
+  <!--------------------------------------- all --------------------------------------->
+  <section id="adverts" class="tabcontent mb-8 bg-white w-full text-left">
+    <div class="w-full mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {% for obj in adverts %}
+        <div
+          class="relative flex flex-col border border-2 bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+        >
+          {% if obj.author == user %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
+            href="{% url 'edit_advert' obj.id %}"
+            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+          ></a>
+          {% endif %}
+          <a href="{% url 'advert' obj.id  %}">
+            <div class="p-4 flex flex-col justify-between group">
+              <i
+                class="mb-2 fa-solid fa-bullhorn text-gray-300 text-4xl group-hover:text-sky-300"
+              ></i>
+              <h4 class="text-black font-bold">
+                {{obj.title|truncatechars:50}}
+              </h4>
+              <p class="py-2 text-sm text-gray-800">
+                {{obj.message|truncatechars:100}}
+              </p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
   <!--------------------------------------- offers --------------------------------------->
-  <section id="offers" class="tabcontent bg-white w-full text-left">
+  <section id="offers" class="tabcontent mb-8 bg-white w-full text-left">
     <div class="w-full mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {% for obj in offers %}
@@ -84,7 +123,7 @@
   </section>
 
   <!--------------------------------------- demands --------------------------------------->
-  <section id="demands" class="tabcontent bg-white w-full text-left">
+  <section id="demands" class="tabcontent mb-8 bg-white w-full text-left">
     <div class="w-full mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {% for obj in demands %}

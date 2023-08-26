@@ -28,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = env('DEBUG')
+DEBUG = eval(env('DEBUG'))
 
 ALLOWED_HOSTS = ["*"]
 
@@ -151,8 +151,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-MEDIA_URL = '/uploads/'
-MEDIA_ROOT = BASE_DIR / 'uploads'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # ---------------------------- static files in production----------------------------
 # AWS_ACCESS_KEY_ID = env('STATIC_ACCESS_KEY_ID')

@@ -1,4 +1,5 @@
-from http.client import HTTPResponse
+from django.contrib import messages
+from django.http import HttpResponseRedirect
 from base.models import *
 from schools.models import *
 from schools.models import *
@@ -71,15 +72,10 @@ def dashboard(req):
 
 
 def dash_schools(req):
-    has_school = False
     user = req.user
     if not user.is_staff:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
-    if user.is_authenticated:
-        school = School.objects.filter(manager=user)
-        if school:
-            has_school = True
     query = req.GET.get('query') if req.GET.get('query') != None else ''
     schools = School.objects.filter(
         Q(name__icontains=query)
@@ -96,7 +92,6 @@ def dash_schools(req):
         'title': 'schools',
         'schools': schools,
         'levels': levels,
-        "has_school": has_school,
         'ordering': ordering,
     }
     return render(req, 'dashboard/schools.html', context)

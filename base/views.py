@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 
 from schools.models import *
@@ -79,7 +79,7 @@ def blog(req):
 
 
 def blogpost(req, pk):
-    curr_post = Blogpost.objects.get(id=pk)
+    curr_post = get_object_or_404(Blogpost, id=pk)
     query = req.GET.get('query') if req.GET.get('query') != None else ''
     blogposts = Blogpost.objects.filter(
         Q(title__icontains=query)
@@ -120,7 +120,7 @@ def edit_blogpost(req, pk):
     if not user.is_staff:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
-    curr_post = Blogpost.objects.get(id=pk)
+    curr_post = get_object_or_404(Blogpost, id=pk)
     form = BlogForm(instance=curr_post)
 
     if req.method == 'POST':
@@ -139,8 +139,9 @@ def edit_blogpost(req, pk):
 def adverts(req):
     query = req.GET.get('query') if req.GET.get('query') != None else ''
     adverts = Advert.objects.filter(Q(title__icontains=query))
-    offers = Advert.objects.filter(Q(title__icontains=query), type='offer')
-    demands = Advert.objects.filter(Q(title__icontains=query), type='demand')
+    offers = Advert.objects.filter(Q(title__icontains=query), target='tutors')
+    demands = Advert.objects.filter(
+        Q(title__icontains=query), target='schools')
 
     context = {
         "adverts_page": "active",
@@ -154,7 +155,7 @@ def adverts(req):
 
 
 def advert(req, pk):
-    curr_ad = Advert.objects.get(id=pk)
+    curr_ad = get_object_or_404(Advert, id=pk)
     query = req.GET.get('query') if req.GET.get('query') != None else ''
     adverts = Advert.objects.filter(
         Q(title__icontains=query)).exclude(id=curr_ad.id)
@@ -192,7 +193,7 @@ def create_advert(req):
 @login_required(login_url='login')
 def edit_advert(req, pk):
     user = req.user
-    curr_ad = Advert.objects.get(id=pk)
+    curr_ad = get_object_or_404(Advert, id=pk)
     if curr_ad.author != user and user.is_staff:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
@@ -241,7 +242,7 @@ def tutors(req):
 
 
 def tutor(req, pk):
-    curr_tut = Tutor.objects.get(id=pk)
+    curr_tut = get_object_or_404(Tutor, id=pk)
     curr_user = curr_tut.user
     rel_articles = ForumArticle.objects.filter(author=curr_user)
     context = {
@@ -273,7 +274,7 @@ def create_tutor(req):
 @login_required(login_url='login')
 def edit_tutor(req, pk):
     user = req.user
-    curr_tut = Tutor.objects.get(id=pk)
+    curr_tut = get_object_or_404(Tutor, id=pk)
     if curr_tut.user != user and not user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
@@ -309,7 +310,7 @@ def forum(req):
 
 
 def forum_article(req, pk):
-    curr_article = ForumArticle.objects.get(id=pk)
+    curr_article = get_object_or_404(ForumArticle, id=pk)
     rel_articles = ForumArticle.objects.filter(
         author=curr_article.author).exclude(id=curr_article.id)
     context = {
@@ -344,7 +345,7 @@ def create_forum_article(req):
 @login_required(login_url='login')
 def edit_forum_article(req, pk):
     user = req.user
-    curr_tut = ForumArticle.objects.get(id=pk)
+    curr_tut = get_object_or_404(ForumArticle, id=pk)
     if curr_tut.author != user and not user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
@@ -478,3 +479,10 @@ def sales_conditions(req):
         "sales_conditions_page": "active",
         "title": 'sales_conditions', }
     return render(req, 'client/sales_conditions.html', context)
+
+
+def not_found(req, exception):
+    context = {
+        "not_found_page": "active",
+        "title": 'not_found', }
+    return render(req, 'client/not_found.html', context)

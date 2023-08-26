@@ -34,18 +34,18 @@
 
   {% if not form %}
   <!--------------------------------------- tutor layout --------------------------------------->
-  <section class="mt-4 flex flex-col lg:flex-row gap-4 w-full">
+  <section class="mt-4 mb-8 flex flex-col lg:flex-row gap-4 w-full">
     {% if not curr_tut.image %}
     <img
       class="h-80 w-full lg:max-w-[400px] border border-2 rounded-md object-cover"
       src="{% static 'imgs/tutor.jpg' %}"
-      alt="tutor image"
+      alt="image"
     />
     {% else %}
     <img
       class="h-80 w-full lg:max-w-[400px] border border-2 rounded-md object-cover"
       src="{{curr_tut.image.url}}"
-      alt="tutor image"
+      alt="image"
     />
     {% endif %}
     <!--  -->
@@ -105,7 +105,7 @@
     <!--  -->
   </section>
   <!--------------------------------------- more info --------------------------------------->
-  <section class="mt-4 flex flex-col md:flex-row gap-4 w-full">
+  <section class="mt-4 mb-8 flex flex-col md:flex-row gap-4 w-full">
     <div
       class="p-6 bg-blue-50 w-full lg:max-w-[400px] rounded-md flex flex-col justify-"
     >
