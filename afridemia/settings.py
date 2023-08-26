@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = eval(env('DEBUG'))
 
-ALLOWED_HOSTS = ['127.0.0.1:8000', 'localhost', '62.72.19.182:8000',
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182',
                  'afridemia.com', 'www.afridemai.com']
 
 
