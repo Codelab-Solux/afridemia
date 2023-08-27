@@ -1,6 +1,6 @@
 services:
   web:
-    image: nginx:latest
+    # image: nginx:latest
     build: .
     ports:
       - "8000:8000"
