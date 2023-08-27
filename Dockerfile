@@ -21,7 +21,6 @@ ADD dashboard /app/dashboard
 ADD schools /app/schools
 ADD static /app/static
 ADD templates /app/templates
-ADD media /app/media
 ADD manage.py /app/manage.py
 WORKDIR /app
 
