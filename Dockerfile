@@ -20,9 +20,8 @@ ADD base /app/base
 ADD dashboard /app/dashboard
 ADD schools /app/schools
 ADD static /app/static
-ADD staticfiles /app/staticfiles
 ADD templates /app/templates
-ADD media /app/media
+# ADD media /app/media
 ADD manage.py /app/manage.py
 WORKDIR /app
 
