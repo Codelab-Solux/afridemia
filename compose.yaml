@@ -1,10 +1,11 @@
 services:
   web:
+    image: nginx:latest
     build: .
     ports:
       - "8000:8000"
     volumes:
-      - ./media:/media
+      - /media:/media
     env_file:
       - ./env
     depends_on:

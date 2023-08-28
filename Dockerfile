@@ -29,4 +29,4 @@ ENV PATH /env/bin:$PATH
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "afridemia.wsgi:application"]
+CMD ["gunicorn","nginx", "--bind", ":8000", "--workers", "3", "afridemia.wsgi:application"]
