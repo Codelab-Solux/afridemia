@@ -36,10 +36,10 @@ RUN mkdir -p /app/media
 WORKDIR /app
 
 COPY ./entrypoint.sh /
-# ENV VIRTUAL_ENV ./env
-# ENV PATH ./env/bin:$PATH
+ENV VIRTUAL_ENV ./env
+ENV PATH ./env/bin:$PATH
 
-# EXPOSE 8000
+EXPOSE 8000
 
 # CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "afridemia.wsgi:application"]
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
