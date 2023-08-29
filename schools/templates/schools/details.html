@@ -8,7 +8,8 @@
       <a
         class="hover:text-green-300 transition ease-in duration-300"
         href="{% url 'home' %}"
-        ><i class="fa-solid fa-house"></i>
+        >
+        <i class="fa-solid fa-house"></i>
       </a>
       /
       <a
@@ -25,18 +26,28 @@
       <form action="{% url 'verify_school' school.id %}" method="POST">
         {% csrf_token %}
         <!--  -->
-        {% if school.is_verified == False %}
-          <input
+        {% if not school.is_verified %}
+          <button
             type="submit"
-            value="Vérifier"
-            class="px-4 py-2 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-          />
+            class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+            <span class="hidden md:inline">
+              
+              Vérifier
+            </span>
+            <i class="fa-solid fa-certificate md:ml-2"></i>
+        </button>
           {% else %}
-          <input
+          <button
             type="submit"
-            value="Ne pas vérifier"
-            class="px-4 py-2 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-          />
+            class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+            <span class="hidden md:inline">
+              
+              Revoquer la vérification
+            </span>
+            <i class="fa-solid fa-certificate md:ml-2"></i>
+        </button>
         {% endif %}
       </form>
 
@@ -45,18 +56,28 @@
       <form action="{% url 'feature_school' school.id %}" method="POST">
         {% csrf_token %}
           <!--  -->
-        {% if school.is_featured == False %}
-          <input
+        {% if not school.is_featured %}
+          <button
             type="submit"
-            value="Mettre en vedette"
-            class="px-4 py-2 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-          />
+            class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+            <span class="hidden md:inline">
+
+              Mettre en vedette
+            </span>
+            <i class="fa-solid fa-bullhorn md:ml-2"></i>
+        </button>
           {% else %}
-          <input
+          <button
             type="submit"
-            value="Ne pas mettre en vedette"
-            class="px-4 py-2 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-          />
+            class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+            <span class="hidden md:inline">
+              
+              Retirer des vedettes
+            </span>
+            <i class="fa-solid fa-bullhorn md:ml-2"></i>
+        </button>
         {% endif %}
       </form>
     </div>
@@ -66,13 +87,21 @@
   <!--------------------------------------- banner section --------------------------------------->
 
   <div class="relative">
-    {% if school.is_verified == False %}
-    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-sky-500 text-white text-md">
-      En cours de vérification
+    {% if not school.is_verified %}
+    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-red-700 text-white text-sm">
+      <span class="hidden md:inline">
+        En cours de vérification 
+              
+            </span>
+      <i class="fa-solid fa-spinner md:ml-2"></i>
     </span>
     {% else %}
-    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-green-500 text-white text-md">
-      Vérifiée
+    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-sky-500 text-white text-sm">
+      <span class="hidden md:inline">
+        Vérifiée 
+              
+            </span>
+      <i class="fa-solid fa-certificate md:ml-2"></i>
     </span>
     {% endif %}
 
@@ -117,22 +146,53 @@
             {% endif %}
           </div>
           <div class="flex-col gap-4">
-            <h2 class="mb-2 text-3xl text-black font-bold">{{school.name}}</h2>
-              <p class="text-truncate me-3"
-                ><i class="fa fa-bullhorn mr-2 text-black"></i>
-                <em class="text-green-400 font-bold">"{{school.moto|title}}" </em>
-          </p>
-              <p class="text-truncate me-3"
-                ><i class="fa fa-trowel-bricks mr-2 text-black"></i>Fondée en
-                {{school.year_founded}}</p>
-              <p class="text-sm">
-                Ouvert de
-                <span class="text-black font-bold">
-                  {{school.opening_hour}} à {{school.closing_hour}}
-                </span>
-              </p>
+            <h2 class="mb-2 text-3xl text-black font-bold">{{school.name}} </h2>
+            <p>
+              <i class="fa fa-bullhorn mr-2 text-black"></i>
+              <em class="text-green-500 font-bold">"{{school.moto|title}}" </em>
+            </p>
+            <p>
+              <i class="fa fa-trowel-bricks mr-2 text-black"></i>
+              Fondée en {{school.year_founded}}
+            </p>
+            <p class="text-sm">
+              <i class="fa fa-clock mr-2 text-black"></i>
+              Ouvert de {{school.opening_hour}} à {{school.closing_hour}}
+            </p>
+            <p class="text-sm">
+              <i class="fa fa-star mr-2 text-black"></i>
+              {{school.avg_rating}} / 5
+            </p>
           </div>
         </div>
+        
+      <form action="{% url 'follow_school' school.id %}" method="POST">
+        {% csrf_token %}
+        <!--  -->
+        {% if not is_following %}
+          <button
+            type="submit"
+            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+            <span class="hidden md:inline">
+              
+              Suivre
+            </span>
+            <i class="fa-solid fa-bell md:ml-2"></i>
+        </button>
+          {% else %}
+          <button
+            type="submit"
+            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+            <span class="hidden md:inline">
+              
+              Ne plus suivre
+            </span>
+            <i class="fa-solid fa-bell-slash md:ml-2"></i>
+        </button>
+        {% endif %}
+      </form>
       </div>
       <!--  -->
       {% if description %}
@@ -142,20 +202,51 @@
       {% endif %}
       <!--  -->
       <div class="my-4 grid md:grid-cols-2 gap-6 w-full">
-        <div class="p-4 bg-blue-950 rounded-md w-full">
-          <p class="text-white text-xl font-bold">Niveaux d'Education</p>
-          <ul class="my-4 flex flex-wrap gap-4">
-            {% for obj in school.levels.all %}
+        <div class="p-6 lg:p-8 bg-blue-950 flex flex-col justify-between rounded-md w-full">
+          <article>
+
+            <p class="text-white text-xl font-bold">Niveaux d'Education</p>
+            <ul class="my-4 flex flex-wrap gap-4">
+              {% for obj in school.levels.all %}
+              <!--  -->
+              <li class="px-4 py-2 rounded-md bg-white text-black">
+                {{obj.name|title}}
+              </li>
+              <!--  -->
+              {% endfor %}
+            </ul>
+          </article>
+          {% if user.is_authenticated %}
+          <form id="review_form" class="p-6 bg-white w-full  rounded-md " action="{% url 'review_school' school.id %}" method="POST">
+            {% csrf_token %}
+            <h3 class="mb-4 text-black text-xl font-bold">Annoter cet etablissement</h3>
             <!--  -->
-            <li class="px-4 py-2 rounded-md bg-white text-black">
-              {{obj.name|title}}
-            </li>
-            <!--  -->
-            {% endfor %}
-          </ul>
+            <!-- <div class="rating my-4 flex gap-2">
+              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-1" value="1"></i>
+              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-2" value="2"></i>
+              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-3" value="3"></i>
+              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-4" value="4"></i>
+              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-5" value="5"></i>
+            </div> -->
+            <div>
+              <h3 class="mb-1">{{review_form.rating.label}}</h3>
+              {{review_form.rating}}
+            </div>
+            <div>
+              <h3 class="mb-1">{{review_form.comment.label}}</h3>
+              {{review_form.comment}}
+            </div>
+            <button
+            type="submit"
+            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-sky-500 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+              Enregistrer
+            </button>
+        </form>
+        {% endif %}
         </div>
-        {% if prereg_form %}
-        <div class="p-6 bg-green-100 rounded-md w-full">
+        {% if user.is_authenticated and prereg_form %}
+        <div id="prereg_form" class="p-6 lg:p-8 bg-green-100 rounded-md w-full">
           <h3 class="mb-4 text-black text-xl font-bold">
             Formulaire de Préinscription
           </h3>
@@ -168,14 +259,14 @@
           >
             {% csrf_token %}
             <!--  -->
-            <div class="flex flex-col md:grid grid-cols-2 flex-wrap gap-2">
-              <div>
-                <h3 class="mb-1">{{prereg_form.classroom.label}}</h3>
-                {{prereg_form.classroom}}
-              </div>
+            <div class="flex flex-col md:grid grid-cols-2 flex-wrap gap-4">
               <div>
                 <h3 class="mb-1">{{prereg_form.last_school.label}}</h3>
                 {{prereg_form.last_school}}
+              </div>
+              <div>
+                <h3 class="mb-1">{{prereg_form.classroom.label}}</h3>
+                {{prereg_form.classroom}}
               </div>
               <div>
                 <h3 class="mb-1">{{prereg_form.last_name.label}}</h3>
@@ -200,12 +291,12 @@
             </div>
             <div class="flex gap-4 items-end">
               <input
-                class="px-8 py-2 bg-blue-950 text-white hover:bg-green-600 rounded-md cursor-pointer"
+                class="px-8 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md cursor-pointer"
                 type="submit"
                 value="Enregistrer"
               />
               <a
-                class="bg-white px-8 py-2 rounded-md hover:bg-red-700 hover:text-white"
+                class="bg-white px-8 py-3 rounded-md hover:bg-red-700 hover:text-white"
                 href="{{request.META.HTTP_REFERER}}"
               >
                 Annuler
@@ -300,6 +391,18 @@
     >
       Performance
     </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'preregs')"
+    >
+      Préinscription
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'reviews')"
+    >
+      Annotations
+    </button>
   </section>
 
   <!--------------------------------------- more info --------------------------------------->
@@ -307,7 +410,7 @@
   <section class="my-8">
     <div
       id="overview"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="flex flex-col-reverse lg:flex-row gap-8">
         <div class="w-full flex flex-col">
@@ -369,7 +472,7 @@
 
     <div
       id="academia"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <h3 class="pb-2 font-bold text-xl text-black">Pédaogie</h3>
    
@@ -386,7 +489,7 @@
 
     </div>
       {% if not classrooms %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in classrooms %}
         <a
           href="{% url 'classroom' obj.id %}"
@@ -427,21 +530,20 @@
 
     <div
       id="teachers"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >    
-    <div class="mb-4 flex justify-between items-center">
-      <h3 class="pb-2 font-bold text-xl text-black">Enseignants</h3>
+      <div class="mb-4 flex justify-between items-center">
+        <h3 class="pb-2 font-bold text-xl text-black">Enseignants</h3>
         {% if is_manager or user.is_staff %}
-        <a
-          href="{% url 'create_teacher' %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
-          ><i class="fa-solid fa-plus"></i
-        ></a>
+          <a
+            href="{% url 'create_teacher' %}"
+            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+            ><i class="fa-solid fa-plus"></i
+          ></a>
         {% endif %}
-
-    </div>
+      </div>
       {% if not teachers %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in teachers %}
         <a
           href="{% url 'teacher' obj.id %}"
@@ -477,21 +579,20 @@
 
     <div
       id="structures"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
-        <div class="mb-4 flex justify-between items-center">
-      <h3 class="pb-2 font-bold text-xl text-black">Structures</h3>
-              {% if is_manager or user.is_staff %}
+      <div class="mb-4 flex justify-between items-center">
+        <h3 class="pb-2 font-bold text-xl text-black">Structures</h3>
+        {% if is_manager or user.is_staff %}
         <a
           href="{% url 'create_structure' %}"
           class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
-
-    </div>
+      </div>
       {% if not structures %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in structures %}
         <a
           href="{% url 'structure' obj.id %}"
@@ -526,7 +627,7 @@
 
     <div
       id="articles"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
         <div class="mb-4 flex justify-between items-center">
       <h3 class="pb-2 font-bold text-xl text-black">Articles</h3>
@@ -540,7 +641,7 @@
 
     </div>
       {% if not articles %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in articles %}
         <a
           href="{% url 'article' obj.id %}"
@@ -576,21 +677,20 @@
 
     <div
       id="gallery"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="mb-4 flex justify-between items-center">
-      <h3 class="pb-2 font-bold text-xl text-black">Gallerie</h3>
-              {% if is_manager or user.is_staff %}
+        <h3 class="pb-2 font-bold text-xl text-black">Gallerie</h3>
+        {% if is_manager or user.is_staff %}
         <a
           href="{% url 'create_gallery' %}"
           class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
-
-    </div>
+      </div>
       {% if not galleries %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in galleries %}
           <img
             class="w-full h-60 object-cover rounded-md"
@@ -606,21 +706,22 @@
 
     <div
       id="performance"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
-    <div class="mb-4 flex justify-between items-center">
-      <h3 class="pb-2 font-bold text-xl text-black">Examens</h3>
-        {% if is_manager or user.is_staff %}
-        <a
-          href="{% url 'create_performance' %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
-          ><i class="fa-solid fa-plus"></i
-        ></a>
-        {% endif %}
-
-    </div class="grid md:grid-cols-2">
-      <div class="h-80">
-        <canvas class="text-gray-200" id="pass_rate_chart"></canvas>
+      <div class="mb-4 flex justify-between items-center">
+        <h3 class="pb-2 font-bold text-xl text-black">Examens</h3>
+          {% if is_manager or user.is_staff %}
+          <a
+            href="{% url 'create_performance' %}"
+            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+            ><i class="fa-solid fa-plus"></i
+          ></a>
+          {% endif %}
+      </div>
+      <div class="grid md:grid-cols-2">
+        <div class="h-80">
+          <canvas class="text-gray-200" id="pass_rate_chart"></canvas>
+        </div>
       </div>
     </div>
 
@@ -628,31 +729,71 @@
 
     <div
       id="preregs"
-      class="tabcontent lg:p-8 lg:border-2 lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
+      <div class="mb-4 flex justify-between items-center">
+        <h3 class="pb-2 font-bold text-xl text-black">Préinscriptions</h3>
+        
+        <a
+          href="{% url 'create_prereg' school.id %}"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          ><i class="fa-solid fa-plus"></i
+        ></a>
+        
+      </div>
       {% if not preregs %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 md:grid-cols-4 gap-4">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in preregs %}
         <a
-          href="{% url 'classroom' obj.id %}"
-          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+          href="{% url 'prereg' obj.id %}"
+          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out group"
         >
-          <img
-            class="w-full h-40 object-cover"
-            src="{% static 'imgs/gradcap.avif' %}"
-            alt="image"
-          />
-          <div class="p-4 flex flex-col gap-2 text-gray-700">
-            <h3 class="text-xl text-black font-bold" class="font-bold">
-              {{obj.last_name}} {{obj.first_name}} <span class="text-sm"> ({{obj.get_gender_display}})</span>
+        <div class="p-4 flex flex-col gap-2 group-hover:text-black">
+            <i class="fa-solid fa-graduation-cap group-hover:text-green-400 text-5xl"></i>
+            <h3 class="text-xl font-bold" class="font-bold">
+              {{obj.last_name}} {{obj.first_name}} 
+              {% if obj.gender == 'M' %}
+              <i class="fa-solid fa-mars text-blue-500"></i>
+              {% else %}
+              <i class="fa-solid fa-venus text-rose-500"></i>
+              {% endif %}
             </h3>
-            <p>
-              {{obj.classroom.name}}
-              <span class="text-green-400">{{obj.classroom.serie}}</span>
-            </p>
+            <p>{{obj.classroom}}</p>
             <p>{{obj.last_school}}</p>
           </div>
         </a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+      <!--------------------------------------- reviews section --------------------------------------->
+
+    <div
+      id="reviews"
+      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+      <div class="mb-4 flex justify-between items-center">
+        <h3 class="pb-2 font-bold text-xl text-black">Annotations</h3>
+        <a
+          href="#review_form"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          ><i class="fa-solid fa-plus"></i
+        ></a>
+      </div>
+      {% if not reviews %} {% include 'components/no_data.html' %} {% else %}
+      <div class="flex flex-col gap-4">
+        {% for obj in reviews %}
+        <div class="p-4 lg:p-8 border flex flex-col gap-2">
+          <h3>
+            <i class="fa-solid fa-star text-green-400 text-xl"></i>
+            {{obj.rating}}
+          </h3>
+          <h3 class="text-xl font-bold" class="font-bold">
+            @{{obj.user.last_name}} {{obj.user.first_name}}
+          </h3>
+          <p>{{obj.comment}}</p>
+          <p>{{obj.date.date}}</p>
+        </div>
         {% endfor %}
       </div>
       {% endif %}

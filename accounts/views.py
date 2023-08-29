@@ -36,10 +36,17 @@ def loginView(req):
         return redirect('home')
 
     if req.method == 'POST':
-        username = req.POST.get('username')
+        email_or_phone = req.POST.get('email_or_phone')
         password = req.POST.get('password')
 
-        user = authenticate(req, username=username, password=password)
+        if "@" in email_or_phone:
+            user = authenticate(req, email=email_or_phone, password=password)
+        # Temporary fix of the login with phone issue
+        else:
+            get_user = CustomUser.objects.get(phone=email_or_phone)
+            user = authenticate(req, email=get_user.email, password=password)
+        # else:
+        #     user = authenticate(req, phone=email_or_phone, password=password)
 
         if user is not None:
             login(req, user)
@@ -49,7 +56,7 @@ def loginView(req):
             else:
                 return redirect('home')
         else:
-            messages.info(req, 'Username or Password is incorrect!')
+            messages.info(req, 'Infos incorrect!')
     context = {
         "login_page": "active",
         "title": 'login'}
@@ -64,7 +71,7 @@ def logoutUser(req):
 
 @login_required(login_url='login')
 def users(req):
-    if req.user.role.sec_level < 4:
+    if req.user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER'))
 
     users = CustomUser.objects.all()
@@ -91,7 +98,7 @@ def user_profile(req, pk):
                 form.save()
                 return redirect('users')
 
-    elif user.role.sec_level >= 4:
+    elif user.is_staff:
         form = AdminEditUserForm(instance=profile)
         if req.method == 'POST':
             form = AdminEditUserForm(req.POST, instance=profile)
@@ -112,7 +119,7 @@ def user_profile(req, pk):
 
 @login_required(login_url='login')
 def delete_user(req, pk):
-    if req.user.role.sec_level < 3:
+    if user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER', '/'))
     else:
         user = CustomUser.objects.filter(id=pk)

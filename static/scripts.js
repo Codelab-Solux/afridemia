@@ -87,3 +87,28 @@ tabLinks.forEach((link, index) => {
     tabPanes[index].classList.remove("hidden");
   });
 });
+
+const ratingStars = [...document.getElementsByClassName("rating_star")];
+
+function executeRating(stars) {
+  const starClassActive =
+    "rating_star fa-solid  fa-star text-sky-400 cursor-pointer";
+  const starClassInactive =
+    "rating_star fa-regular fa-star text-sky-400 cursor-pointer";
+
+  const starsLength = stars.length;
+  let i;
+  stars.map((star) => {
+    star.onclick = () => {
+      i = stars.indexOf(star);
+      console.log(i + 1);
+
+      if (star.className === starClassInactive) {
+        for (i; i >= 0; --i) stars[i].className = starClassActive;
+      } else {
+        for (i; i < starsLength; ++i) stars[i].className = starClassInactive;
+      }
+    };
+  });
+}
+executeRating(ratingStars);

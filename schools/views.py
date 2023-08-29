@@ -67,7 +67,15 @@ def school(req, pk):
     # information
     articles = school.schoolarticle_set.all()
     advantages = school.advantage_set.all()
-    preregs = school.preregistration_set.all()
+    reviews = school.review_set.all()
+
+    if user.is_authenticated:
+        preregs = school.preregistration_set.filter(user=user)
+        is_following = Follow.objects.filter(
+            user=user, school=school, status=True).first()
+    else:
+        preregs = None
+        is_following = None
 
     # pre registration
     prereg_form = PreRegForm()
@@ -79,6 +87,18 @@ def school(req, pk):
             prereg_form.save()
             return redirect(req.META.get('HTTP_REFERER', '/'))
 
+    # pre registration
+    review_form = ReviewForm()
+    if req.method == 'POST':
+        review_form = ReviewForm(req.POST, req.FILES)
+        review_form.instance.user = user
+        review_form.instance.school = school
+        if review_form.is_valid():
+            print('valid')
+            review_form.save()
+            return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    print(reviews)
     context = {
         "schools_page": "active",
         'title': 'school',
@@ -92,6 +112,9 @@ def school(req, pk):
         'advantages': advantages,
         'preregs': preregs,
         'prereg_form': prereg_form,
+        'review_form': review_form,
+        'reviews': reviews,
+        'is_following': is_following,
     }
     return render(req, 'schools/details.html', context)
 
@@ -214,6 +237,62 @@ def feature_school(req, pk):
     return redirect(req.META.get('HTTP_REFERER', '/'))
 
 
+@login_required(login_url='login')
+def rate_school(req, pk):
+    user = req.user
+    obj = get_object_or_404(School, id=pk)
+    existing_review = Review.objects.filter(user=user).first()
+
+    if req.method == 'POST':
+        rating = int(req.POST.get('rating'))
+        if not existing_review:
+            Review.objects.create(
+                user=user, school=obj, rating=rating)
+        else:
+            Review.objects.filter(id=pk).update(
+                user=user, school=obj, rating=rating)
+
+        obj.update_avg_rating()
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+
+@login_required(login_url='login')
+def review_school(req, pk):
+    user = req.user
+    obj = get_object_or_404(School, id=pk)
+    existing_review = Review.objects.filter(user=user).first()
+
+    if req.method == 'POST':
+        rating = int(req.POST.get('rating'))
+        comment = req.POST.get('comment')
+        if not existing_review:
+            Review.objects.create(
+                user=user, school=obj, rating=rating, comment=comment)
+        else:
+            Review.objects.filter(id=pk).update(
+                user=user, school=obj, rating=rating, comment=comment)
+
+        obj.update_avg_rating()
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+
+@login_required(login_url='login')
+def follow_school(req, pk):
+    user = req.user
+    obj = get_object_or_404(School, id=pk)
+    already_following = Follow.objects.filter(user=user, school=obj).first()
+
+    if req.method == 'POST':
+        if not already_following:
+            Follow.objects.create(
+                user=user, school=obj, status=True)
+        else:
+            Follow.objects.filter(id=pk).update(
+                user=user, school=obj, status=False)
+
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+
 # ------------------------------------------------------classrooms CRUD--------------------------------------------------------
 
 
@@ -254,7 +333,7 @@ def create_classroom(req):
 def edit_classroom(req, pk):
     user = req.user
     curr_obj = get_object_or_404(Classroom, id=pk)
-    if curr_obj.school.manager != user:
+    if curr_obj.school.manager != user and user.is_superuser == False:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = ClassroomForm(instance=curr_obj)
@@ -320,7 +399,7 @@ def create_teacher(req):
 def edit_teacher(req, pk):
     user = req.user
     curr_obj = get_object_or_404(Teacher, id=pk)
-    if curr_obj.school.manager != user:
+    if curr_obj.school.manager != user and user.is_superuser == False:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = TeacherForm(instance=curr_obj)
@@ -333,7 +412,7 @@ def edit_teacher(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/teacher/{id}'.format(id=pk))
     context = {
-        "teacher_edit_page": "active", "title": 'edit teacher', "user": user, "form": form}
+        "teacher_edit_page": "active", "curr_obj": curr_obj, "title": 'edit teacher', "user": user, "form": form}
     return render(req, 'schools/teacher.html', context)
 
 
@@ -385,7 +464,7 @@ def create_structure(req):
 def edit_structure(req, pk):
     user = req.user
     curr_obj = get_object_or_404(Structure, id=pk)
-    if curr_obj.school.manager != user:
+    if curr_obj.school.manager != user and user.is_superuser == False:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = StructureForm(instance=curr_obj)
@@ -398,7 +477,7 @@ def edit_structure(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/structure/{id}'.format(id=pk))
     context = {
-        "structure_edit_page": "active", "title": 'edit structure', "user": user, "form": form}
+        "structure_edit_page": "active", "curr_obj": curr_obj, "title": 'edit structure', "user": user, "form": form}
     return render(req, 'schools/structure.html', context)
 
 
@@ -450,7 +529,7 @@ def create_article(req):
 def edit_article(req, pk):
     user = req.user
     curr_obj = get_object_or_404(SchoolArticle, id=pk)
-    if curr_obj.school.manager != user:
+    if curr_obj.school.manager != user and user.is_superuser == False:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = ArticleForm(instance=curr_obj)
@@ -463,7 +542,7 @@ def edit_article(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/article/{id}'.format(id=pk))
     context = {
-        "article_edit_page": "active", "title": 'edit article', "user": user, "form": form}
+        "article_edit_page": "active", "curr_obj": curr_obj, "title": 'edit article', "user": user, "form": form}
     return render(req, 'schools/article.html', context)
 
 
@@ -516,7 +595,7 @@ def create_gallery(req):
 def edit_gallery(req, pk):
     user = req.user
     curr_obj = get_object_or_404(Gallery, id=pk)
-    if curr_obj.school.manager != user:
+    if curr_obj.school.manager != user and user.is_superuser == False:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = GalleryForm(instance=curr_obj)
@@ -529,7 +608,7 @@ def edit_gallery(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/gallery/{id}'.format(id=pk))
     context = {
-        "Gallery_edit_page": "active", "title": 'edit gallery', "user": user, "form": form}
+        "Gallery_edit_page": "active", "curr_obj": curr_obj, "title": 'edit gallery', "user": user, "form": form}
     return render(req, 'schools/gallery.html', context)
 
 
@@ -583,7 +662,7 @@ def create_performance(req):
 def edit_performance(req, pk):
     user = req.user
     curr_obj = get_object_or_404(Performance, id=pk)
-    if curr_obj.school.manager != user:
+    if curr_obj.school.manager != user and user.is_superuser == False:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
     form = PerformanceForm(instance=curr_obj)
@@ -596,13 +675,76 @@ def edit_performance(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/performance/{id}'.format(id=pk))
     context = {
-        "Performance_edit_page": "active", "title": 'edit performance', "user": user, "form": form}
+        "Performance_edit_page": "active", "curr_obj": curr_obj, "title": 'edit performance', "user": user, "form": form}
     return render(req, 'schools/performance.html', context)
 
 
 @login_required(login_url='login')
 def delete_performance(req, pk):
     obj = get_object_or_404(Performance, id=pk)
+    if req.user.is_superadmin:
+        return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+    obj.delete()
+    return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
+
+
+# ------------------------------------------------------PreRegistration CRUD--------------------------------------------------------
+
+def prereg(req, pk):
+    curr_obj = get_object_or_404(PreRegistration, id=pk)
+    rel_preregs = PreRegistration.objects.filter(
+        school=curr_obj.school).exclude(id=pk)
+    context = {
+        "rel_preregs_page": "active",
+        'title': 'PreRegistration',
+        'curr_obj': curr_obj,
+        'rel_preregs': rel_preregs,
+    }
+    return render(req, 'schools/prereg.html', context)
+
+
+@login_required(login_url='login')
+def create_prereg(req, pk):
+    user = req.user
+    school = get_object_or_404(School, id=pk)
+
+    form = PreRegForm()
+    if req.method == 'POST':
+        form = PreRegForm(req.POST, req.FILES)
+        form.instance.school = school
+        if form.is_valid():
+            instance = form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/prereg/{id}'.format(id=instance.id))
+    context = {
+        "PreRegistration_create_page": "active", "title": 'add PreRegistration', "school": school, "user": user, "form": form}
+    return render(req, 'schools/prereg.html', context)
+
+
+@login_required(login_url='login')
+def edit_prereg(req, pk):
+    user = req.user
+    curr_obj = get_object_or_404(PreRegistration, id=pk)
+    if curr_obj.school.manager != user and user.is_superuser == False:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    form = PreRegForm(instance=curr_obj)
+    if req.method == 'POST':
+        form = PreRegForm(req.POST, req.FILES, instance=curr_obj)
+        if form.is_valid():
+
+            form = form.save(commit=True)
+            form.save()
+            messages.success(req, "Success")
+            return HttpResponseRedirect('/schools/prereg/{id}'.format(id=pk))
+    context = {
+        "PreRegistration_edit_page": "active", "curr_obj": curr_obj, "title": 'edit PreRegistration', "user": user, "form": form}
+    return render(req, 'schools/prereg.html', context)
+
+
+@login_required(login_url='login')
+def delete_prereg(req, pk):
+    obj = get_object_or_404(PreRegistration, id=pk)
     if req.user.is_superadmin:
         return HttpResponseRedirect(req.META.get('HTTP_REFERER'))
     obj.delete()

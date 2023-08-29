@@ -9,6 +9,8 @@ urlpatterns = [
     path('<str:pk>/edit', edit_school, name='edit_school'),
     path('<str:pk>/verify', verify_school, name='verify_school'),
     path('<str:pk>/feature', feature_school, name='feature_school'),
+    path('<str:pk>/review', review_school, name='review_school'),
+    path('<str:pk>/follow', follow_school, name='follow_school'),
     #
     path('classroom/create', create_classroom, name='create_classroom'),
     path('classroom/<str:pk>/', classroom, name='classroom'),
@@ -40,4 +42,10 @@ urlpatterns = [
     path('performance/<str:pk>/edit', edit_performance, name='edit_performance'),
     path('performance/<str:pk>/delete',
          delete_performance, name='delete_performance'),
+    #
+    path('<str:pk>/prereg/create', create_prereg, name='create_prereg'),
+    path('prereg/<str:pk>/', prereg, name='prereg'),
+    path('prereg/<str:pk>/edit', edit_prereg, name='edit_prereg'),
+    path('prereg/<str:pk>/delete',
+         delete_prereg, name='delete_prereg'),
 ]

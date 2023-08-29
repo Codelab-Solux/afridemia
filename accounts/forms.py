@@ -39,6 +39,7 @@ class EditUserForm(forms.ModelForm):
         fields = ('__all__')
         exclude = ('groups', 'user_permissions',
                    'password', 'last_login', 'is_staff', 'is_superuser', 'is_active')
+        labels = {'phone': 'Téléphone', }
         widgets = {
             'first_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 w-full"}),
             'last_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 w-full"}),

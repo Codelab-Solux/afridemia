@@ -70,7 +70,7 @@
         <!------------------ search form ------------------->
         <form
           id="search_box"
-          class="p-4 bg-green-200 rounded-md max-w-3xl flex gap-3 justify-between"
+          class="p-4 bg-green-200 rounded-md w-full max-w-3xl flex flex-col md:flex-row gap-3 justify-between"
         >
           <input
             type="text"
@@ -112,7 +112,7 @@
   <section id="schools" class="py-10 bg-white w-full text-left">
     <div class="w-full mx-auto">
       {% if not schools %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
         {% for obj in schools %}
         <div
           class="relative flex flex-col bg-blue-50 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
@@ -135,15 +135,18 @@
           >
             <p class="">
               <i class="fa-solid fa-chalkboard-user text-sky-500"></i>
-              {{obj.teacher_count}} Professeurs
+              {{obj.teacher_count}}
+              <span class="hidden xl:inline"> Professeurs</span>
             </p>
             <p class="">
               <i class="fa-solid fa-graduation-cap text-sky-500"></i>
-              {{obj.student_count}} Elèves
+              {{obj.student_count}}
+              <span class="hidden xl:inline"> Elèves</span>
             </p>
             <p class="">
               <i class="fa-solid fa-bookmark text-sky-500"></i>
-              {{obj.formation_count}} Cursus
+              {{obj.formation_count}}
+              <span class="hidden xl:inline"> Cursus</span>
             </p>
           </div>
           <a href="{% url 'school' obj.id %}">

@@ -40,26 +40,35 @@
           class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{tutors_page}}"
           >Enseignants</a
         >
-        <a
-          href="{% url 'blog' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{blog_page}}"
-          >Blog</a
-        >
-        <a
-          href="{% url 'adverts' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{adverts_page}}"
-          >Annonces</a
-        >
-        <a
-          href="{% url 'forum' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{forum_page}}"
-          >Forum</a
-        >
-        <a
-          href="{% url 'pricing' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{pricing_page}}"
-          >Tarif</a
-        >
+        <div class="relative flex flex-col items-center group">
+          <a class="mt-4 flex items-center hover:text-green-500 cursor-pointer"
+            >Informations<i class="fa-solid fa-caret-down ml-2"></i
+          ></a>
+          <div
+            class="hidden absolute top-10 z-60 bg-gray-50 px-4 group-hover:flex group-hover:flex-col rounded-md"
+          >
+            <a
+              href="{% url 'blog' %}"
+              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{blog_page}}"
+              >Blog</a
+            >
+            <a
+              href="{% url 'adverts' %}"
+              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{adverts_page}}"
+              >Annonces</a
+            >
+            <a
+              href="{% url 'forum' %}"
+              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{forum_page}}"
+              >Forum</a
+            >
+            <a
+              href="{% url 'pricing' %}"
+              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{pricing_page}}"
+              >Tarif</a
+            >
+          </div>
+        </div>
       </ul>
 
       {% if user.is_authenticated %}

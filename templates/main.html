@@ -38,6 +38,17 @@
     <!--  -->
     {% include 'navbar.html' %}
     <!--  -->
+    {% if messages %}
+    <ul class="py-4 messages bg-yellow-200 w-full text-center">
+      {% for message in messages %}
+      <li {% if message.tags %} class=" {{ message.tags }} " {% endif %}>
+        {{ message }}
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!--  -->
     <button
       onclick="toTop()"
       id="toTopBtn"

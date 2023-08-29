@@ -52,42 +52,13 @@ gender_list = (
     ('F', 'Féminin'),
 )
 
-# tiers = (
-#     ('free', 'Gratuit'),
-#     ('basic', "Basique"),
-#     ('pro', "Professionel"),
-# )
-
-# durations = (
-#     ('undefined', 'Indéfini'),
-#     ('month', 'Mois'),
-#     ('trimester', "Trimestre"),
-#     ('semester', "Semestre"),
-#     ('year', "Année"),
-# )
-
-
-# class Plan(models.Model):
-#     name = models.CharField(max_length=128)
-#     price = models.IntegerField(default='0')
-#     tier = models.CharField(
-#         max_length=50, null=True, default='free', choices=tiers)
-#     duration = models.CharField(
-#         max_length=50, null=True, default='undefined', choices=durations)
-
-#     def __str__(self):
-#         return self.name
-
-
-# class Subscription(models.Model):
-#     subscriber = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
-#     start_date = models.DateField(null=True, blank=True)
-#     end_date = models.DateField(null=True, blank=True)
-#     active = models.BooleanField(default=False)
-#     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, default=1)
-
-#     def __str__(self):
-#         return self.subscriber.username
+ratings_list = (
+    ('1', 'Médiocre'),
+    ('2', 'Passable'),
+    ('3', 'Assez bien'),
+    ('4', 'Bien'),
+    ('5', 'Excellente'),
+)
 
 
 class School(models.Model):
@@ -118,6 +89,7 @@ class School(models.Model):
     closing_hour = models.TimeField(blank=True, null=True)
     is_verified = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
+    avg_rating = models.FloatField(default=0.0)
 
     # academia
     success_rate = models.IntegerField(default='0', blank=True, null=True)
@@ -136,6 +108,15 @@ class School(models.Model):
         upload_to='schools/cerificate', blank=True, null=True)
     date_added = models.DateTimeField(auto_now=True)
 
+    def update_avg_rating(self):
+        reviews = self.review_set.all()
+        total_ratings = sum(int(n.rating) for n in reviews)
+        ratings_count = reviews.count()
+
+        if ratings_count > 0:
+            self.avg_rating = total_ratings / ratings_count
+            self.save()
+
     def __str__(self):
         return self.name
 
@@ -143,9 +124,39 @@ class School(models.Model):
         return reverse('school', kwargs={'pk': self.pk})
 
 
+class Review(models.Model):
+    user = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE)
+    school = models.ForeignKey(
+        School, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=3000, blank=True, null=True)
+    date = models.DateTimeField(auto_now=True)
+    rating = models.CharField(max_length=10, choices=ratings_list)
+
+    def __str__(self):
+        return f'{self.user} - {self.school}'
+
+    def get_absolute_url(self):
+        return reverse('review', kwargs={'pk': self.pk})
+
+
+class Follow(models.Model):
+    user = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE)
+    school = models.ForeignKey(
+        School, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user} - {self.school}'
+
+    def get_absolute_url(self):
+        return reverse('follow', kwargs={'pk': self.pk})
+
+
 class Teacher(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     image = models.ImageField(
         upload_to='schools/teachers', blank=True, null=True)
     fullname = models.CharField(max_length=255)
@@ -171,7 +182,7 @@ class Teacher(models.Model):
 
 class Advantage(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     phrase = models.CharField(max_length=255, default='avantage',)
 
     def __str__(self):
@@ -183,7 +194,7 @@ class Advantage(models.Model):
 
 class Faculty(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
 
@@ -196,7 +207,7 @@ class Faculty(models.Model):
 
 class Cursus(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
 
@@ -209,7 +220,7 @@ class Cursus(models.Model):
 
 class Department(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     faculty = models.ForeignKey(
         Serie, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=128)
@@ -229,7 +240,7 @@ class Department(models.Model):
 
 class Classroom(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     serie = models.ForeignKey(
         Serie, on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=255, default='')
@@ -248,7 +259,7 @@ class Classroom(models.Model):
 
 class Structure(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     type = models.CharField(
         max_length=50, default='', choices=infrastructures)
     name = models.CharField(max_length=255)
@@ -266,7 +277,7 @@ class Structure(models.Model):
 
 class SchoolArticle(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     title = models.CharField(max_length=255, default='')
     content = models.TextField(blank=True, default='')
     date = models.DateTimeField(auto_now=True)
@@ -282,14 +293,14 @@ class SchoolArticle(models.Model):
 
 class Gallery(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     images = models.FileField(
         upload_to='schools/gallerie', blank=True, null=True)
 
 
 class Performance(models.Model):
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     exam = models.CharField(max_length=255)
     candidates = models.IntegerField(default='0')
     pass_rate = models.IntegerField(default='0')
@@ -305,9 +316,9 @@ class Performance(models.Model):
 
 class PreRegistration(models.Model):
     user = models.ForeignKey(
-        CustomUser, on_delete=models.CASCADE, default=None)
+        CustomUser, on_delete=models.CASCADE)
     school = models.ForeignKey(
-        School, on_delete=models.CASCADE, default=None)
+        School, on_delete=models.CASCADE)
     classroom = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
