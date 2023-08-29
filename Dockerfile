@@ -1,8 +1,8 @@
 FROM python:3.11-alpine
 
-# COPY ./requirements.txt /app
+COPY ./requirements.txt /app
 
-COPY afridemia /app
+# COPY afridemia /app
 
 
 RUN set -ex \
@@ -18,14 +18,18 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del .build-deps
 
-# ADD accounts /app/accounts
-# ADD afridemia /app/afridemia
-# ADD base /app/base
-# ADD dashboard /app/dashboard
-# ADD schools /app/schools
-# ADD static /app/static
-# ADD templates /app/templates
-# ADD manage.py /app/manage.py
+ADD accounts /app/accounts
+ADD afridemia /app/afridemia
+ADD base /app/base
+ADD compose.yaml /app/compose.yaml
+ADD dashboard /app/dashboard
+ADD Dockerfile /app/Dockerfile
+ADD env /app/env
+ADD manage.py /app/manage.py
+ADD nginx /app/nginx
+ADD schools /app/schools
+ADD static /app/static
+ADD templates /app/templates
 RUN mkdir -p /app/media
 
 WORKDIR /app
