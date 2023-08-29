@@ -1,16 +1,4 @@
 services:
-# -----------------------afridemia datatbase setup---------------------
-  db:
-    image: postgres:15
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=afridemia
-    ports:
-      - 8432:5432
-
 # -----------------------afridemia web app setup---------------------
   web:
     build: 
@@ -33,6 +21,19 @@ services:
       - "80:80"
     depends_on:
       - web
+# -----------------------afridemia datatbase setup---------------------
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=afridemia
+    ports:
+      - 8432:5432
 
 volumes:
+  static:
+  media:
   postgres_data:
