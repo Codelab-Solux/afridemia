@@ -2,7 +2,7 @@ FROM python:3.11-alpine
 
 # COPY ./requirements.txt /app
 
-COPY . /app
+COPY afridemia /app
 
 
 RUN set -ex \
@@ -18,6 +18,14 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del .build-deps
 
+# ADD accounts /app/accounts
+# ADD afridemia /app/afridemia
+# ADD base /app/base
+# ADD dashboard /app/dashboard
+# ADD schools /app/schools
+# ADD static /app/static
+# ADD templates /app/templates
+# ADD manage.py /app/manage.py
 RUN mkdir -p /app/media
 
 WORKDIR /app
