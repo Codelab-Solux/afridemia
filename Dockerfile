@@ -22,8 +22,8 @@ RUN mkdir -media /app
 WORKDIR /
 
 COPY ./entrypoint.sh /
-ENV VIRTUAL_ENV /env
-ENV PATH /env/bin:$PATH
+ENV VIRTUAL_ENV ./env
+ENV PATH ./env/bin:$PATH
 
 EXPOSE 8000
 
