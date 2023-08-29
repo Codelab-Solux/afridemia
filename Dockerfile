@@ -1,6 +1,6 @@
 FROM python:3.11-alpine
 
-# COPY ./requirements.txt /app
+COPY ./requirements.txt /app
 
 COPY ./afridemia /app
 
@@ -18,7 +18,7 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del .build-deps
 
-ADD media /app
+RUN mkdir -p /app/media
 
 WORKDIR /app
 
