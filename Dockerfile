@@ -1,6 +1,5 @@
 FROM python:3.11-alpine
 
-COPY ./requirements.txt /
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
