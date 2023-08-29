@@ -1,7 +1,8 @@
 FROM python:3.11-alpine
 
-COPY ./requirements.txt /app
+# COPY ./requirements.txt /app
 
+ADD requirements.txt /app/requirements.txt
 # COPY afridemia /app
 
 
