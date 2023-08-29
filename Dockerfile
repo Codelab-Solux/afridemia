@@ -1,8 +1,8 @@
 FROM python:3.11-alpine
 
-COPY ./requirements.txt /app
+# COPY ./requirements.txt /app
 
-COPY ./afridemia /app
+COPY . /app
 
 
 RUN set -ex \
