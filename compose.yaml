@@ -1,6 +1,6 @@
 services:
 # -----------------------afridemia datatbase setup---------------------
-  afridemia_db:
+  db:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -12,7 +12,7 @@ services:
       - 8432:5432
 
 # -----------------------afridemia web app setup---------------------
-  afridemia_web:
+  web:
     build: 
       context: .
     volumes:
@@ -22,7 +22,7 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - afridemia_db
+      - db
 
 # -----------------------NGINX setup---------------------
   nginx:
@@ -32,7 +32,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - afridemia_web
+      - web
 
 volumes:
   postgres_data:
