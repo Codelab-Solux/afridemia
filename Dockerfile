@@ -4,7 +4,7 @@ FROM python:3.11-alpine
 
 COPY ./afridemia /app
 
-RUN mkdir -media /app
+RUN mkdir media /app
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
