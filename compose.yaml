@@ -16,7 +16,7 @@ services:
     build: 
       context: .
     volumes:
-      - static:/static
+      - ./static:/static
     env_file:
       - .env
     ports:
@@ -28,7 +28,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - media:/media
+      - ./media:/media
     ports:
       - "80:80"
     depends_on:

@@ -17,6 +17,8 @@ RUN set -ex \
 
 COPY ./afridemia /app
 
+RUN mkdir -media /app
+
 WORKDIR /
 
 COPY ./entrypoint.sh /
