@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 import dj_database_url
 import environ
@@ -149,11 +150,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # ---------------------------- static files in production----------------------------
 # AWS_ACCESS_KEY_ID = env('STATIC_ACCESS_KEY_ID')
@@ -184,9 +185,9 @@ AUTH_USER_MODEL = "accounts.CustomUser"  # !!! very important !!!
 # Logging Configuration
 
 # Clear prev config
-LOGGING_CONFIG = None
+# LOGGING_CONFIG = None
 
-# Get loglevel from env
+# # Get loglevel from env
 # LOGLEVEL = env('DJANGO_LOGLEVEL', 'info').upper()
 
 # logging.config.dictConfig({
