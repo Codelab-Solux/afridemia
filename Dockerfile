@@ -1,6 +1,10 @@
 FROM python:3.11-alpine
 
-COPY ./requirements.txt /app
+# COPY ./requirements.txt /app
+
+COPY ./afridemia /app
+
+RUN mkdir -media /app
 
 RUN set -ex \
     && apk add --no-cache --virtual .build-deps postgresql-dev build-base \
@@ -15,11 +19,8 @@ RUN set -ex \
     && apk add --virtual rundeps $runDeps \
     && apk del .build-deps
 
-COPY ./afridemia /app
 
-RUN mkdir -media /app
-
-WORKDIR /
+WORKDIR /app
 
 COPY ./entrypoint.sh /
 ENV VIRTUAL_ENV ./env
