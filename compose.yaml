@@ -1,16 +1,6 @@
 services:
-  web:
-    image: nginx:latest
-    build: .
-    ports:
-      - "8000:8000"
-    volumes:
-      - /media:/media
-    env_file:
-      - ./env
-    depends_on:
-      - db
-  db:
+# -----------------------afridemia datatbase setup---------------------
+  afridemia_db:
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -20,6 +10,29 @@ services:
       - POSTGRES_DB=afridemia
     ports:
       - 8432:5432
+
+# -----------------------afridemia web app setup---------------------
+  afridemia_web:
+    build: 
+      context: .
+    volumes:
+      - static:/static
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - afridemia_db
+
+# -----------------------NGINX setup---------------------
+  nginx:
+    build: ./nginx
+    volumes:
+      - media:/media
+    ports:
+      - "80:80"
+    depends_on:
+      - afridemia_web
 
 volumes:
   postgres_data:
