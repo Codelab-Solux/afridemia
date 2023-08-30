@@ -1,5 +1,6 @@
 #!/bin/sh
 python3 -m venv env
+bash env/script/activate
 pip install --upgrade pip
 pip install --no-cache-dir -r requirements.txt
 python manage.py makemigrations --no-input
