@@ -1,4 +1,7 @@
 #!/bin/sh
+python3 -m venv env
+pip install --upgrade pip
+pip install --no-cache-dir -r requirements.txt
 python manage.py makemigrations --no-input
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
