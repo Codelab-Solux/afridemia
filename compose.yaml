@@ -19,7 +19,7 @@ services:
     volumes:
       - ./media:/media
     ports:
-      - "9000:80"
+      - "1234:80"
     depends_on:
       - web
 # -----------------------afridemia datatbase setup---------------------
