@@ -24,5 +24,5 @@ ENV PATH="/env/bin:$PATH"
 
 USER afridemia_app
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "afridemia.wsgi:application"]
+CMD ["gunicorn", "--workers", "3", "afridemia.wsgi:application"]
 # ENTRYPOINT [ "sh", "/entrypoint.sh" ]
