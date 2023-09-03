@@ -26,19 +26,17 @@
             ><i class="fa-solid fa-certificate"></i
           ></span>
           <a href="{% url 'tutor' obj.id  %}">
-            <div class="w-full max-h-40 overflow-hidden">
-              {% if not obj.image %}
-              <img
-                class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
-                src="{% static 'imgs/tutor.jpg' %}"
-                alt="image"
-              />
-              {% else %}
+            <div class="w-full max-h-40 overflow-hidden text-center">
+              {% if obj.image %}
               <img
                 class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
                 src="{{obj.image.url}}"
                 alt="image"
               />
+              {% else %}
+              <i
+                class="mt-6 fa-solid fa-chalkboard-user text-5xl text-blue-950 text-center"
+              ></i>
               {% endif %}
             </div>
             <div class="p-4 flex flex-col justify-between">

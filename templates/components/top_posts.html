@@ -33,19 +33,19 @@
       ></a>
       {% endif %}
       <a href="{% url 'blogpost' item.id  %}">
-        {% if not item.image %}
-        <img
-          class="h-20 w-full object-cover"
-          src="{% static 'imgs/mugger.jpg' %}"
-          alt="blogpost image"
-        />
-        {% else %}
-        <img
-          class="h-40 w-full object-cover"
-          src="{{item.image.url}}"
-          alt="blogpost image"
-        />
-        {% endif %}
+        <div class="text-center">
+          {% if item.image %}
+          <img
+            class="h-20 w-full object-cover"
+            src="{% static 'imgs/mugger.jpg' %}"
+            alt="blogpost image"
+          />
+          {% else %}
+          <i
+            class="mt-6 fa-solid fa-file-text text-5xl text-blue-950 text-center"
+          ></i>
+          {% endif %}
+        </div>
         <div class="p-4 flex flex-col justify-between">
           <h4 class="text-black font-bold">{{item.title|truncatechars:30}}</h4>
           <p class="py-2 text-sm text-gray-800">

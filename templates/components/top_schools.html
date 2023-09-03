@@ -19,7 +19,7 @@
     <div class="mt-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {% for obj in schools %}
       <div
-        class="relative flex flex-col bg-blue-50 hover:shadow-md hover:bg-blue-100 rounded-md transition duration-300 ease-in-out overflow-hidden group"
+        class="relative flex flex-col bg-blue-50 hover:shadow-md hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden group"
       >
         <!--  -->
         {% if obj.manager == user %}
@@ -34,7 +34,7 @@
           ><i class="fa-solid fa-certificate"></i
         ></span>
         <a href="{% url 'school' obj.id %}">
-          <div class="w-full max-h-40 overflow-hidden">
+          <div class="w-full max-h-40 overflow-hidden text-center">
             {% if obj.thumbnail %}
             <img
               class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
@@ -42,11 +42,9 @@
               alt="image"
             />
             {% else %}
-            <img
-              class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
-              src="{% static 'imgs/uni.jpg' %}"
-              alt="image"
-            />
+            <i
+              class="mt-6 fa-solid fa-school text-5xl text-blue-950 text-center"
+            ></i>
             {% endif %}
           </div>
           <div class="px-4 py-2 rounded-b-md">

@@ -43,20 +43,16 @@
       <div class="p-4 rounded-full bg-white mx-auto">
         {% if obj.image %}
         <img
-          class="h-20 object-cover"
+          class="h-20 w-20 object-cover"
           src="{{obj.image.url}}"
           alt="{{level.name}} image"
         />
         {% else %}
-        <img
-          class="h-20 object-contain"
-          src="{% static 'icons/sch_col.png' %}"
-          alt="{{level.name}} image"
-        />
+        <i class="fa-solid fa-graduation-cap text-3xl text-blue-950"></i>
         {% endif %}
       </div>
       <h4
-        class="mt-4 text-indigo-900 text-sm text-center font-bold group-hover:text-white"
+        class="mt-4 text-blue-950 text-sm text-center font-bold group-hover:text-white"
       >
         {{obj.name}}
       </h4>

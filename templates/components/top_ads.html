@@ -29,11 +29,13 @@
         ></a>
         {% endif %}
         <a href="{% url 'advert' item.id  %}">
-          <div class="p-4 flex justify-between items-center gap-2 group">
+          <div
+            class="p-4 flex justify-between items-center gap-2 text-black group"
+          >
             <i
-              class="fa-solid fa-bullhorn text-gray-300 text-3xl group-hover:text-sky-400"
+              class="fa-solid fa-bullhorn text-xl group-hover:text-sky-400"
             ></i>
-            <p class="text-black">{{item.title|truncatechars:50}}</p>
+            <p>{{item.title|truncatechars:50}}</p>
           </div>
         </a>
       </div>

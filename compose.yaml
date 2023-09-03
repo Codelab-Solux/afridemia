@@ -3,6 +3,7 @@ services:
   web:
     build: 
       context: .
+    restart: always
     volumes:
       - ./static:/static
     env_file:
@@ -18,12 +19,12 @@ services:
     volumes:
       - ./media:/media
     ports:
-      - "80:80"
+      - "8080:8080"
     depends_on:
       - web
 # -----------------------afridemia datatbase setup---------------------
   db:
-    image: postgres:15
+    image: postgres:15-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:
@@ -36,4 +37,4 @@ services:
 volumes:
   static:
   media:
-  postgres_data:
+  postgres_data: 
