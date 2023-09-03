@@ -12,9 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-import dj_database_url
 import environ
-import logging.config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = eval(env('DEBUG'))
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182',
-                 'afridemia.com', 'www.afridemai.com']
+                 'afridemia.com', 'www.afridemaia.com']
 
 
 # Application definition
@@ -89,27 +87,13 @@ WSGI_APPLICATION = 'afridemia.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': dj_database_url.parse('postgres://leparle_user:aQzlmJubZhvEuS0DHEn6TOcpyUwr5zaU@dpg-chdl4vu7avj0djhovptg-a.ohio-postgres.render.com/leparle')
-    # 'default': dj_database_url.parse(env('DB_URL')
-
     'default': {
-
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        # 'NAME': 'afridemia',
-        # 'USER': 'postgres',
-        # 'PASSWORD': 'password',
-        # 'HOST': 'localhost',
-        # 'PORT': '5432',
-
         'ENGINE': env('DATABASE_ENGINE'),
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USERNAME'),
         'PASSWORD': env('DATABASE_PASSWORD'),
         'HOST': env('DATABASE_HOST'),
         'PORT': env('DATABASE_PORT'),
-
-        # 'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': BASE_DIR / 'db.sqlite3',
 
     }
 }
