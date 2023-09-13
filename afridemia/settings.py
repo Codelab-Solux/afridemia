@@ -29,7 +29,8 @@ SECRET_KEY = 'django-insecure-cnp+n3wdx_8*77$rewd8)wwi99j)+0f2q892qu&u)y7t%#rvdw
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = eval(env('DEBUG'))
+# DEBUG = eval(env('DEBUG'))
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182',
                  'afridemia.com', 'www.afridemaia.com']
