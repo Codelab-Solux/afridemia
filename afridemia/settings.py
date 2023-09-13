@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,6 +37,8 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182',
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'accounts.apps.AccountsConfig',
     'base.apps.BaseConfig',
+    'chats.apps.ChatsConfig',
     'schools.apps.SchoolsConfig',
     'dashboard.apps.DashboardConfig',
     'dj_database_url',
@@ -80,6 +84,7 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'afridemia.asgi.application'
 WSGI_APPLICATION = 'afridemia.wsgi.application'
 
 
@@ -87,15 +92,17 @@ WSGI_APPLICATION = 'afridemia.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': env('DATABASE_ENGINE'),
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USERNAME'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
+    'default': dj_database_url.parse('postgres://afridemia_user:QoPxMPYISB6KGsSWkZU2oSH3fkTbrPB7@dpg-ck0t4r36fquc73amh510-a.frankfurt-postgres.render.com/afridemia')
 
-    }
+    # 'default': {
+    #     'ENGINE': env('DATABASE_ENGINE'),
+    #     'NAME': env('DATABASE_NAME'),
+    #     'USER': env('DATABASE_USERNAME'),
+    #     'PASSWORD': env('DATABASE_PASSWORD'),
+    #     'HOST': env('DATABASE_HOST'),
+    #     'PORT': env('DATABASE_PORT'),
+
+    # }
 }
 
 
@@ -134,11 +141,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
-# STATICFILES_DIRS = [BASE_DIR / 'staticfiles']
-# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static',]
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # ---------------------------- static files in production----------------------------
 # AWS_ACCESS_KEY_ID = env('STATIC_ACCESS_KEY_ID')
@@ -165,6 +171,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "accounts.CustomUser"  # !!! very important !!!
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "CONFIG": {
+            "hosts": [('localhost', '8080')],
+        },
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+    },
+}
+
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels.layers.InMemoryChannelLayer"
+#     }
+# }
 
 # Logging Configuration
 

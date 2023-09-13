@@ -50,7 +50,7 @@
       {% if not curr_obj.image %}
       <img
         class="h-80 w-full rounded-md object-cover"
-        src="{% static 'imgs/structure.jpg' %}"
+        src="{% static 'vectors/library.png' %}"
         alt="image"
       />
       {% else %}
@@ -62,7 +62,7 @@
       {% endif %}
       <div class="py-4 flex flex-col gap-2 text-gray-700">
         <h4 class="text-3xl text-black font-bold">
-          {{curr_obj.get_type_display}}
+          {{curr_obj.get_type_display}} de
           <span class="text-sky-400">{{curr_obj.name}}</span>
         </h4>
         <p>
@@ -94,7 +94,7 @@
             {% if not obj.image %}
             <img
               class="h-20 w-full object-cover"
-              src="{% static 'imgs/structure.jpg' %}"
+              src="{% static 'vectors/library.png' %}"
               alt="image"
             />
             {% else %}
@@ -106,9 +106,7 @@
             {% endif %}
             <div class="p-4 flex flex-col gap-2 text-gray-700">
               <h4 class="text-xl text-black font-bold">
-                {{obj.name}} {% if obj.serie %}
-                <span class="text-green-400">{{obj.serie}}</span>
-                {% endif %}
+                {{curr_obj.get_type_display}} de {{obj.name}}
               </h4>
               <p>
                 Capacité de personnes :
@@ -170,7 +168,7 @@
     </article>
     <img
       class="w-full h-full rounded-md object-cover"
-      src="{% static 'imgs/structure.jpg' %}"
+      src="{% static 'vectors/library.png' %}"
       alt="image"
     />
   </div>

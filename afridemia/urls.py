@@ -25,6 +25,7 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('schools/', include('schools.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('chats/', include('chats.urls')),
 ]
 
 if settings.DEBUG:

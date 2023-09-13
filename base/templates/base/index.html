@@ -1,14 +1,14 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
 <!--------------------------------------- hero section --------------------------------------->
 
-<section class="py- bg-[url('{% static 'imgs/sch-.jpg' %}')]">
+<section>
   <div class="px-8 flex gap-4 justify-between w-full max-w-[1350px] mx-auto">
     <!--------------------------------------- levels --------------------------------------->
     <div class="flex flex-col gap-2 w-60">
       {% for obj in levels %}
       <a
         href="{% url 'schools' %}?query={{obj.name}}"
-        class="px-4 py-3 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-blue-200 hover:text-black transition duration-300 ease-in-out"
+        class="px-4 py-2 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-blue-200 hover:text-black transition duration-300 ease-in-out"
       >
         <img
           class="h-7 xl:h-10 object-contain"
@@ -21,11 +21,59 @@
       {% endfor %}
     </div>
 
-    <img
-      class="hidden md:inline w-full md:max-w-[400px] lg:max-w-[800px] xl:max-w-[860px] rounded-md object-cover"
-      src="{% static 'imgs/sch-1.jpg' %}"
+    <!-- <img
+      class=" md:inline w-full md:max-w-[400px] lg:max-w-[800px] xl:max-w-[860px] rounded-md object-contain"
+      src="{% static 'icons/1.png' %}"
       alt="image"
-    />
+    /> -->
+
+    <div
+      class="carousel hidden md:block relative z-10 flex justify-start rounded-md w-full md:max-w-[400px] lg:max-w-[800px] h-[500px] overflow-hidden"
+    >
+      <!-- carousel slider -->
+      <div class="carousel-slider z-10">
+        <img class="w-full" src="{% static 'images/1.png' %}" alt="image" />
+        <img src="{% static 'images/2.png' %}" alt="image" />
+        <img src="{% static 'images/3.png' %}" alt="image" />
+        <img src="{% static 'images/4.png' %}" alt="image" />
+        <img src="{% static 'images/5.png' %}" alt="image" />
+        <!-- <img
+          src="{% static 'images/6.png' %}"
+          alt="image"
+        />
+        <img
+         src="{% static 'images/7.png' %}"
+           alt="image"
+        /> -->
+      </div>
+      <!-- carousel controls -->
+      <div>
+        <!-- <span
+          id="prev"
+          class="text-xl bg-white hover:bg-green-300 rounded-full px-4 py-2 z-30 absolute top-[45%] cursor-pointer left-0"
+        >
+          <i class="fa-solid fa-angle-left"></i>
+        </span> -->
+        <span
+          id="next"
+          class="text-xl bg-white hover:bg-green-300 rounded-full px-4 py-2 z-30 absolute top-[45%] cursor-pointer right-0"
+        >
+          <i class="fa-solid fa-angle-right"></i>
+        </span>
+      </div>
+
+      <!-- carousel indicators -->
+      <!-- <div class="absolute bottom-4 text-center flex">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+        <span class="dot" onclick="currentSlide(7)"></span>
+      </div> -->
+    </div>
+
     <!-- <article
       class="mb-2 mx-auto w-full max-w-[500px] flex flex-col items-center text-center"
     >
@@ -46,7 +94,7 @@
       <!--  -->
       <a
         href="{% url 'tutors' %}?query={{obj.name}}"
-        class="px-4 py-2 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-green-200 hover:text-black transition duration-300 ease-in-out"
+        class="px-4 py-1 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-green-200 hover:text-black transition duration-300 ease-in-out"
       >
         {{obj.name}}
         <img
@@ -73,14 +121,14 @@
 
 <!--------------------------------------- why us ? --------------------------------------->
 
-<section class="py-40 bg-sky-300 w-full text-left">
+<!-- <section class="py-10 bg-sky-300 w-full text-left">
   <div class="px-8 max-w-[1350px] mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       <ul>
         <h3 class="mb-2 mx-auto text-4xl text-black font-bold">
           Pourquoi Afridemia?
         </h3>
-        <li class="py-2 text-gray-800">
+        <li class="slide" class="py-2 text-gray-800">
           <h4 class="text-xl font-bold text-black">
             <i class="fa-regular fa-circle-check mr-2 text-2xl"></i>
             Potentiel maximisé
@@ -91,7 +139,7 @@
             particuliers dévoués, grâce à notre application innovante.
           </p>
         </li>
-        <li class="py-2 text-gray-800">
+        <li class="slide" class="py-2 text-gray-800">
           <h4 class="text-xl font-bold text-black">
             <i class="fa-regular fa-circle-check mr-2 text-2xl"></i>Education
             sur mesure
@@ -102,7 +150,7 @@
             notre plateforme intuitive.
           </p>
         </li>
-        <li class="py-2 text-gray-800">
+        <li class="slide" class="py-2 text-gray-800">
           <h4 class="text-xl font-bold text-black">
             <i class="fa-regular fa-circle-check mr-2 text-2xl"></i>Suivi bien
             appliqué
@@ -113,7 +161,7 @@
             particuliers en un seul endroit.
           </p>
         </li>
-        <li class="py-2 text-gray-800">
+        <li class="slide" class="py-2 text-gray-800">
           <h4 class="text-xl font-bold text-black">
             <i class="fa-regular fa-circle-check mr-2 text-2xl"></i>Embarras du
             choix
@@ -128,11 +176,11 @@
       <img
         class="h-full rounded-md object-cover"
         src="{% static 'imgs/graduation.jpg' %}"
-        alt="welcome image"
+        alt="image"
       />
     </div>
   </div>
-</section>
+</section> -->
 <!--------------------------------------- featured tutors --------------------------------------->
 {% include 'components/top_tutors.html' %}
 
@@ -142,7 +190,7 @@
 
 <!--------------------------------------- explore --------------------------------------->
 
-<div class="bg-green-200 py-40 w-full">
+<div class="bg-green-200 py-10 w-full">
   <div class="p-8 mx-auto max-w-[1350px] flex flex-col">
     <article class="mb-8">
       <h4 class="mb-2 text-3xl text-black font-bold">
@@ -219,7 +267,7 @@
         </h3>
 
         <button
-          class="bg-blue-950 hover:bg-green-600 text-white py-2 px-4 rounded"
+          class="bg-blue-950 hover:bg-green-600 text-white py-2 px-4 rounded-md"
         >
           Contactez nous
         </button>

@@ -23,7 +23,6 @@ def home(req):
         | Q(tel__icontains=query)
         | Q(levels__name__icontains=query),
         is_featured=True,
-        is_verified=True,
     ).distinct()
 
     # levels counter

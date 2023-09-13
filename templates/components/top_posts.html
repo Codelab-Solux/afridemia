@@ -2,18 +2,18 @@
 <!--------------------------------------- rec_posts --------------------------------------->
 <section
   id="rec_posts"
-  class="px-8 py-40 w-full max-w-[1350px] mx-auto bg-white w-full text-left"
+  class="px-8 py-10 w-full max-w-[1350px] mx-auto bg-white w-full text-left"
 >
   <div class="w-full my-2 flex justify-between items-center">
     <h3 class="text-3xl text-black font-bold">Articles récents</h3>
     <a
-      class="hidden md:inline text-blue-950 hover:bg-sky-500 px-4 py-2 rounded-md"
+      class="hidden md:inline text-black hover:bg-sky-200 px-4 py-2 rounded-md"
       href="{% url 'blog' %}"
       ><i class="fa-solid fa-angles-right text-lg"></i>
     </a>
   </div>
 
-  <p class="mb-4 w-full max-w-lg text-lg">
+  <p class="my-4 w-full max-w-lg text-lg">
     Explorez des perspectives éducatives captivantes grâce à nos articles
     récents. Apprenez, grandissez et évoluez avec nous.
   </p>
@@ -23,7 +23,7 @@
   <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
     {% for item in rec_posts %}
     <div
-      class="relative flex flex-col bg-blue-50 hover:shadow-md hover:bg-blue-100 rounded-md transition duration-300 ease-in-out overflow-hidden group"
+      class="relative flex flex-col bg-gray-100 hover:shadow-md hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden group"
     >
       {% if user.role.sec_level >= 6 %}
       <a
@@ -37,13 +37,15 @@
           {% if item.image %}
           <img
             class="h-20 w-full object-cover"
-            src="{% static 'imgs/mugger.jpg' %}"
+            src="{{obj.image.url}}"
             alt="blogpost image"
           />
           {% else %}
-          <i
-            class="mt-6 fa-solid fa-file-text text-5xl text-blue-950 text-center"
-          ></i>
+          <img
+            class="h-20 w-full object-cover"
+            src="{% static 'vectors/article.png' %}"
+            alt="blogpost image"
+          />
           {% endif %}
         </div>
         <div class="p-4 flex flex-col justify-between">

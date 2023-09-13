@@ -56,7 +56,7 @@ function openTab(evt, cityName) {
 /* client folder scripts ---------------------------------------------------------------------------------------------------- */
 
 // Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
+// document.getElementById("defaultOpen").click();
 
 // Récupérer tous les éléments de l'accordéon
 const accordionItems = document.querySelectorAll(".accordion-item");
@@ -88,6 +88,7 @@ tabLinks.forEach((link, index) => {
   });
 });
 
+/* school rating ---------------------------------------------------------------------------------------------------- */
 const ratingStars = [...document.getElementsByClassName("rating_star")];
 
 function executeRating(stars) {
@@ -112,3 +113,42 @@ function executeRating(stars) {
   });
 }
 executeRating(ratingStars);
+
+/* carousels ---------------------------------------------------------------------------------------------------- */
+const carousel = document.querySelector(".carousel");
+const slider = document.querySelector(".carousel-slider");
+// const prev = document.getElementById("prev");
+const next = document.getElementById("next");
+var carousel_direction = 0;
+
+// prev.addEventListener("click", () => {
+//   if (carousel_direction < 0) {
+//     slider.appendChild(slider.firstElementChild);
+//     carousel_direction = 1;
+//   }
+//   carousel.style.justifyContent = "flex-end";
+//   slider.style.transform = "translate(+20%)";
+// });
+
+next.addEventListener("click", () => {
+  if (carousel_direction > 0) {
+    slider.appendChild(slider.lastElementChild);
+    carousel_direction = -1;
+  }
+  carousel.style.justifyContent = "flex-start";
+  slider.style.transform = "translate(-20%)";
+});
+
+slider.addEventListener("transitionend", function () {
+  if (carousel_direction > 0) {
+    slider.prepend(slider.lastElementChild);
+  } else {
+    slider.appendChild(slider.firstElementChild);
+  }
+
+  slider.style.transition = "none";
+  slider.style.transform = "translate(0)";
+  setTimeout(function () {
+    slider.style.transition = "all 0.5s";
+  });
+});

@@ -49,7 +49,7 @@
       <!--  -->
       <img
         class="h-80 w-full rounded-md object-cover"
-        src="{% static 'imgs/prereg.jpg' %}"
+        src="{% static 'vectors/preregs.png' %}"
         alt="image"
       />
       <div class="py-4 flex flex-col gap-2 text-gray-700">
@@ -102,7 +102,7 @@
           <a href="{% url 'prereg' obj.id  %}">
             <img
               class="h-20 w-full object-cover"
-              src="{% static 'imgs/prereg.jpg' %}"
+              src="{% static 'vectors/preregs.png' %}"
               alt="image"
             />
             <div class="p-4 flex flex-col gap-2 text-gray-700 text-sm">
@@ -131,13 +131,13 @@
   <!--------------------------------------- prereg form --------------------------------------->
   {% else %}
 
-  <p class="my-4 w-full lg:max-w-lg">
+  <p class="my-4 w-full lg:max-w-3xl">
     Faire une préinscription dans cet etablissement
-    <span class="font-bold text-blue-950 text-2xl">({{school.name}})</span>.
+    <span class="font-bold text-green-500 text-2xl">({{school.name}})</span>.
   </p>
 
   <div class="mb-8 mx-auto rounded grid md:grid-cols-2 gap-8">
-    <div class="p-8 bg-sky-100 rounded-md">
+    <div class="p-8 bg-green-100 rounded-md">
       {% if curr_obj %}
       <h3 class="mb-4 text-black text-2xl font-bold">
         Modifier cette préinscription
@@ -179,7 +179,7 @@
     </div>
     <img
       class="w-full h-full rounded-md object-cover"
-      src="{% static 'imgs/prereg.jpg' %}"
+      src="{% static 'vectors/preregs.png' %}"
       alt="image"
     />
   </div>

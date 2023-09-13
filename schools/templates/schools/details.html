@@ -114,7 +114,7 @@
     {% else %}
     <img
       class="w-full h-[500px] rounded-md object-cover"
-      src="{% static 'imgs/uni.jpg' %}"
+      src="{% static 'vectors/school.png' %}"
       alt="image"
     />
     {% endif %}
@@ -479,21 +479,20 @@
     <p class="my-4 bg-gray-50 p-4 rounded-md">{{school.pedagogy}}</p>
     <div class="mb-4 flex justify-between items-center">
       <h3 class="pb-2 font-bold text-xl text-black">Salles de classes</h3>
-              {% if is_manager or user.is_staff %}
+       {% if is_manager or user.is_supersuer %}
         <a
           href="{% url 'create_classroom' %}"
           class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
-
     </div>
       {% if not classrooms %} {% include 'components/no_data.html' %} {% else %}
       <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in classrooms %}
         <a
           href="{% url 'classroom' obj.id %}"
-          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+          class="bg-gray-100 hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
         >
           {% if obj.image %}
           <img
@@ -504,7 +503,7 @@
           {% else %}
           <img
             class="w-full h-40 object-cover"
-            src="{% static 'imgs/classroom.jpg' %}"
+            src="{% static 'vectors/classroom.png' %}"
             alt="image"
           />
           {% endif %}
@@ -534,7 +533,7 @@
     >    
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Enseignants</h3>
-        {% if is_manager or user.is_staff %}
+        {% if is_manager %}
           <a
             href="{% url 'create_teacher' %}"
             class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
@@ -547,7 +546,7 @@
         {% for obj in teachers %}
         <a
           href="{% url 'teacher' obj.id %}"
-          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+          class="bg-gray-100 hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
         >
           {% if obj.image %}
           <img
@@ -558,7 +557,7 @@
           {% else %}
           <img
             class="w-full h-40 object-cover"
-            src="{% static 'imgs/teacher.jpg' %}"
+            src="{% static 'vectors/teacher.png' %}"
             alt="image"
           />
           {% endif %}
@@ -583,7 +582,7 @@
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Structures</h3>
-        {% if is_manager or user.is_staff %}
+        {% if is_manager %}
         <a
           href="{% url 'create_structure' %}"
           class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
@@ -596,7 +595,7 @@
         {% for obj in structures %}
         <a
           href="{% url 'structure' obj.id %}"
-          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+          class="bg-gray-100 hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
         >
           {% if obj.image %}
           <img
@@ -607,7 +606,7 @@
           {% else %}
           <img
             class="w-full h-40 object-cover"
-            src="{% static 'imgs/lab.jpg' %}"
+            src="{% static 'vectors/library.png' %}"
             alt="image"
           />
           {% endif %}
@@ -631,7 +630,7 @@
     >
         <div class="mb-4 flex justify-between items-center">
       <h3 class="pb-2 font-bold text-xl text-black">Articles</h3>
-              {% if is_manager or user.is_staff %}
+        {% if is_manager %}
         <a
           href="{% url 'create_article' %}"
           class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
@@ -645,7 +644,7 @@
         {% for obj in articles %}
         <a
           href="{% url 'article' obj.id %}"
-          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
+          class="bg-gray-100 hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out"
         >
           {% if obj.image %}
           <img
@@ -656,7 +655,7 @@
           {% else %}
           <img
             class="w-full h-40 object-cover"
-            src="{% static 'imgs/article.jpg' %}"
+            src="{% static 'vectors/article.png' %}"
             alt="image"
           />
           {% endif %}
@@ -681,7 +680,7 @@
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Gallerie</h3>
-        {% if is_manager or user.is_staff %}
+        {% if is_manager %}
         <a
           href="{% url 'create_gallery' %}"
           class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
@@ -710,7 +709,7 @@
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Examens</h3>
-          {% if is_manager or user.is_staff %}
+          {% if is_manager %}
           <a
             href="{% url 'create_performance' %}"
             class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
@@ -746,7 +745,7 @@
         {% for obj in preregs %}
         <a
           href="{% url 'prereg' obj.id %}"
-          class="bg-gray-50 border hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out group"
+          class="bg-gray-100 hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out group"
         >
         <div class="p-4 flex flex-col gap-2 group-hover:text-black">
             <i class="fa-solid fa-graduation-cap group-hover:text-green-400 text-5xl"></i>
@@ -789,7 +788,7 @@
             {{obj.rating}}
           </h3>
           <h3 class="text-xl font-bold" class="font-bold">
-            @{{obj.user.last_name}} {{obj.user.first_name}}
+            @{{obj.user.first_name}}
           </h3>
           <p>{{obj.comment}}</p>
           <p>{{obj.date.date}}</p>

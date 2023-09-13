@@ -11,7 +11,7 @@
           alt="logo"
         />
         <img
-          class="md:inline w-40 hidden lg:w-60"
+          class="md:inline w-40 hidden lg:w-40"
           src="{% static 'imgs/afdm-logo.png' %}"
           alt="logo"
         />
@@ -45,7 +45,7 @@
             >Informations<i class="fa-solid fa-caret-down ml-2"></i
           ></a>
           <div
-            class="hidden absolute top-10 z-80 bg-gray-50 px-4 group-hover:flex group-hover:flex-col rounded-md"
+            class="hidden absolute top-10 z-60 bg-gray-100 px-4 group-hover:flex group-hover:flex-col rounded-md"
           >
             <a
               href="{% url 'blog' %}"
@@ -72,6 +72,11 @@
       </ul>
 
       {% if user.is_authenticated %}
+      <a class="lg:ml-4" href="{% url 'chats' %}">
+        <i
+          class="fa-solid fa-message text-xl hover:text-green-500 text-2xl ml-6 lg:ml-4 transition ease-in duration-200"
+        ></i>
+      </a>
       <!-- notification dropdown -->
       <div class="relative lg:ml-4">
         <button
@@ -167,12 +172,11 @@
           aria-haspopup="true"
           onclick="toggleDropdown(this)"
         >
-          <i class="fa-solid fa-user text-green-300 text-2xl ml-6 lg:ml-4"></i>
-          <!-- <img
-            class="hidden lg:block lg:h-6 rounded-full ring-offset-2 ring-4 hover:ring-white"
-            src="{% static 'imgs/rand.webp' %}"
-            alt="Rounded avatar"
-          /> -->
+          <img
+            class="hidden ml-4 lg:block lg:h-6 rounded-full ring-4 ring-offset-2 ring-gray-300 hover:ring-green-400"
+            src="{% static 'imgs/avatar.png' %}"
+            alt="image"
+          />
         </button>
 
         <div

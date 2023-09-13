@@ -1,8 +1,8 @@
 {% load static %}
 <!--------------------------------------- rec_ads --------------------------------------->
-<section id="rec_ads" class="py-40 w-full bg-blue-950">
-  <div class="p-8 w-full max-w-[1350px] mx-auto w-full text-white">
-    <div class="w-full my-2 flex justify-between items-center">
+<section id="rec_ads" class="py-10 w-full bg-blue-950">
+  <div class="px-8 w-full max-w-[1350px] mx-auto w-full">
+    <div class="w-full flex justify-between items-center">
       <h3 class="text-3xl text-white font-bold">Demandes et Offres récentes</h3>
       <a
         class="hidden md:inline text-sky-400 hover:bg-white px-4 py-2 rounded-md"
@@ -10,32 +10,28 @@
         ><i class="fa-solid fa-angles-right text-lg"></i>
       </a>
     </div>
-    <p class="mb-4 w-full max-w-lg text-lg">
+    <p class="mb-4 w-full text-gray-300 max-w-lg text-lg">
       Restez à la pointe des dernières nouvelles et opportunités éducatives
       grâce à nos annonces récentes. Votre prochaine étape commence ici.
     </p>
     {% if not rec_ads %} {% include 'components/no_data.html' %} {% else %}
 
     <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {% for item in rec_ads %}
+      {% for obj in rec_ads %}
       <div
         class="relative h-full flex flex-col bg-gray-200 hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden"
       >
-        {% if item.author == user %}
+        {% if obj.author == user %}
         <a
-          class="absolute top-4 right-4 px-3 py-2 text-black bg-gray-200 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
-          href="{% url 'edit_advert' item.id %}"
+          class="absolute top-4 right-4 px-3 py-2 bg-gray-200 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
+          href="{% url 'edit_advert' obj.id %}"
           ><i class="fa-solid fa-pen-to-square text-sm"></i
         ></a>
         {% endif %}
-        <a href="{% url 'advert' item.id  %}">
-          <div
-            class="p-4 flex justify-between items-center gap-2 text-black group"
-          >
-            <i
-              class="fa-solid fa-bullhorn text-xl group-hover:text-sky-400"
-            ></i>
-            <p>{{item.title|truncatechars:50}}</p>
+        <a href="{% url 'advert' obj.id  %}">
+          <div class="p-4 flex flex-col gap-2">
+            <h4 class="text-black font-bold">@{{obj.author.username}}</h4>
+            <p>{{obj.title|truncatechars:100}}</p>
           </div>
         </a>
       </div>
