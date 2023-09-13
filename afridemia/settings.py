@@ -33,7 +33,7 @@ SECRET_KEY = 'django-insecure-cnp+n3wdx_8*77$rewd8)wwi99j)+0f2q892qu&u)y7t%#rvdw
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182',
-                 'afridemia.com', 'www.afridemaia.com']
+                 'afridemia.com', 'www.afridemia.com', 'www.afridemia.onrender.com']
 
 
 # Application definition
