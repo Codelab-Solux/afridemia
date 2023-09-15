@@ -10,7 +10,7 @@
       {% for obj in levels %}
       <a
         href="{% url 'schools' %}?query={{obj.name}}"
-        class="px-4 py-2 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-blue-200 hover:text-black transition duration-300 ease-in-out"
+        class="px-4 py-2 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-black transition duration-300 ease-in-out"
       >
         <img
           class="h-7 xl:h-10 object-contain"
@@ -86,7 +86,7 @@
       <!--  -->
       <a
         href="{% url 'tutors' %}?query={{obj.name}}"
-        class="px-4 py-1 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-green-200 hover:text-black transition duration-300 ease-in-out"
+        class="px-4 py-1 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-black transition duration-300 ease-in-out"
       >
         {{obj.name}}
         <img
