@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from accounts.models import CustomUser
 from django_countries.fields import CountryField
+from ckeditor.fields import RichTextField
 
 
 # Create your models here.
@@ -52,7 +53,7 @@ class Blogpost(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, default='')
     subtitle = models.CharField(max_length=255, blank=True, null=True)
-    content = models.TextField(blank=True, default='')
+    content = RichTextField(blank=True, default='')
     image = models.ImageField(upload_to='blogposts', blank=True, null=True)
     date = models.DateTimeField(auto_now=True)
 
@@ -72,7 +73,7 @@ class Advert(models.Model):
     target = models.CharField(max_length=50, blank=True,
                               null=True, choices=advert_targets, default='')
     title = models.CharField(max_length=128)
-    message = models.TextField()
+    message = RichTextField()
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -100,7 +101,7 @@ class Tutor(models.Model):
     tel = models.CharField(max_length=255, default='',)
     cel = models.CharField(max_length=255, default='', blank=True, null=True)
     # address = models.CharField(max_length=255, default='',)
-    bio = models.TextField(blank=True, null=True)
+    bio = RichTextField(blank=True, null=True)
     subjects = models.TextField(blank=True, null=True)
     grades = models.TextField(blank=True, null=True)
     is_verified = models.BooleanField(default=False)
@@ -122,7 +123,7 @@ class Tutor(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=128)
-    description = models.TextField(blank=True, null=True)
+    description = RichTextField(blank=True, null=True)
     image = models.ImageField(upload_to='subjects', blank=True, null=True)
 
     def __str__(self):
@@ -139,7 +140,7 @@ class ForumArticle(models.Model):
         Subject, on_delete=models.SET_NULL, blank=True, null=True)
     title = models.CharField(max_length=255, default='')
     subtitle = models.CharField(max_length=255, blank=True, null=True)
-    content = models.TextField(blank=True, default='')
+    content = RichTextField(blank=True, default='')
     # image = models.ImageField(upload_to='blogposts', blank=True, null=True)
     date = models.DateTimeField(auto_now=True)
 

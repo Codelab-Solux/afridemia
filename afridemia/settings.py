@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
     'dj_database_url',
     'django_countries',
+    'ckeditor',
     # 'storages',
 ]
 
@@ -94,17 +95,17 @@ WSGI_APPLICATION = 'afridemia.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.parse('postgres://afridemia_user:QoPxMPYISB6KGsSWkZU2oSH3fkTbrPB7@dpg-ck0t4r36fquc73amh510-a.frankfurt-postgres.render.com/afridemia')
+    # 'default': dj_database_url.parse('postgres://afridemia_user:QoPxMPYISB6KGsSWkZU2oSH3fkTbrPB7@dpg-ck0t4r36fquc73amh510-a.frankfurt-postgres.render.com/afridemia')
 
-    # 'default': {
-    #     'ENGINE': env('DATABASE_ENGINE'),
-    #     'NAME': env('DATABASE_NAME'),
-    #     'USER': env('DATABASE_USERNAME'),
-    #     'PASSWORD': env('DATABASE_PASSWORD'),
-    #     'HOST': env('DATABASE_HOST'),
-    #     'PORT': env('DATABASE_PORT'),
+    'default': {
+        'ENGINE': env('DATABASE_ENGINE'),
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USERNAME'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('DATABASE_HOST'),
+        'PORT': env('DATABASE_PORT'),
 
-    # }
+    }
 }
 
 
@@ -175,20 +176,20 @@ LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "accounts.CustomUser"  # !!! very important !!!
 
 
-CHANNEL_LAYERS = {
-    "default": {
-        "CONFIG": {
-            "hosts": [('localhost', '8080')],
-        },
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-    },
-}
-
 # CHANNEL_LAYERS = {
 #     "default": {
-#         "BACKEND": "channels.layers.InMemoryChannelLayer"
-#     }
+#         "CONFIG": {
+#             "hosts": [('localhost', '6379')],
+#         },
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#     },
 # }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Logging Configuration
 

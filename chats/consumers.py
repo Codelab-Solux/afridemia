@@ -24,7 +24,7 @@ class PrivateChatConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
-    async def disconnect(self):
+    async def disconnect(self, code):
         self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
@@ -74,7 +74,7 @@ class PrivateChatConsumer(AsyncWebsocketConsumer):
             ChatNotification.objects.create(chat=chat_obj, user=get_other_user)
 
 
-class NotificationConsumer(AsyncWebsocketConsumer):
+class ChatNotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         my_id = self.scope['user'].id
         self.room_group_name = f'{my_id}'
@@ -85,7 +85,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
-    async def disconnect(self):
+    async def disconnect(self, code):
         self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name

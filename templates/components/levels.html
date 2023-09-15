@@ -1,7 +1,11 @@
 {% load static %}
 <!--------------------------------------- levels --------------------------------------->
 
+{% if not levels %} {% include 'components/no_data.html' %}
+<!--    -->
+{% else %}
 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+  <!--  -->
   {% for obj in levels %}
   <a href="{% url 'schools' %}?query={{obj.name}}">
     <div
@@ -58,4 +62,6 @@
       </h4>
     </div> </a
   >{% endfor %}
+  <!--    -->
 </div>
+{% endif %}

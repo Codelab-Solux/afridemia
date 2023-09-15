@@ -19,24 +19,24 @@ function toggleNotifier(e) {
     ? ((e.name = "close"), notifications.classList.remove("hidden"))
     : ((e.name = "bellBtn"), notifications.classList.add("hidden"));
 }
-//  back to top button mechanism ---------------------------------------------------
-// const to_top_btn = $("#toTopBtn");
-// // When the user scrolls down 20px from the top of the document, show the button
-// window.onscroll = function () {
-//   if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-//     to_top_btn.removeClass("hidden");
-//     to_top_btn.addClass("block");
-//   } else {
-//     to_top_btn.removeClass("block");
-//     to_top_btn.addClass("hidden");
-//   }
-// };
 
-// // When the user clicks on the button, scroll to the top of the document
-// function toTop() {
-//   document.body.scrollTop = 0;
-//   document.documentElement.scrollTop = 0;
-// }
+//  back to top button mechanism ---------------------------------------------------
+const to_top_btn = $("#toTopBtn");
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function () {
+  if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+    to_top_btn.removeClass("hidden");
+    to_top_btn.addClass("block");
+  } else {
+    to_top_btn.removeClass("block");
+    to_top_btn.addClass("hidden");
+  }
+};
+// When the user clicks on the button, scroll to the top of the document
+function toTop() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
 
 //  tabs control ---------------------------------------------------
 function openTab(evt, cityName) {
@@ -117,20 +117,20 @@ executeRating(ratingStars);
 /* carousels ---------------------------------------------------------------------------------------------------- */
 const carousel = document.querySelector(".carousel");
 const slider = document.querySelector(".carousel-slider");
-// const prev = document.getElementById("prev");
-const next = document.getElementById("next");
+const prev = document.querySelector(".prev");
+const next = document.querySelector(".next");
 var carousel_direction = 0;
 
-// prev.addEventListener("click", () => {
-//   if (carousel_direction < 0) {
-//     slider.appendChild(slider.firstElementChild);
-//     carousel_direction = 1;
-//   }
-//   carousel.style.justifyContent = "flex-end";
-//   slider.style.transform = "translate(+20%)";
-// });
+prev.addEventListener("click", function () {
+  if (carousel_direction < 0) {
+    slider.appendChild(slider.firstElementChild);
+    carousel_direction = 1;
+  }
+  carousel.style.justifyContent = "flex-end";
+  slider.style.transform = "translate(+20%)";
+});
 
-next.addEventListener("click", () => {
+next.addEventListener("click", function () {
   if (carousel_direction > 0) {
     slider.appendChild(slider.lastElementChild);
     carousel_direction = -1;

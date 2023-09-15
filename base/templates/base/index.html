@@ -2,7 +2,9 @@
 <!--------------------------------------- hero section --------------------------------------->
 
 <section>
-  <div class="px-8 flex gap-4 justify-between w-full max-w-[1350px] mx-auto">
+  <div
+    class="px-8 flex gap-4 justify-between items-center w-full max-w-[1350px] mx-auto"
+  >
     <!--------------------------------------- levels --------------------------------------->
     <div class="flex flex-col gap-2 w-60">
       {% for obj in levels %}
@@ -27,51 +29,41 @@
       alt="image"
     /> -->
 
-    <div
-      class="carousel hidden md:block relative z-10 flex justify-start rounded-md w-full md:max-w-[400px] lg:max-w-[800px] h-[500px] overflow-hidden"
-    >
+    <div class="carousel hidden md:block">
       <!-- carousel slider -->
-      <div class="carousel-slider z-10">
+      <div class="carousel-slider">
         <img class="w-full" src="{% static 'images/1.png' %}" alt="image" />
         <img src="{% static 'images/2.png' %}" alt="image" />
         <img src="{% static 'images/3.png' %}" alt="image" />
         <img src="{% static 'images/4.png' %}" alt="image" />
         <img src="{% static 'images/5.png' %}" alt="image" />
-        <!-- <img
-          src="{% static 'images/6.png' %}"
-          alt="image"
-        />
-        <img
-         src="{% static 'images/7.png' %}"
-           alt="image"
-        /> -->
+        <img src="{% static 'images/6.png' %}" alt="image" />
+        <img src="{% static 'images/7.png' %}" alt="image" />
       </div>
       <!-- carousel controls -->
       <div>
-        <!-- <span
-          id="prev"
-          class="text-xl bg-white hover:bg-green-300 rounded-full px-4 py-2 z-30 absolute top-[45%] cursor-pointer left-0"
+        <span
+          class="prev text-xl bg-white hover:bg-green-300 rounded-full px-4 py-2 z-30 absolute top-[45%] cursor-pointer left-0"
         >
           <i class="fa-solid fa-angle-left"></i>
-        </span> -->
+        </span>
         <span
-          id="next"
-          class="text-xl bg-white hover:bg-green-300 rounded-full px-4 py-2 z-30 absolute top-[45%] cursor-pointer right-0"
+          class="next text-xl bg-white hover:bg-green-300 rounded-full px-4 py-2 z-30 absolute top-[45%] cursor-pointer right-0"
         >
           <i class="fa-solid fa-angle-right"></i>
         </span>
       </div>
 
       <!-- carousel indicators -->
-      <!-- <div class="absolute bottom-4 text-center flex">
-        <span class="dot" onclick="currentSlide(1)"></span>
-        <span class="dot" onclick="currentSlide(2)"></span>
-        <span class="dot" onclick="currentSlide(3)"></span>
-        <span class="dot" onclick="currentSlide(4)"></span>
-        <span class="dot" onclick="currentSlide(5)"></span>
-        <span class="dot" onclick="currentSlide(6)"></span>
-        <span class="dot" onclick="currentSlide(7)"></span>
-      </div> -->
+      <ul class="carousel-nav">
+        <li class="dot" onclick="currentSlide(1)"></li>
+        <li class="dot" onclick="currentSlide(2)"></li>
+        <li class="dot" onclick="currentSlide(3)"></li>
+        <li class="dot" onclick="currentSlide(4)"></li>
+        <li class="dot" onclick="currentSlide(5)"></li>
+        <li class="dot" onclick="currentSlide(6)"></li>
+        <li class="dot" onclick="currentSlide(7)"></li>
+      </ul>
     </div>
 
     <!-- <article
@@ -191,7 +183,7 @@
 <!--------------------------------------- explore --------------------------------------->
 
 <div class="bg-green-200 py-10 w-full">
-  <div class="p-8 mx-auto max-w-[1350px] flex flex-col">
+  <div class="px-8 mx-auto max-w-[1350px] flex flex-col">
     <article class="mb-8">
       <h4 class="mb-2 text-3xl text-black font-bold">
         Le hub academique d'afrique
@@ -259,7 +251,7 @@
       d'enseignement enrichissante, Afridemia est là pour vous offrir une
       expérience fluide et personnalisée.
     </p>
-    <div class="grid mt-10 gap-8 bg-green-100 rounded-md">
+    <div class="grid mt-10 gap-8 bg-green-200 rounded-md">
       <div class="text-center mt-12 mb-12">
         <h3 style="font-size: 18px; padding: 31px">
           N'hésitez pas à nous contacter pour toute question ou suggestion. Nous

@@ -315,11 +315,11 @@
           ><i class="fa-solid fa-pen-to-square"></i
         ></a>
         {% endif %}
-        <!-- <a
-          href="#schools"
+            <a href="{% url 'chat_page' school.manager.id %}"
+
           class="mt-4 px-4 py-3 rounded-md flex justify-between items-center text-black hover:text-white bg-green-200 hover:bg-green-600"
           ><i class="fa-solid fa-message"></i
-        ></a> -->
+        ></a>
         <a
           href="https://wa.me/{{school.whatsapp}}"
           class="mt-4 px-4 py-3 rounded-md text-white hover:text-white bg-green-500 hover:bg-green-700"
@@ -472,7 +472,7 @@
 
     <div
       id="academia"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <h3 class="pb-2 font-bold text-xl text-black">Pédaogie</h3>
    
@@ -529,7 +529,7 @@
 
     <div
       id="teachers"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >    
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Enseignants</h3>
@@ -578,7 +578,7 @@
 
     <div
       id="structures"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Structures</h3>
@@ -626,7 +626,7 @@
 
     <div
       id="articles"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
         <div class="mb-4 flex justify-between items-center">
       <h3 class="pb-2 font-bold text-xl text-black">Articles</h3>
@@ -676,7 +676,7 @@
 
     <div
       id="gallery"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Gallerie</h3>
@@ -705,7 +705,7 @@
 
     <div
       id="performance"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Examens</h3>
@@ -728,7 +728,7 @@
 
     <div
       id="preregs"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Préinscriptions</h3>
@@ -769,7 +769,7 @@
 
     <div
       id="reviews"
-      class="tabcontent lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
     >
       <div class="mb-4 flex justify-between items-center">
         <h3 class="pb-2 font-bold text-xl text-black">Annotations</h3>
