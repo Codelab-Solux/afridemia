@@ -117,8 +117,8 @@
     Ajoutez une nouvelle article à votre etablissement.
   </p>
 
-  <div class="mb-8 mx-auto rounded grid md:grid-cols-2 gap-8">
-    <article class="p-8 bg-sky-100 rounded-md">
+  <div class="mx-auto grid md:grid-cols-2 gap-8">
+    <article class="p-8 border-2 hover:border-green-300 rounded-md">
       {% if curr_obj %}
       <h3 class="mb-4 text-black text-2xl font-bold">Modifier cet article</h3>
       {% else %}
@@ -132,12 +132,8 @@
           action=""
           enctype="multipart/form-data"
         >
-          {% csrf_token %} {% for field in form %}
-          <div>
-            <h3 class="mb-1 text-black font-bold">{{field.label}}</h3>
-            {{field}}
-          </div>
-          {% endfor %}
+          {% csrf_token %} {{form.media}} {{form.as_p}}
+
           <div class="mt-4 flex gap-4 items-end">
             <input
               class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"

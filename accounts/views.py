@@ -71,7 +71,7 @@ def logoutUser(req):
 
 @login_required(login_url='login')
 def users(req):
-    if req.user.is_superuser:
+    if not req.user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER'))
 
     users = CustomUser.objects.all()

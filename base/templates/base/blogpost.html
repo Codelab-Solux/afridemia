@@ -113,7 +113,7 @@
     collectif en ajoutant un article à notre blog.
   </p>
 
-  <div class="mx-auto rounded grid md:grid-cols-2 gap-8">
+  <div class="mx-auto grid md:grid-cols-2 gap-8">
     <article class="p-8 border-2 hover:border-green-300 rounded-md">
       {% if curr_ad %}
       <h3 class="mb-4 text-black text-2xl font-bold">Modifier Cet Article</h3>
@@ -128,15 +128,7 @@
           action=""
           enctype="multipart/form-data"
         >
-          {% csrf_token %}
-
-          <!-- {% for field in form %}
-          <div>
-            <h3 class="mb-1 text-black font-bold">{{field.label}}</h3>
-            {{field}}
-          </div>
-          {% endfor %} -->
-          {{form.media}} {{form.as_p}}
+          {% csrf_token %} {{form.media}} {{form.as_p}}
           <div class="mt-4 flex gap-4 items-end">
             <input
               class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"

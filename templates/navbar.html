@@ -45,27 +45,27 @@
             >Informations<i class="fa-solid fa-caret-down ml-2"></i
           ></a>
           <div
-            class="hidden absolute top-10 z-100 bg-gray-100 px-4 group-hover:flex group-hover:flex-col rounded-md"
+            class="hidden absolute top-10 z-100 bg-green-100 p-2 group-hover:flex group-hover:flex-col rounded-md"
           >
             <a
+              href="{% url 'pricing' %}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{pricing_page}}"
+              >Tarif</a
+            >
+            <a
               href="{% url 'blog' %}"
-              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{blog_page}}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{blog_page}}"
               >Blog</a
             >
             <a
-              href="{% url 'adverts' %}"
-              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{adverts_page}}"
-              >Annonces</a
-            >
-            <a
               href="{% url 'forum' %}"
-              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{forum_page}}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{forum_page}}"
               >Forum</a
             >
             <a
-              href="{% url 'pricing' %}"
-              class="hover:text-green-500 px-3 py-2  w-full transition ease-in duration-200 {{pricing_page}}"
-              >Tarif</a
+              href="{% url 'adverts' %}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{adverts_page}}"
+              >Annonces</a
             >
           </div>
         </div>

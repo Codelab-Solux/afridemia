@@ -13,11 +13,13 @@ urlpatterns = [
     path('adverts/create', create_advert, name='create_advert'),
     path('adverts/<str:pk>/', advert, name='advert'),
     path('adverts/<str:pk>/edit', edit_advert, name='edit_advert'),
+    #     path('adverts/<str:pk>/delete', delete_advert, name='delete_advert'),
     #
     path('tutors/', tutors, name='tutors'),
     path('tutors/<str:pk>/', tutor, name='tutor'),
     path('tutors/create', create_tutor, name='create_tutor'),
     path('tutors/<str:pk>/edit', edit_tutor, name='edit_tutor'),
+    #     path('tutors/<str:pk>/delete', delete_tutor, name='delete_tutor'),
     #
     path('forum/', forum, name='forum'),
     path('forum/<str:pk>/', forum_article, name='forum_article'),
@@ -25,6 +27,8 @@ urlpatterns = [
          name='create_forum_article'),
     path('forum/article/<str:pk>/edit',
          edit_forum_article, name='edit_forum_article'),
+    #     path('forum/article/<str:pk>/delete',
+    #          delete_forum_article, name='delete_forum_article'),
     path('pricing/', pricing, name='pricing'),
 
     # -----------------------------------------------------------

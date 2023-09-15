@@ -73,7 +73,7 @@ class Advert(models.Model):
     target = models.CharField(max_length=50, blank=True,
                               null=True, choices=advert_targets, default='')
     title = models.CharField(max_length=128)
-    message = RichTextField()
+    message = models.TextField()
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -101,7 +101,7 @@ class Tutor(models.Model):
     tel = models.CharField(max_length=255, default='',)
     cel = models.CharField(max_length=255, default='', blank=True, null=True)
     # address = models.CharField(max_length=255, default='',)
-    bio = RichTextField(blank=True, null=True)
+    bio = models.TextField(blank=True, null=True)
     subjects = models.TextField(blank=True, null=True)
     grades = models.TextField(blank=True, null=True)
     is_verified = models.BooleanField(default=False)
@@ -123,7 +123,7 @@ class Tutor(models.Model):
 
 class Subject(models.Model):
     name = models.CharField(max_length=128)
-    description = RichTextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='subjects', blank=True, null=True)
 
     def __str__(self):

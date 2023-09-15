@@ -200,7 +200,7 @@ def edit_advert(req, pk):
         form = AdvertForm(req.POST, instance=curr_ad)
         if form.is_valid():
             form.save()
-            return redirect('advert')
+            return redirect('adverts')
     context = {
         "edit_advert_page": "active", "title": 'edit_advert', "user": user, "form": form, "curr_ad": curr_ad}
     return render(req, 'base/advert.html', context)

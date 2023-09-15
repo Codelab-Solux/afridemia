@@ -66,7 +66,7 @@
           <h4 class="mb-2 text-white text-lg font-bold">Contacts</h4>
           <div class="py-2 flex flex-wrap gap-4 items-center">
             <a
-              href="#schools"
+              href="{% url 'chat_page' curr_tut.user.id %}"
               class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
               >Contacter<i class="fa-solid fa-message ml-2"></i
             ></a>

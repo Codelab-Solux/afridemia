@@ -80,11 +80,11 @@ class School(models.Model):
     telegram = models.CharField(
         max_length=255, default='', blank=True, null=True)
     year_founded = models.IntegerField(blank=True, null=True)
-    mgt_quote = RichTextField(blank=True, null=True)
-    history = RichTextField(blank=True, null=True)
-    description = RichTextField(blank=True, null=True)
-    pedagogy = RichTextField(blank=True, null=True)
-    ad_copy = RichTextField(blank=True, null=True)
+    mgt_quote = models.TextField(blank=True, null=True)
+    history = models.TextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+    pedagogy = models.TextField(blank=True, null=True)
+    ad_copy = models.TextField(blank=True, null=True)
     resumption_date = models.DateField(blank=True, null=True)
     opening_hour = models.TimeField(blank=True, null=True)
     closing_hour = models.TimeField(blank=True, null=True)
@@ -197,7 +197,7 @@ class Faculty(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
-    description = RichTextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -210,7 +210,7 @@ class Cursus(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
-    description = RichTextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -225,7 +225,7 @@ class Department(models.Model):
     faculty = models.ForeignKey(
         Serie, on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=128)
-    description = RichTextField(blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     schoolfees = models.IntegerField(default='0', blank=True, null=True)
     staff_number = models.IntegerField(default='0', blank=True, null=True)
     students_number = models.IntegerField(default='0', blank=True, null=True)
@@ -247,7 +247,7 @@ class Classroom(models.Model):
     name = models.CharField(max_length=255, default='')
     fees = models.IntegerField(default='0', blank=True, null=True)
     size = models.IntegerField(default='0', blank=True, null=True)
-    overview = RichTextField(blank=True, null=True)
+    overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
         upload_to='schools/classrooms', blank=True, null=True)
 
@@ -265,7 +265,7 @@ class Structure(models.Model):
         max_length=50, default='', choices=infrastructures)
     name = models.CharField(max_length=255)
     capacity = models.IntegerField(default='0')
-    overview = RichTextField(blank=True, null=True)
+    overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
         upload_to='schools/structures', blank=True, null=True)
 

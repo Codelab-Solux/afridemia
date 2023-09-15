@@ -1,5 +1,5 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
-<div class="px-8 w-full max-w-[1350px] mx-auto">
+<div class="pb-8 px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav
     class="mb-2 mx-auto py-2 flex gap-4 items-center text-xs w-full max-w-[1350px]"
@@ -29,7 +29,7 @@
     écoles et des enseignants privés de confiance.
   </p>
 
-  <div class="mt-4 mb-8 p-4 lg:p-10 mx-auto border-2 w-full rounded-md">
+  <div class="p-4 lg:p-10 mx-auto border-2 w-full rounded-md">
     <article class="flex flex-col md:flex-row text-left gap-8 items-center">
       <i
         class="mb-2 fa-solid fa-bullhorn text-gray-300 text-9xl group-hover:text-green-400"
@@ -46,7 +46,7 @@
           ></a>
           {% endif %}
           <a
-            href="#schools"
+            href="{% url 'chat_page' curr_ad.author.id %}"
             class="mt-4 px-4 py-2 rounded-md flex justify-between items-center bg-sky-100 hover:bg-sky-300 text-black"
             >Contacter<i class="fa-solid fa-message ml-2"></i
           ></a>
@@ -63,8 +63,8 @@
     trouvez l'école ou l'enseignant idéal.
   </p>
 
-  <div class="mx-auto rounded grid md:grid-cols-2 gap-8">
-    <article class="p-8 bg-gray-100 rounded-md">
+  <div class="mx-auto grid md:grid-cols-2 gap-8">
+    <article class="p-8 border-2 hover:border-green-300 rounded-md">
       {% if curr_ad %}
       <h3 class="mb-4 text-black text-2xl font-bold">
         Modifier Cette {{curr_ad.get_type_display|title}}
@@ -106,7 +106,7 @@
     </article>
     <img
       class="w-full h-full rounded-md object-cover"
-      src="{% static 'imgs/handshake.jpg' %}"
+      src="{% static 'vectors/advert.png' %}"
       alt="curr_ad image"
     />
   </div>
