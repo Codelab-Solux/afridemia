@@ -95,17 +95,17 @@ WSGI_APPLICATION = 'afridemia.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # 'default': dj_database_url.parse('postgres://afridemia_user:QoPxMPYISB6KGsSWkZU2oSH3fkTbrPB7@dpg-ck0t4r36fquc73amh510-a.frankfurt-postgres.render.com/afridemia')
+    'default': dj_database_url.parse('postgres://afridemia_user:QoPxMPYISB6KGsSWkZU2oSH3fkTbrPB7@dpg-ck0t4r36fquc73amh510-a.frankfurt-postgres.render.com/afridemia')
 
-    'default': {
-        'ENGINE': env('DATABASE_ENGINE'),
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USERNAME'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('DATABASE_HOST'),
-        'PORT': env('DATABASE_PORT'),
+    # 'default': {
+    #     'ENGINE': env('DATABASE_ENGINE'),
+    #     'NAME': env('DATABASE_NAME'),
+    #     'USER': env('DATABASE_USERNAME'),
+    #     'PASSWORD': env('DATABASE_PASSWORD'),
+    #     'HOST': env('DATABASE_HOST'),
+    #     'PORT': env('DATABASE_PORT'),
 
-    }
+    # }
 }
 
 
