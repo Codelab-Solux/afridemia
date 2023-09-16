@@ -111,6 +111,48 @@ body {
   background-color: #4fd862;
 }
 
+/* animations ---------------------------------------------------z------------------------------------------------- */
+.fadeout {
+  opacity: 0;
+  transition: ease-in 1s;
+  transition-delay: 2s;
+}
+
+.fadein {
+  opacity: 1;
+  transition: ease-out 1s;
+}
+
+.slideout {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateX(-100%);
+  transition: all 1s;
+}
+
+.slidein {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateX(0);
+}
+
+/* .stagerout {
+  opacity: 0;
+}
+.stagerin {
+  opacity: 1;
+  transition: ease-in 1s;
+}
+.stagerin:nth-child(2) {
+  transition-delay: 200ms;
+} */
+
+@media (prefers-redusced-motion) {
+  .fadetext {
+    transition: none;
+  }
+}
+
 /* client folder styles ---------------------------------------------------------------------------------------------------- */
 
 /* Styles de base pour l'accordéon */

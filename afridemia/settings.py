@@ -32,9 +32,9 @@ SECRET_KEY = 'django-insecure-cnp+n3wdx_8*77$rewd8)wwi99j)+0f2q892qu&u)y7t%#rvdw
 # DEBUG = eval(env('DEBUG'))
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182',
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182','http://*', 'https://*',
                  'afridemia.com', 'www.afridemia.com', 'afridemia.onrender.com', 'www.afridemia.onrender.com']
-
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
 
 # Application definition
 
