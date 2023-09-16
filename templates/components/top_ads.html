@@ -2,22 +2,26 @@
 <!--------------------------------------- rec_ads --------------------------------------->
 <section id="rec_ads" class="py-10 w-full bg-blue-950">
   <div class="px-8 w-full max-w-[1350px] mx-auto w-full">
-    <div class="w-full flex justify-between items-center">
-      <h3 class="text-3xl text-white font-bold">Demandes et Offres récentes</h3>
-      <a
-        class="hidden md:inline text-white px-4 py-2 rounded-md group"
-        href="{% url 'adverts' %}"
-        ><i
-          class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
-        ></i>
-      </a>
+    <div class="slideout">
+      <div class="w-full flex justify-between items-center">
+        <h3 class="text-3xl text-white font-bold">
+          Demandes et Offres récentes
+        </h3>
+        <a
+          class="hidden md:inline text-white px-4 py-2 rounded-md group"
+          href="{% url 'adverts' %}"
+          ><i
+            class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
+          ></i>
+        </a>
+      </div>
+      <p class="mb-4 w-full text-gray-300 max-w-lg text-lg">
+        Restez à la pointe des dernières nouvelles et opportunités éducatives
+        grâce à nos annonces récentes. Votre prochaine étape commence ici.
+      </p>
     </div>
-    <p class="mb-4 w-full text-gray-300 max-w-lg text-lg">
-      Restez à la pointe des dernières nouvelles et opportunités éducatives
-      grâce à nos annonces récentes. Votre prochaine étape commence ici.
-    </p>
     {% if not rec_ads %}
-    <div class="py-20 flex-col text-gray-200 text-center m-auto w-full">
+    <div class="fadeout py-20 flex-col text-gray-200 text-center m-auto w-full">
       <i class="fa-solid fa-folder"></i>
       <p class="p-2 max-w-[400px] mx-auto">
         Aucune données disponible pour le moment
@@ -25,7 +29,9 @@
     </div>
     {% else %}
 
-    <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div
+      class="fadeout grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+    >
       {% for obj in rec_ads %}
       <div
         class="relative h-full flex flex-col bg-gray-200 hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden"

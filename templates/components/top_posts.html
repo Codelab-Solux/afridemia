@@ -4,25 +4,27 @@
   id="rec_posts"
   class="px-8 py-10 w-full max-w-[1350px] mx-auto bg-white w-full text-left"
 >
-  <div class="w-full my-2 flex justify-between items-center">
-    <h3 class="text-3xl text-black font-bold">Articles récents</h3>
-    <a
-      class="hidden md:inline text-black px-4 py-2 rounded-md group"
-      href="{% url 'blog' %}"
-      ><i
-        class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
-      ></i>
-    </a>
-  </div>
+  <div class="slideout">
+    <div class="w-full my-2 flex justify-between items-center">
+      <h3 class="text-3xl text-black font-bold">Articles récents</h3>
+      <a
+        class="hidden md:inline text-black px-4 py-2 rounded-md group"
+        href="{% url 'blog' %}"
+        ><i
+          class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
+        ></i>
+      </a>
+    </div>
 
-  <p class="my-4 w-full max-w-lg text-lg">
-    Explorez des perspectives éducatives captivantes grâce à nos articles
-    récents. Apprenez, grandissez et évoluez avec nous.
-  </p>
+    <p class="my-4 w-full max-w-lg text-lg">
+      Explorez des perspectives éducatives captivantes grâce à nos articles
+      récents. Apprenez, grandissez et évoluez avec nous.
+    </p>
+  </div>
 
   {% if not rec_posts %} {% include 'components/no_data.html' %} {% else %}
 
-  <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+  <div class="fadeout grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
     {% for item in rec_posts %}
     <div
       class="relative flex flex-col bg-gray-100 hover:shadow-md hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden group"

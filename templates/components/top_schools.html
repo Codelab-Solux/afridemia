@@ -2,89 +2,82 @@
 <!--------------------------------------- schools --------------------------------------->
 <section id="schools" class="bg-white w-full">
   <div class="p-8 py-10 w-full max-w-[1350px] mx-auto text-left">
-    <div class="w-full my-2 flex justify-between items-center">
-      <h3 class="text-3xl text-black font-bold">Etablissements recommandés</h3>
-      <a
-        class="hidden md:inline text-black px-4 py-2 rounded-md group"
-        href="{% url 'schools' %}"
-        ><i
-          class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
-        ></i>
-      </a>
+    <div class="slideout">
+      <div class="w-full my-2 flex justify-between items-center">
+        <h3 class="text-3xl text-black font-bold">
+          Etablissements recommandés
+        </h3>
+        <a
+          class="hidden md:inline text-black px-4 py-2 rounded-md group"
+          href="{% url 'schools' %}"
+          ><i
+            class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
+          ></i>
+        </a>
+      </div>
+      <p class="mb-4 w-full max-w-lg text-lg">
+        Découvrez votre chemin vers l'excellence éducative avec nos écoles
+        recommandées, où chaque avenir trouve sa voie.
+      </p>
     </div>
-    <p class="mb-4 w-full max-w-lg text-lg">
-      Découvrez votre chemin vers l'excellence éducative avec nos écoles
-      recommandées, où chaque avenir trouve sa voie.
-    </p>
 
     {% if not schools %} {% include 'components/no_data.html' %} {% else %}
-    <!-- Slider main container -->
-    <div class="swiper">
-      <!-- Additional required wrapper -->
+    <div
+      class="fadeout grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+    >
+      {% for obj in schools %}
       <div
-        class="swiper-wrapper grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        class="relative flex flex-col bg-green-50 hover:shadow-md hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden group"
       >
-        {% for obj in schools %}
-        <div
-          class="swiper-slide relative flex flex-col bg-green-50 hover:shadow-md hover:bg-white rounded-md transition duration-300 ease-in-out overflow-hidden group"
-        >
-          <!--  -->
-          {% if obj.manager == user %}
-          <a
-            class="absolute top-4 right-4 px-3 py-2 text-black bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
-            href="{% url 'edit_school' obj.id %}"
-            ><i class="fa-solid fa-pen-to-square text-sm"></i
-          ></a>
-          {% endif %}
-          <span
-            class="absolute left-4 top-4 p-2 bg-sky-500 text-white text-xs rounded-md z-30"
-            ><i class="fa-solid fa-bullhorn"></i
-          ></span>
-          <a href="{% url 'school' obj.id %}">
-            <div class="bg-gray-100 max-h-40 overflow-hidden text-center">
-              {% if obj.thumbnail %}
-              <img
-                class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
-                src="{{obj.thumbnail.url}}"
-                alt="image"
-              />
-              {% else %}
-              <img
-                class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
-                src="{% static 'vectors/school.png' %}"
-                alt="image"
-              />
-              {% endif %}
-            </div>
-            <div class="px-4 py-2 rounded-b-md">
-              <h4 class="text-black text-xl font-bold">{{obj.name}}</h4>
-              <p class="text-gray-800">
-                <i class="fa-solid fa-location-dot text-sky-500"></i>
-                {{obj.address}}
-              </p>
-              <ul class="my-2 flex flex-wrap gap-2">
-                {% for level in obj.levels.all %}
-                <!--  -->
-                <li
-                  class="px-2 py-1 rounded-md text-xs text-gray-800 bg-green-200 transition duration-300 ease-in-out"
-                >
-                  {{level.name|title}}
-                </li>
-                <!--  -->
-                {% endfor %}
-              </ul>
-            </div>
-          </a>
-        </div>
-        {% endfor %}
+        <!--  -->
+        {% if obj.manager == user %}
+        <a
+          class="absolute top-4 right-4 px-3 py-2 text-black bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+          href="{% url 'edit_school' obj.id %}"
+          ><i class="fa-solid fa-pen-to-square text-sm"></i
+        ></a>
+        {% endif %}
+        <span
+          class="absolute left-4 top-4 p-2 bg-sky-500 text-white text-xs rounded-md z-30"
+          ><i class="fa-solid fa-bullhorn"></i
+        ></span>
+        <a href="{% url 'school' obj.id %}">
+          <div class="bg-gray-100 max-h-40 overflow-hidden text-center">
+            {% if obj.thumbnail %}
+            <img
+              class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
+              src="{{obj.thumbnail.url}}"
+              alt="image"
+            />
+            {% else %}
+            <img
+              class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
+              src="{% static 'vectors/school.png' %}"
+              alt="image"
+            />
+            {% endif %}
+          </div>
+          <div class="px-4 py-2 rounded-b-md">
+            <h4 class="text-black text-xl font-bold">{{obj.name}}</h4>
+            <p class="text-gray-800">
+              <i class="fa-solid fa-location-dot text-sky-500"></i>
+              {{obj.address}}
+            </p>
+            <ul class="my-2 flex flex-wrap gap-2">
+              {% for level in obj.levels.all %}
+              <!--  -->
+              <li
+                class="px-2 py-1 rounded-md text-xs text-gray-800 bg-green-200 transition duration-300 ease-in-out"
+              >
+                {{level.name|title}}
+              </li>
+              <!--  -->
+              {% endfor %}
+            </ul>
+          </div>
+        </a>
       </div>
-
-      <!-- If we need pagination -->
-      <div class="swiper-pagination"></div>
-
-      <!-- If we need navigation buttons -->
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-button-next"></div>
+      {% endfor %}
     </div>
     {% endif %}
   </div>

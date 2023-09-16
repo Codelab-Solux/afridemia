@@ -22,7 +22,7 @@ function toggleNotifier(e) {
 
 //  back to top button mechanism ---------------------------------------------------
 const to_top_btn = $("#toTopBtn");
-// When the user scrolls down 20px from the top of the document, show the button
+// When the user scrolls down 20px from the top of the document, fadein the button
 window.onscroll = function () {
   if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
     to_top_btn.removeClass("hidden");
@@ -152,3 +152,31 @@ slider.addEventListener("transitionend", function () {
     slider.style.transition = "all 0.5s";
   });
 });
+/* animations ---------------------------------------------------------------------------------------------------- */
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    console.log(entry);
+    if (entry.isIntersecting) {
+      entry.target.classList.add("fadein");
+    } else {
+      entry.target.classList.remove("fadein");
+    }
+    if (entry.isIntersecting) {
+      entry.target.classList.add("slidein");
+    } else {
+      entry.target.classList.remove("slidein");
+    }
+    if (entry.isIntersecting) {
+      entry.target.classList.add("stagerin");
+    } else {
+      entry.target.classList.remove("stagerin");
+    }
+  });
+});
+const fadingElements = document.querySelectorAll(".fadeout");
+fadingElements.forEach((e) => observer.observe(e));
+const slidingElements = document.querySelectorAll(".slideout");
+slidingElements.forEach((e) => observer.observe(e));
+const stageringElements = document.querySelectorAll(".stagerout");
+stageringElements.forEach((e) => observer.observe(e));
