@@ -34,7 +34,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182','http://*', 'https://*',
                  'afridemia.com', 'www.afridemia.com', 'afridemia.onrender.com', 'www.afridemia.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*']
+CSRF_TRUSTED_ORIGINS = ['https://afridemia.onrender.com/*']
 
 # Application definition
 
