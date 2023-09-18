@@ -3,7 +3,7 @@
 *.pyc
 .env
 .conf
-google_apikey.json
+.json
 venv/
 __pycache__
 db.sqlite3
