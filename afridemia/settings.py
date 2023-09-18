@@ -30,11 +30,11 @@ SECRET_KEY = 'django-insecure-cnp+n3wdx_8*77$rewd8)wwi99j)+0f2q892qu&u)y7t%#rvdw
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # DEBUG = eval(env('DEBUG'))
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182','http://*', 'https://*',
                  'afridemia.com', 'www.afridemia.com', 'afridemia.onrender.com', 'www.afridemia.onrender.com']
-CSRF_TRUSTED_ORIGINS = ['127.0.0.1','https://afridemia.onrender.com/*']
+CSRF_TRUSTED_ORIGINS = ['http://', 'https://','https://afridemia.onrender.com/*']
 
 # Application definition
 
@@ -55,8 +55,8 @@ INSTALLED_APPS = [
     'dj_database_url',
     'django_countries',
     'ckeditor',
-    # 'storages',
-]
+    'gdstorage',
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -146,25 +146,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static',]
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media/'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media/'
 
 # ---------------------------- static files in production----------------------------
-# AWS_ACCESS_KEY_ID = env('STATIC_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = env('STATIC_SECRET_KEY')
 
-# AWS_STORAGE_BUCKET_NAME = env('STATIC_BUCKET_NAME')
-# AWS_S3_ENDPOINT_URL = env('STATIC_ENDPOINT_URL')
-# AWS_S3_OBJECT_PARAMETERS = {
-#     'CacheControl': 'max-age=86400',
-# }
-# AWS_LOCATION = 'static'
-# AWS_DEFAULT_ACL = 'public-read'
-
-# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-# STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
-# STATIC_ROOT = 'static/'
+AWS_S3_CUSTOM_DOMAIN = 'https://drive.google.com/drive/folders/1BB3VywdKdZ6vcDRppKwdHwv1wktIGhfA?usp=drive_link'
+DEFAULT_FILE_STORAGE = 'storages.backends.google_drive.GoogleDriveStorage'
+GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR / 'google_apikey.json'
+GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '1BB3VywdKdZ6vcDRppKwdHwv1wktIGhfA' # L'ID du dossier partagé
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -174,7 +164,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "accounts.CustomUser"  # !!! very important !!!
-
 
 # CHANNEL_LAYERS = {
 #     "default": {

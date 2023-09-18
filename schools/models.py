@@ -5,13 +5,17 @@ from accounts.models import CustomUser
 from django_countries.fields import CountryField
 # from multiselectfield import MultiSelectField
 from ckeditor.fields import RichTextField
+from gdstorage.storage import GoogleDriveStorage
+
+# Define Google Drive Storage
+gd_storage = GoogleDriveStorage()
 
 
 class EducationLevel(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='levels', blank=True, null=True)
+        upload_to='levels', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return self.name
@@ -100,13 +104,13 @@ class School(models.Model):
 
     # files
     thumbnail = models.ImageField(
-        upload_to='schools/thumbnails', blank=True, null=True)
+        upload_to='schools/thumbnails', blank=True, null=True, storage=gd_storage)
     banner = models.ImageField(
-        upload_to='schools/banners', blank=True, null=True)
+        upload_to='schools/banners', blank=True, null=True, storage=gd_storage)
     crest = models.ImageField(
-        upload_to='schools/crests', blank=True, null=True)
+        upload_to='schools/crests', blank=True, null=True, storage=gd_storage)
     certificate = models.FileField(
-        upload_to='schools/cerificate', blank=True, null=True)
+        upload_to='schools/cerificate', blank=True, null=True, storage=gd_storage)
     date_added = models.DateTimeField(auto_now=True)
 
     def update_avg_rating(self):
@@ -159,7 +163,7 @@ class Teacher(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
     image = models.ImageField(
-        upload_to='schools/teachers', blank=True, null=True)
+        upload_to='schools/teachers', blank=True, null=True, storage=gd_storage)
     fullname = models.CharField(max_length=255)
     designation = models.CharField(
         max_length=50, default='', choices=designations)
@@ -230,7 +234,7 @@ class Department(models.Model):
     staff_number = models.IntegerField(default='0', blank=True, null=True)
     students_number = models.IntegerField(default='0', blank=True, null=True)
     image = models.ImageField(
-        upload_to='schools/departments', blank=True, null=True)
+        upload_to='schools/departments', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.name} - {self.school}'
@@ -249,7 +253,7 @@ class Classroom(models.Model):
     size = models.IntegerField(default='0', blank=True, null=True)
     overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='schools/classrooms', blank=True, null=True)
+        upload_to='schools/classrooms', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.name} - {self.school}'
@@ -267,7 +271,7 @@ class Structure(models.Model):
     capacity = models.IntegerField(default='0')
     overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='schools/structures', blank=True, null=True)
+        upload_to='schools/structures', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.type} {self.name} - {self.school}'
@@ -283,7 +287,7 @@ class SchoolArticle(models.Model):
     content = RichTextField(blank=True, default='')
     date = models.DateTimeField(auto_now=True)
     image = models.ImageField(
-        upload_to='schools/school_articles', blank=True, null=True)
+        upload_to='schools/school_articles', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.title} - {self.school}'
@@ -296,7 +300,7 @@ class Gallery(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
     images = models.FileField(
-        upload_to='schools/gallerie', blank=True, null=True)
+        upload_to='schools/gallerie', blank=True, null=True, storage=gd_storage)
 
 
 class Performance(models.Model):

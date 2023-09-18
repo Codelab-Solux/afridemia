@@ -3,7 +3,10 @@ from django.urls import reverse
 from accounts.models import CustomUser
 from django_countries.fields import CountryField
 from ckeditor.fields import RichTextField
+from gdstorage.storage import GoogleDriveStorage
 
+# Define Google Drive Storage
+gd_storage = GoogleDriveStorage()
 
 # Create your models here.
 
@@ -54,7 +57,7 @@ class Blogpost(models.Model):
     title = models.CharField(max_length=255, default='')
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     content = RichTextField(blank=True, default='')
-    image = models.ImageField(upload_to='blogposts', blank=True, null=True)
+    image = models.ImageField(upload_to='blogposts', blank=True, null=True, storage=gd_storage)
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -112,7 +115,7 @@ class Tutor(models.Model):
         max_length=255, blank=True, null=True)
     linkedin_link = models.CharField(
         max_length=255, blank=True, null=True)
-    image = models.ImageField(upload_to='tutors', blank=True, null=True)
+    image = models.ImageField(upload_to='tutors', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.user.last_name} - {self.user.first_name}'
@@ -124,7 +127,7 @@ class Tutor(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='subjects', blank=True, null=True)
+    image = models.ImageField(upload_to='subjects', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return self.name
@@ -141,7 +144,7 @@ class ForumArticle(models.Model):
     title = models.CharField(max_length=255, default='')
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     content = RichTextField(blank=True, default='')
-    # image = models.ImageField(upload_to='blogposts', blank=True, null=True)
+    # image = models.ImageField(upload_to='blogposts', blank=True, null=True, storage=gd_storage)
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):

@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "afridemia-399415",
+  "private_key_id": "b32d68bea8deae55bf088479adb5b7153d38f2dd",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCrMZVTxhhC0eSn\nIMzw9ypVgdOVcNhV96FHZvkyPXARplN54emsvUBoGc/u8xgTI3qGeRKf6uLUjEPV\n/jfL1CBUw0vpsSg7joLV8uQOx4RkEP6DdbVNwHPU5NrDe7D+Os/XKc/yDagApgy2\nMGsFM3/0jtF1FnvqYVJjFWEYQOsY1EhO6ee2dYBPTs6siSCBUpTCWEB47M3m6Oov\n+zqcEvzADAeM/bhXoDpv6wY/gfh5ClRkxzFQV7Te2XwH1O7lDwE0zvoTfCBEaBsf\neh7viv0Usy/B41Ve3G/bxUNyftJqe7U1PgBaUT3XnQgxKEZS8E3RDOy/yXZi0QKq\nGWib6BdrAgMBAAECggEAHDXJ/SmOEujCjJXXn7ejFr8TjjMvuw7Y2UrLMq+0GXx2\nkgWbu5beF6l1PdN6OqEkjidCXe7XXR4WCZvgNuroPv+FsWc7kYDc54OkeBkBpHm2\nbxRFAaB+lez2bbMiyeoIGNUvipwcfKrgOl+FKzC+255zPp+rYMaTzHcX7ma4Nvlz\nBLhwxiYwGkgAHifH+NbNqBXcjL8TNTcy1hRukuRzOJk319E5spO/s9qqGg/FgLGr\nfksx2yuEe5esuiutMOxDT7q7tI/l2a8WNL2PI56YhtAnM77czqCZXe+dFlFQLIy2\nOpYWPNJwmpCvBAptnxC4gvzMo9bx31PV9TOzP+XeXQKBgQDkdjCAVEs6yiKf0tJg\nkOWRv6nmQe/zY6vLN8EpgSoqg3ctGi95K9ZDpjMlK9ZGYn7EGgsz4DuciNnCUDl0\nkGO32m188mVRrdniEkugkCPTH1KmV7TphbLuPtOJP0r0xAlI45WTCYrKCBHnMl1i\nj6Aut6mdHtdDuJjTGSHX5+tyLQKBgQC/1DuvgND7QPivzQW4Iy7hryUZMKHB0TTA\nf9j02mh7Eqw9Tvlmp/S4iWYA/XBHLiOjKWy0qtpt3Dk/2sCCDl+jkt5IxSvY2bBl\nXB/JpJ2NFRDviZayjFA6bT0hu3vejeEwZeTzFXkzQCV1AvpOq/etUrLikktk4Ii6\nW2P045tm9wKBgQDYEowWoyKvjIOowvyjxgbJjQtEMfKeMBNH1QiEl5vor4PkjVJ+\n+J3iR2sx6b7zvK4GDFeyDY5zot7JL5TXkMQvG4/Xz21SDen3LbSHPCwVvhcuKd95\nyTCMsbDhqpHa4xmg7VYGxcyU/YLpNbIqyIoIBT6O0p9ndkxbwvZGPBtrVQKBgQCq\nYfXJgp8cK683ZuEnlohziD9pSlrCbfFu8Z9gjAW1GvbFVboLxi6FIfTp+DGb541b\nxNV6+y4b2jk3UDMg0Wd9QFwTQp4Zc/FLdjH9xiryPr3WJN0nJZ2054YeygnRuS9E\n75wVlQMb1GPwtH5jFjddSVD+EXbJ2O1YqQf1YZyMLQKBgQCEN7MVH2Nrj3hrTCjp\nYkuHV/oqNdMhYRXRKVRryTUNuRXUtd822hy8ix3pQm64DGkldulkbxzUdqDrgn8x\nm4B+UEnRthxe/mYhvrCWvbpvrQNqrM/ZhFgBiNo/kgerBam4CKKYnOI/NeLiFMvj\nS4uLzTBq2N25n8GQTPdN4CK99g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "afridemia@afridemia-399415.iam.gserviceaccount.com",
+  "client_id": "113993040022640857914",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/afridemia%40afridemia-399415.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
