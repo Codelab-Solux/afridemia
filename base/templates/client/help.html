@@ -1,0 +1,125 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<!-------------------------------------------------------------------  banner -------------------------------------------------------------------------------->
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-16">
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/sup.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+      <div class="">
+        <h1
+          class="text-black my-4 text-5xl font-bold leading-tight"
+          style="font-size: 60px"
+        >
+          Nous sommes là pour vous aider !
+        </h1>
+
+        <p class="leading-normal text-2xl mb-8">
+          Notre équipe de support dévouée est prête à répondre à vos questions
+          et à résoudre vos problèmes pour vous offrir une expérience fluide et
+          agréable.
+        </p>
+
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-------------------------------------------------------------------  main -------------------------------------------------------------------------------->
+
+<section class="bg-[#f8f8f7] py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <h2
+      class="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800"
+    >
+      Comment pouvons-nous vous aider
+    </h2>
+    <div class="grid md:grid-cols-2 mt-10 gap-8">
+      <div
+        class="p-8 w-full rounded-md overflow-hidden hover:shadow-lg bg-white sm:ml-32 md:ml-4 lg:ml-0"
+        style="text-align: -webkit-center"
+      >
+        <a href="faq.html">
+          <img
+            class="w-32"
+            src="{% static 'assets/faq.svg' %}"
+            alt="Description de l'image"
+          />
+          <div class="px-6 py-4 text-center">
+            <div class="font-bold text-xl mb-2">Foire aux questions (FAQ)</div>
+            <p class="text-gray-700 text-base">
+              Afridemia fournie une section FAQ sur son site web ou son
+              application ...
+            </p>
+          </div>
+        </a>
+      </div>
+      <div
+        class="p-8 w-full rounded-md overflow-hidden hover:shadow-lg bg-white sm:ml-32 md:ml-4 lg:ml-0"
+        style="text-align: -webkit-center"
+      >
+        <a href="">
+          <img
+            class="w-32"
+            src="{% static 'assets/ana.svg' %}"
+            alt="Description de l'image"
+          />
+          <div class="px-6 py-4 text-center">
+            <div class="font-bold text-xl mb-2">Support par e-mail</div>
+            <p class="text-gray-700 text-base">
+              Vous pouvez envoyer vos questions, préoccupations ou problèmes à
+              <a href="support@afridemia.com">support@afridemia.com</a>
+            </p>
+          </div>
+        </a>
+      </div>
+      <div
+        class="p-8 w-full rounded-md overflow-hidden hover:shadow-lg bg-white sm:ml-32 md:ml-4 lg:ml-0"
+        style="text-align: -webkit-center"
+      >
+        <a href="">
+          <img
+            class="w-32"
+            src="{% static 'assets/y.svg' %}"
+            alt="Description de l'image"
+          />
+          <div class="px-6 py-4 text-center">
+            <div class="font-bold text-xl mb-2">Formulaire de contact</div>
+            <p class="text-gray-700 text-base">
+              Afridemia propose également un formulaire de contact Vous pouvez
+              remplir le formulaire en fournissant vos informations de contact
+            </p>
+          </div>
+        </a>
+      </div>
+      <div
+        class="p-8 w-full rounded-md overflow-hidden hover:shadow-lg bg-white sm:ml-32 md:ml-4 lg:ml-0"
+        style="text-align: -webkit-center"
+      >
+        <a href="">
+          <img
+            class="w-32"
+            src="{% static 'assets/com.svg' %}"
+            alt="Description de l'image"
+          />
+          <div class="px-6 py-4 text-center">
+            <div class="font-bold text-xl mb-2">Support en ligne</div>
+            <p class="text-gray-700 text-base">
+              Afridemia offre un support en ligne via des chats en direct ou des
+              systèmes de messagerie intégrés.
+            </p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

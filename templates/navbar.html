@@ -1,0 +1,242 @@
+{% load static %}
+<nav class="text-gray-600 py-4">
+  <div
+    class="px-8 w-full max-w-[1350px] mx-auto lg:flex lg:items-center justify-between"
+  >
+    <div class="flex items-center justify-between gap-4">
+      <a href="{% url 'home' %}">
+        <img
+          class="w-20 md:hidden"
+          src="{% static 'imgs/afdm-icon.png' %}"
+          alt="logo"
+        />
+        <img
+          class="md:inline w-40 hidden lg:w-40"
+          src="{% static 'imgs/afdm-logo.png' %}"
+          alt="logo"
+        />
+      </a>
+      {% include 'components/searchbar.html' %}
+      <span class="text-xl cursor-pointer lg:hidden">
+        <i name="menu" onclick="toggleMenu(this)" class="fa-solid fa-bars"></i>
+      </span>
+    </div>
+    <div class="hidden lg:flex lg:mt-0 items-center" id="navlinks">
+      <ul
+        class="flex flex-col lg:flex-row gap-4 justify-between menu-list text-sm"
+      >
+        <a
+          href="{% url 'home' %}"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{home_page}}"
+          >Accueil</a
+        >
+        <a
+          href="{% url 'schools' %}"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{schools_page}}"
+          >Ecoles</a
+        >
+        <a
+          href="{% url 'tutors' %}"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{tutors_page}}"
+          >Enseignants</a
+        >
+        <div class="relative flex flex-col items-center group">
+          <a class="mt-4 flex items-center hover:text-green-500 cursor-pointer"
+            >Informations<i class="fa-solid fa-caret-down ml-2"></i
+          ></a>
+          <div
+            class="hidden absolute top-10 z-100 bg-green-100 p-2 group-hover:flex group-hover:flex-col rounded-md"
+          >
+            <a
+              href="{% url 'pricing' %}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{pricing_page}}"
+              >Tarif</a
+            >
+            <a
+              href="{% url 'blog' %}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{blog_page}}"
+              >Blog</a
+            >
+            <a
+              href="{% url 'forum' %}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{forum_page}}"
+              >Forum</a
+            >
+            <a
+              href="{% url 'adverts' %}"
+              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{adverts_page}}"
+              >Annonces</a
+            >
+          </div>
+        </div>
+      </ul>
+
+      {% if user.is_authenticated %}
+      <a class="lg:ml-4" href="{% url 'chat_page' user.id %}">
+        <i
+          class="fa-solid fa-message text-xl hover:text-green-500 text-2xl ml-6 lg:ml-4 transition ease-in duration-200"
+        ></i>
+      </a>
+      <!-- notification dropdown -->
+      <div class="relative lg:ml-4">
+        <button
+          type="button"
+          class=""
+          name="bellBtn"
+          id="bellBtn"
+          aria-expanded="false"
+          aria-haspopup="true"
+          onclick="toggleNotifier(this)"
+        >
+          <i
+            class="fa-solid fa-bell text-xl hover:text-blue-950 text-2xl ml-6 lg:ml-4 transition ease-in duration-200"
+          ></i>
+        </button>
+        <!-- {% if notifications %}
+        <span
+          id="notifier"
+          class="absolute top-1 right-11 h-2 w-2 rounded-full bg-green-500 animate-pulse"
+        >
+          <tt id="count_badge"></tt>
+        </span>
+        {% endif %} -->
+        <!-- notification button -->
+        <div
+          class="absolute lef-0 lg:right-0 top-10 origin-top-left z-50 p-6 bg-blue-950 w-[400px] min-h-[400px] max-h-[800px] shadow-lg hidden rounded-lg flex flex-col"
+          tabindex="-1"
+          id="notifications"
+        >
+          {% if not notifications %}
+          <!--  -->
+
+          <div class="py-20 flex-col text-center text-white m-auto w-full">
+            <i class="fa-solid fa-folder"></i>
+            <p class="p-2 max-w-[400px] mx-auto">
+              Aucune données disponible pour le moment
+            </p>
+          </div>
+
+          <!--  -->
+          {% else %}
+          <!--  -->
+          {% for obj in notifications %}
+          <div
+            class="contact-li p-2 w-full bg-white hover:bg-gray-200 rounded-md"
+          >
+            <form
+              action="{% url 'read_chat_notification' obj.id %}"
+              method="POST"
+            >
+              {% csrf_token %}
+              <button
+                type="submit"
+                class="flex gap-2 w-full justify-between items-center"
+              >
+                <img
+                  class="lg:block h-10 rounded-md mx-auto"
+                  src="{% static 'imgs/random.png' %}"
+                  alt="Rounded avatar"
+                />
+                <div class="flex flex-col items-start w-full">
+                  <p class="text-blabg-black font-bold">
+                    {% for user_obj in users %}
+                    <!--  -->
+                    {% if user_obj.id == obj.chat.sender %}
+                    <!--  -->
+                    <span class="text-black text-sm">
+                      @{{user_obj.username}}
+                    </span>
+                    <!--  -->
+                    {% endif %}
+                    <!--  -->
+                    {% endfor %}
+                  </p>
+                  <p>{{obj.chat.message|truncatechars:20}}</p>
+                </div>
+              </button>
+            </form>
+          </div>
+          {% endfor %}
+          <!--  -->
+          {% endif %}
+        </div>
+      </div>
+      <!-- menu dropdown -->
+      <div class="relative lg:ml-4">
+        <button
+          type="button"
+          class=""
+          name="dropdownBtn"
+          id="dropdownBtn"
+          aria-expanded="false"
+          aria-haspopup="true"
+          onclick="toggleDropdown(this)"
+        >
+          <img
+            class="hidden ml-4 lg:block lg:h-6 rounded-full ring-4 ring-offset-2 ring-gray-300 hover:ring-green-400"
+            src="{% static 'imgs/avatar.png' %}"
+            alt="image"
+          />
+        </button>
+
+        <div
+          class="absolute lef-0 lg:right-0 top-10 origin-top-left z-30 my-2 p-2 bg-green-100 w-[200px] shadow-lg hidden rounded-lg flex flex-col"
+          role="menu"
+          aria-orientation="vertical"
+          aria-labelledby="user-menu-button"
+          tabindex="-1"
+          id="dropdownMenu"
+        >
+          <a
+            href="{% url 'user_profile' user.id  %}"
+            class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
+            role="menuitem"
+            tabindex="-1"
+            id="user-menu-item-0"
+            ><i class="fa-solid fa-user mr-2"></i>Mon profile</a
+          >
+          {% if user.is_staff %}
+          <a
+            href="{% url 'users' %}"
+            class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
+            role="menuitem"
+            tabindex="-1"
+            id="user-menu-item-1"
+            ><i class="fa-solid fa-users mr-2"></i>Utilisateurs</a
+          >
+          <a
+            href="{% url 'dashboard' %}"
+            class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
+            role="menuitem"
+            tabindex="-1"
+            id="user-menu-item-1"
+            ><i class="fa-solid fa-bars-progress mr-2"></i>Tableau de bord</a
+          >
+          {% endif %} {% if user.is_superuser %}
+          <a
+            class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
+            href="{% url 'admin:index' %}"
+            ><i class="fa-solid fa-lock mr-2"></i>Super Admin</a
+          >
+          {% endif %}
+
+          <a
+            href="{% url 'logout' %}"
+            class="inline px-2 lg:px-4 py-2 text-sm text-red-700 hover:bg-red-700 hover:text-white rounded-md"
+            role="menuitem"
+            tabindex="-1"
+            id="user-menu-item-2"
+            ><i class="fa-solid fa-right-from-bracket mr-2"></i>Déconnexion</a
+          >
+        </div>
+      </div>
+      {% else %}
+      <a
+        class="lg:ml-4 px-4 py-2 rounded-lg border border-2 border-white bg-blue-950 hover:bg-green-300 text-white hover:text-black transition ease-in duration-200"
+        href="{% url 'login' %}"
+        >Connexion</a
+      >
+      {% endif %}
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,54 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+
+<div
+  class="py-20 px-8 max-w-[1350px] h-full mx-auto flex flex-col md:flex-row gap-x-8 items-center justify-between"
+>
+  <img
+    class="w-full max-w-[440px] rounded-md"
+    src="{% static 'imgs/sch-1.jpg' %}"
+    alt="login image"
+  />
+  <div class="flex flex-col w-full md:w-[350px]">
+    <h1 class="my-4 text-black text-3xl font-bold">Connectez vous ici</h1>
+    <form method="POST" action="">
+      {% csrf_token %}
+      <div class="flex flex-col mb-2">
+        <label for="email_or_phone">Email / Téléphone</label>
+        <input
+          type="text"
+          name="email_or_phone"
+          class="mt-2 px-4 py-2 rounded-md w-full border-2 border-gray-200 text-sm"
+          placeholder="adresse email ou téléphone"
+          required
+        />
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="password">Mot de pass</label>
+        <input
+          type="password"
+          name="password"
+          class="mt-2 px-4 py-2 rounded-md w-full border-2 border-gray-200"
+          placeholder="mot de pass"
+          required
+        />
+      </div>
+      {% if request.GET.next %}
+      <input type="hidden" name="next" value="{{request.GET.next}}" />
+      {% endif %}
+
+      <input
+        type="submit"
+        value="Connexion"
+        class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
+      />
+    </form>
+
+    <!-- <a href="#!" class="forgot-password-link mt-4">Password forgotten?</a> -->
+
+    <p class="login-wrapper-footer-text mt-4">
+      Vous n'avez pas de compte?
+      <a href="{% url 'signup' %}" class="text-green-400">Cliquez ici</a>
+    </p>
+  </div>
+</div>
+{% endblock %}

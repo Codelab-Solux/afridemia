@@ -1,0 +1,148 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<!-- start banner -->
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-16">
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/ab.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+      <div class="">
+        <h1
+          class="text-black my-4 text-5xl font-bold leading-tight"
+          style="font-size: 60px"
+        >
+          Découvrez l'histoire et la mission d'afridemia
+        </h1>
+
+        <p class="leading-normal text-2xl mb-8">
+          Plongez dans notre passion pour la littérature africaine et explorez
+          notre engagement envers les auteurs et les lecteurs.
+        </p>
+
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- and banner -->
+
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-10">
+      <div class="">
+        <p class="text-xl">
+          Afridemia est une application révolutionnaire conçue pour simplifier
+          et faciliter la recherche d'écoles et d'enseignants de tous les
+          niveaux. Que vous soyez un parent à la recherche de la meilleure
+          éducation pour votre enfant ou un enseignant à la recherche
+          d'opportunités d'emploi stimulantes, Afridemia est là pour vous aider.
+        </p>
+        <br />
+
+        <p class="text-xl">
+          Pour les parents et les étudiants, Afridemia offre une plateforme
+          conviviale et complète permettant de rechercher des écoles en fonction
+          de critères spécifiques tels que la localisation géographique, le
+          niveau d'enseignement, les programmes d'études, les installations, et
+          bien plus encore. L'application fournit des informations détaillées
+          sur chaque école, y compris son historique, ses réalisations, son
+          personnel enseignant, et les avis des étudiants précédents. Cette
+          transparence permet aux parents de prendre des décisions éclairées
+          lorsqu'il s'agit de choisir une école pour leurs enfants.
+        </p>
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/about0.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <h2
+      class="w-full my-2 text-4xl font-bold leading-tight text-center text-gray-800"
+    >
+      Notre équipe
+    </h2>
+    <!-- max-w-sm -->
+    <p class="text-center mt-4 text-xl">
+      Pour les enseignants, Afridemia offre une plateforme permettant de créer
+      des profils professionnels détaillés mettant en valeur leurs compétences,
+      leurs qualifications et leur expérience. Les enseignants peuvent spécifier
+      leurs préférences d'enseignement, leurs domaines d'expertise et rechercher
+      des opportunités d'emploi correspondant à leurs critères
+    </p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 mt-10 gap-4">
+      <div
+        class="bg-green-100 w-full rounded overflow-hidden hover:bg-white hover:shadow-lg"
+      >
+        <img
+          class="w-full"
+          src="{% static 'assets/team-1.jpg' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-black text-xl mb-2">Joe Doe</div>
+          <p class="text-gray-700 text-base">Description ou contenu</p>
+        </div>
+      </div>
+      <div
+        class="bg-green-100 w-full rounded overflow-hidden hover:bg-white hover:shadow-lg"
+      >
+        <img
+          class="w-full"
+          src="{% static 'assets/team-2.jpg' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-black text-xl mb-2">Joe doe</div>
+          <p class="text-gray-700 text-base">Description ou contenu</p>
+        </div>
+      </div>
+      <div
+        class="bg-green-100 w-full rounded overflow-hidden hover:bg-white hover:shadow-lg"
+      >
+        <img
+          class="w-full"
+          src="{% static 'assets/team-3.jpg' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-black text-xl mb-2">Joe doe</div>
+          <p class="text-gray-700 text-base">Description ou contenu</p>
+        </div>
+      </div>
+      <div
+        class="bg-green-100 w-full rounded overflow-hidden hover:bg-white hover:shadow-lg"
+      >
+        <img
+          class="w-full"
+          src="{% static 'assets/team-1.jpg' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-black text-xl mb-2">Joe doe</div>
+          <p class="text-gray-700 text-base">Description ou contenu</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

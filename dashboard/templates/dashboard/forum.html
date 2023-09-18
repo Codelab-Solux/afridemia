@@ -1,0 +1,51 @@
+{% extends 'dash_head.html' %} {% load static %} {% block content %}
+<div class="p-6 w-full max-w-[1350px] mx-auto">
+  {% include 'components/searchbar.html' %}
+
+  <!--------------------------------------- mini navbar --------------------------------------->
+  <div class="my-4 flex flex-wrap gap-2">
+    {% for obj in subjects %}
+    <!--  -->
+    <a
+      href="{% url 'tutors' %}?query={{obj.name}}"
+      class="px-3 py-1 flex justify-between items-center rounded-md text-xs text-gray-700 bg-gray-100 hover:bg-green-200 hover:text-black transition duration-300 ease-in-out"
+    >
+      {{obj.name}}
+      <img class="h-7 object-contain" src="{{obj.image.url}}" alt="image" />
+    </a>
+    <!--  -->
+    {% endfor %}
+  </div>
+  <!--------------------------------------- articles --------------------------------------->
+  <section
+    id="articles"
+    class="w-full mx-auto grid md:grid-cols-2 xl:grid-cols-4 gap-8"
+  >
+    {% for obj in articles %}
+    <div
+      class="relative h-full bg-green-100 hover:bg-white hover:shadow-lg rounded-md transition duration-300 ease-in-out overflow-hidden group"
+    >
+      {% if obj.author == user or user.is_staff %}
+      <a
+        class="absolute top-4 right-4 px-3 py-2 bg-green-200 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+        href="{% url 'edit_forum_article' obj.id %}"
+        ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+      ></a>
+      {% endif %}
+      <a href="{% url 'forum_article' obj.id  %}" class="flex flex-col">
+        <img
+          class="relative h-20 w-full object-cover"
+          src="{% static 'imgs/forum.webp' %}"
+          alt="article image"
+        />
+        <div class="p-4 flex flex-col justify-between">
+          <h4 class="text-black text-lg font-bold">{{obj.title}}</h4>
+          <p class="pt-2 text-xs">{{obj.content|truncatechars:100}}</p>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </section>
+</div>
+
+{% endblock %}

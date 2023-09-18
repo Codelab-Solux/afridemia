@@ -1,0 +1,170 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+
+<!-- start banner -->
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-16">
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/paiement.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+      <div class="">
+        <h1
+          class="text-black my-4 text-5xl font-bold leading-tight"
+          style="font-size: 60px"
+        >
+          Moyens de paiement
+        </h1>
+
+        <p class="leading-normal text-2xl mb-8">
+          Facilitez vos achats en consultant nos options de paiement sécurisées.
+          Nous offrons une variété de méthodes pour garantir des transactions en
+          ligne sans souci.
+        </p>
+
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- and banner -->
+
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-1 md:grid-cols-1 gap-10 mb-20">
+      <div class="">
+        <p class="text-xl">
+          Il est également important de prendre des précautions lors de la
+          saisie de vos informations de paiement en ligne et de vous assurer que
+          vous utilisez un site web sécurisé et légitime pour effectuer vos
+          transactions.
+        </p>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-10">
+      <div class="">
+        <h2 class="text-4xl mb-2">Cartes de crédit/débit</h2>
+        <hr id="hr" class="mb-5" />
+        <p class="text-xl">
+          Afridemia peut accepter les paiements par les principales cartes de
+          crédit et de débit, telles que Visa, Mastercard, American Express,
+          etc. Les utilisateurs peuvent saisir les informations de leur carte
+          lors du processus de paiement en ligne.
+        </p>
+        <br />
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/carte.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-10 mt-10">
+      <div class="">
+        <h2 class="text-4xl mb-2">PayPal</h2>
+        <hr id="hr" class="mb-5" />
+        <p class="text-xl">
+          Afridemia peut également offrir la possibilité de payer via PayPal, un
+          service de paiement en ligne populaire. Les utilisateurs peuvent se
+          connecter à leur compte PayPal et effectuer le paiement en utilisant
+          les fonds disponibles sur leur compte ou en associant leur compte
+          PayPal à une carte de crédit ou de débit.
+        </p>
+        <br />
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/p.jpg' %}"
+            alt=""
+            class="rounded-b-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-10 mt-10">
+      <div class="">
+        <h2 class="text-4xl mb-2">Virement bancaire</h2>
+        <hr id="hr" class="mb-5" />
+        <p class="text-xl">
+          Certaines plateformes permettent aux utilisateurs de procéder à un
+          virement bancaire direct pour effectuer leurs paiements. Cela implique
+          généralement de fournir les informations bancaires appropriées et
+          d'initier le transfert via le système bancaire en ligne ou en se
+          rendant à la banque.
+        </p>
+        <br />
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/vire.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-10 mt-10 mb-10">
+      <div class="">
+        <h2 class="text-4xl mb-2">Portefeuilles numériques</h2>
+        <hr id="hr" class="mb-5" />
+        <p class="text-xl">
+          En fonction de la région et de la plateforme, Afridemia peut prendre
+          en charge d'autres portefeuilles numériques populaires tels que orange
+          money, moov money etc. Les utilisateurs peuvent utiliser ces
+          portefeuilles numériques pour effectuer des paiements rapides et
+          sécurisés.
+        </p>
+        <br />
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/electro.jpg' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="grid lg:grid-cols-1 md:grid-cols-1 gap-10 mt-10">
+      <div class="">
+        <p class="text-xl">
+          Il est également important de prendre des précautions lors de la
+          saisie de vos informations de paiement en ligne et de vous assurer que
+          vous utilisez un site web sécurisé et légitime pour effectuer vos
+          transactions.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

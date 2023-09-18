@@ -1,0 +1,36 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<!--  -->
+
+<!-- ---------------------------objs and contacts sidebar--------------------------------->
+<div class="lg:px-8 w-full max-w-[1350px] mx-auto">
+  <h1 class="mb-2 text-black text-xl font-bold">Rejoindre une conversation</h1>
+  <!--  -->
+  {% if not contacts %}
+
+  <!--------------------------------------- No data placeholder --------------------------------------->
+  {% include 'components/no_data.html' %}
+  <!--  -->
+  {% else %}
+  <!--  -->
+  <div class="mt-4 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+    {% for obj in contacts %}
+    <a href="{% url 'chat_page' obj.id %}">
+      <div
+        class="contact-li p-6 border hover:border-green-400 h-full flex flex-col items-center text-center gap-2 bg-white hover:shadow-md rounded-md"
+        chat-id="chat_{{obj.id}}"
+      >
+        <img
+          class="hidden lg:block w-20 h-20 rounded-full mx-auto object-cover"
+          src="{% static 'imgs/avatar.png' %}"
+          alt="image"
+        />
+        <p class="text-black font-bold">@{{obj.username}}</p>
+        <p>{{obj.email}}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  <!--  -->
+  {% endif %}
+</div>
+{% endblock %}

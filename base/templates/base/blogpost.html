@@ -1,0 +1,157 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="pb-8 px-8 w-full max-w-[1350px] mx-auto">
+  <!--------------------------------------- mini navbar --------------------------------------->
+  <nav
+    class="mb-4 mx-auto py-2 flex justify-between items-center gap-2 items-center text-xs w-full max-w-[1350px]"
+  >
+    <div class="flex gap-4 items-center">
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'home' %}"
+        ><i class="fa-solid fa-house"></i>
+      </a>
+      /
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'blog' %}"
+        >Blog</a
+      >
+      / {% if curr_post %}
+      <span class="hidden md:inline text-blue-950 font-black">
+        {{curr_post.title}}</span
+      >
+      {% else %}
+      <span>Nouvel Article</span>
+      {% endif %}
+    </div>
+  </nav>
+
+  {% if not form %}
+  <!--------------------------------------- blogpost layout --------------------------------------->
+
+  <div class="mt-4 flex flex-col lg:flex-row justify-between items-start gap-8">
+    <!--------------------- current blogpost -------------------------->
+
+    <div class="relative flex flex-col w-full overflow-hidden">
+      {% if user.role.sec_level >= 6 %}
+      <a
+        class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+        href="{% url 'edit_blogpost' curr_post.id %}"
+        ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+      ></a>
+      {% endif %}
+      <!--  -->
+      {% if not curr_post.image %}
+      <img
+        class="h-80 w-full rounded-md object-cover"
+        src="{% static 'vectors/article.png' %}"
+        alt="blogpost image"
+      />
+      {% else %}
+      <img
+        class="h-80 w-full rounded-md object-cover"
+        src="{{item.image.url}}"
+        alt="blogpost image"
+      />
+      {% endif %}
+      <h4 class="mt-4 text-black text-3xl font-bold">{{curr_post.title}}</h4>
+      <!-- <p class="py-2 text-md">{{curr_post.subtitle}}</p> -->
+      <p class="py-1 text-lg text-gray-700">{{curr_post.content}}</p>
+    </div>
+
+    <!--------------------------------------- other blogposts --------------------------------------->
+
+    <div class="w-full lg:w-[400px]">
+      <div
+        class="flex flex-col md:grid grid-cols-2 lg:grid-cols-1 justify-between gap-8 w-full"
+      >
+        {% for item in blogposts %}
+        <div
+          class="relative w-full flex flex-col bg-gray-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+        >
+          {% if user.role.sec_level >= 6 %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+            href="{% url 'edit_blogpost' item.id %}"
+            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+          ></a>
+          {% endif %}
+          <a href="{% url 'blogpost' item.id  %}">
+            {% if not item.image %}
+            <img
+              class="h-20 w-full object-cover"
+              src="{% static 'vectors/article.png' %}"
+              alt="blogpost image"
+            />
+            {% else %}
+            <img
+              class="h-20 w-full object-cover"
+              src="{{item.image.url}}"
+              alt="blogpost image"
+            />
+            {% endif %}
+            <div class="p-4 flex flex-col justify-between">
+              <h4 class="text-black font-bold">
+                {{item.title|truncatechars:30}}
+              </h4>
+              <p class="py-2 text-sm text-gray-800">
+                {{item.content|truncatechars:100}}
+              </p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!--------------------------------------- blog form --------------------------------------->
+
+  {% else %}
+  <p class="mb-4 w-full max-w-lg">
+    Partagez vos connaissances et perspectives éducatives. Contribuez au savoir
+    collectif en ajoutant un article à notre blog.
+  </p>
+
+  <div class="mx-auto grid md:grid-cols-2 gap-8">
+    <article class="p-8 border-2 hover:border-green-300 rounded-md">
+      {% if curr_ad %}
+      <h3 class="mb-4 text-black text-2xl font-bold">Modifier Cet Article</h3>
+      {% else %}
+      <h3 class="mb-4 text-black text-2xl font-bold">Ajouter Un Article</h3>
+      {% endif %}
+
+      <div class="mx-auto w-full rounded-md">
+        <form
+          class="w-full"
+          method="POST"
+          action=""
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {{form.media}} {{form.as_p}}
+          <div class="mt-4 flex gap-4 items-end">
+            <input
+              class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
+              type="submit"
+              value="Enregistrer"
+            />
+            <a
+              class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+              href="{{request.META.HTTP_REFERER}}"
+            >
+              Annuler
+            </a>
+          </div>
+        </form>
+      </div>
+    </article>
+    <img
+      class="w-full h-full rounded-md object-cover"
+      src="{% static 'vectors/article.png' %}"
+      alt="curr_ad image"
+    />
+  </div>
+  {%endif%}
+</div>
+
+{% endblock %}

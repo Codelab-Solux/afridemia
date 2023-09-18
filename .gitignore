@@ -1,0 +1,11 @@
+*.log
+*.pot
+*.pyc
+.env
+.conf
+.json
+venv/
+__pycache__
+db.sqlite3
+media
+uploads
