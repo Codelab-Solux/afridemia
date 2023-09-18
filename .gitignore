@@ -3,7 +3,7 @@
 *.pyc
 .env
 .conf
-.json
+apikey.json
 venv/
 __pycache__
 db.sqlite3
