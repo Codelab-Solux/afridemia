@@ -1,0 +1,237 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+
+<div class="px-8 w-full max-w-[1350px] mx-auto">
+  <!--------------------------------------- mini navbar --------------------------------------->
+
+  <nav class="mb-4 mx-auto py-2 flex gap-4 items-center text-xs w-full">
+    <a
+      class="hover:text-green-400 transition ease-in duration-300"
+      href="{% url 'home' %}"
+      ><i class="fa-solid fa-house"></i>
+    </a>
+    /
+    <a
+      class="hover:text-green-400 transition ease-in duration-300"
+      href="{% url 'schools' %}"
+      >Ecoles</a
+    >
+    /
+    <span>{{school.name}}</span>
+  </nav>
+
+  <!--------------------------------------- edit school --------------------------------------->
+
+  <div>
+    {% if school.banner %}
+    <img
+      class="w-full h-80 rounded-md object-cover"
+      src="{{school.banner.url}}"
+      alt="school image"
+    />
+    {% else %}
+    <img
+      class="w-full h-80 rounded-md object-cover"
+      src="{% static 'vectors/school.png' %}"
+      alt="image"
+    />
+    {% endif %}
+  </div>
+
+  <!--------------------------------------- tabs section --------------------------------------->
+
+  <section class="my-8 tab flex gap-4 max-w-[300px] mx-auto text-gray-700">
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'general')"
+      id="defaultOpen"
+    >
+      Aperçue
+    </button>
+    <button
+      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      onclick="openTab(event, 'academia')"
+    >
+      Académie
+    </button>
+  </section>
+
+  <div
+    class="my-4 p-6 mx-auto border-2 hover:border-green-300 w-full rounded-md"
+  >
+    <form
+      class="w-full rounded-xl text-sm"
+      method="POST"
+      action=""
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <!---------------------------- general form ---------------------------->
+      <div id="general" class="tabcontent">
+        <div class="mb-8 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.name.label}}</h3>
+            {{form.name}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.moto.label}}</h3>
+            {{form.moto}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.address.label}}</h3>
+            {{form.address}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.country.label}}</h3>
+            {{form.country}}
+          </div>
+        </div>
+        <!--  -->
+        <div class="mb-8 flex gap-3">
+          <div class="w-1/3">
+            <h3 class="mb-1 text-black font-bold">{{form.levels.label}}</h3>
+            {{form.levels}}
+          </div>
+          <div
+            class="w-2/3 mb-2 grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-0"
+          >
+            <div>
+              <h3 class="mb-1 text-black font-bold">
+                {{form.year_founded.label}}
+              </h3>
+              {{form.year_founded}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">{{form.email.label}}</h3>
+              {{form.email}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">{{form.website.label}}</h3>
+              {{form.website}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">{{form.tel.label}}</h3>
+              {{form.tel}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">{{form.cel.label}}</h3>
+              {{form.cel}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">{{form.whatsapp.label}}</h3>
+              {{form.whatsapp}}
+            </div>
+            <!-- <div>
+              <h3 class="mb-1 text-black font-bold">{{form.telegram.label}}</h3>
+              {{form.telegram}}
+            </div> -->
+            <div>
+              <h3 class="mb-1 text-black font-bold">
+                {{form.resumption_date.label}}
+              </h3>
+              {{form.resumption_date}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">
+                {{form.opening_hour.label}}
+              </h3>
+              {{form.opening_hour}}
+            </div>
+            <div>
+              <h3 class="mb-1 text-black font-bold">
+                {{form.closing_hour.label}}
+              </h3>
+              {{form.closing_hour}}
+            </div>
+          </div>
+        </div>
+        <!--  -->
+        <div class="mb-4 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.thumbnail.label}}</h3>
+            {{form.thumbnail}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.banner.label}}</h3>
+            {{form.banner}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.crest.label}}</h3>
+            {{form.crest}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.certificate.label}}
+            </h3>
+            {{form.certificate}}
+          </div>
+        </div>
+        <!--  -->
+        <div class="mb-8 grid lg:grid-cols-2 gap-4"></div>
+      </div>
+      <!---------------------------- academia form ---------------------------->
+      <div id="academia" class="tabcontent hidden">
+        <div class="mb-2 grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.teacher_count.label}}
+            </h3>
+            {{form.teacher_count}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.student_count.label}}
+            </h3>
+            {{form.student_count}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.formation_count.label}}
+            </h3>
+            {{form.formation_count}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.success_rate.label}}
+            </h3>
+            {{form.success_rate}}
+          </div>
+        </div>
+        <div class="mb-2 grid lg:grid-cols-2 gap-4">
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.description.label}}
+            </h3>
+            {{form.description}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.history.label}}</h3>
+            {{form.history}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.ad_copy.label}}</h3>
+            {{form.ad_copy}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.pedagogy.label}}</h3>
+            {{form.pedagogy}}
+          </div>
+        </div>
+      </div>
+      <!--  -->
+      <div class="flex gap-4 items-end">
+        <input
+          class="px-4 py-2 bg-blue-950 hover:bg-green-600 text-white rounded-md cursor-pointer"
+          type="submit"
+          value="Enregistrer"
+        />
+        <a
+          class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+          href="{{request.META.HTTP_REFERER}}"
+        >
+          Annuler
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

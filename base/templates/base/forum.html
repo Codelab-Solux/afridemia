@@ -1,0 +1,89 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="px-8 w-full max-w-[1350px] mx-auto">
+  <!--------------------------------------- mini navbar --------------------------------------->
+  <nav
+    class="mb-4 mx-auto py-2 flex justify-between items-center gap-4 items-center text-xs w-full max-w-[1350px]"
+  >
+    <div class="flex items-center gap-4">
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'home' %}"
+        ><i class="fa-solid fa-house"></i>
+      </a>
+      /
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'forum' %}"
+        >Forum</a
+      >
+    </div>
+    <div class="flex justify-between items-center gap-4">
+      {% if user.is_authenticated %}
+      <a
+        href="{% url 'create_forum_article' %}"
+        class="px-4 py-3 bg-sky-100 text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
+        >Nouvel article<i class="fa-solid fa-plus ml-2"></i
+      ></a>
+      {% endif %}
+    </div>
+  </nav>
+
+  <p class="mb-4 w-full max-w-lg text-lg">
+    Un espace pour partager, discuter et apprendre ensemble. Rejoignez notre
+    communauté et participez aux conversations éducatives passionnantes.
+  </p>
+  <!--------------------------------------- articles --------------------------------------->
+  <section id="articles" class="w-full text-left">
+    <div class="w-full mx-auto flex flex-col-reverse lg:flex-row gap-8">
+      <div class="w-full">
+        {% for obj in articles %}
+        <div
+          class="relative bg-green-100 hover:bg-white hover:shadow-lg rounded-md transition duration-300 ease-in-out overflow-hidden group"
+        >
+          {% if obj.author == user or user.is_superuser %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
+            href="{% url 'edit_forum_article' obj.id %}"
+            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+          ></a>
+          {% endif %}
+          <a href="{% url 'forum_article' obj.id  %}" class="flex">
+            <img
+              class="h- w-40 object-cover"
+              src="{% static 'imgs/forum.webp' %}"
+              alt="image"
+            />
+            <div class="p-4 flex flex-col justify-between">
+              <h4 class="text-black text-2xl font-bold">{{obj.title}}</h4>
+              <p class="pt-2 text-sm">{{obj.content|truncatechars:200}}</p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="bg-blue-50 p-6 w-full lg:max-w-[400px] rounded-md">
+        <h3 class="text-blue-950 font-bold">Matières</h3>
+        <div class="my-4 grid grid-cols-2 gap-2">
+          {% for obj in subjects %}
+          <!--  -->
+          <a
+            href="{% url 'tutors' %}?query={{obj.name}}"
+            class="px-4 py-2 flex justify-between items-center gap-4 rounded-md text-sm text-gray-700 bg-white hover:bg-blue-200 hover:text-black transition duration-300 ease-in-out"
+          >
+            {{obj.name}}
+            <img
+              class="h-7 xl:h-10 object-contain"
+              src="{{obj.image.url}}"
+              alt="image"
+            />
+          </a>
+          <!--  -->
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% endblock %}

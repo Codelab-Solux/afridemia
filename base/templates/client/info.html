@@ -1,0 +1,264 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<!-- start banner -->
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-16">
+      <div class="mt-4 rounded sm:ml-4 md:ml-4 lg:ml-0">
+        <div class="w-full overflow-hidden">
+          <img
+            src="{% static 'assets/info.png' %}"
+            alt=""
+            class="rounded-t-lg w-full"
+            id="cat_img"
+            style="width: 512px; height: 312px; object-fit: cover"
+          />
+        </div>
+      </div>
+      <div class="">
+        <h1
+          class="text-black my-4 text-5xl font-bold leading-tight"
+          style="font-size: 60px"
+        >
+          Infos sur l’application
+        </h1>
+
+        <p class="leading-normal text-2xl mb-8">
+          Facilitez vos achats en consultant nos options de paiement sécurisées.
+          Nous offrons une variété de méthodes pour garantir des transactions en
+          ligne sans souci.
+        </p>
+
+        <!-- <p class="text-gray-700 text-base">Description de la Card</p> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- and banner -->
+
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-1 md:grid-cols-1 gap-10 mb-20">
+      <div class="text-center">
+        <p class="text-xl">
+          Afridemia, une application dédiée à la recherche d'écoles et
+          d'enseignants de tous les niveaux, offre une gamme de fonctionnalités
+          pour faciliter la préinscription, la recherche, la communication et
+          l'interaction entre les utilisateurs et les établissements scolaires
+          ou les enseignants. Grâce à son interface conviviale et ses outils
+          intuitifs, Afridemia vise à simplifier le processus de recherche et
+          d'inscription en offrant aux utilisateurs la possibilité de
+          préinscrire leur intérêt pour des écoles ou des enseignants
+          spécifiques.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-white py-8">
+  <div class="container max-w-6xl mx-auto m-8 px-8">
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 mt-10 gap-8">
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/school.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">Recherche d'écoles</div>
+          <p class="text-gray-700 text-base">
+            Les utilisateurs peuvent rechercher des écoles en fonction de
+            différents critères tels que le niveau d'éducation, la localisation,
+            les programmes offerts, les frais de scolarité, etc.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/teacher.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">Recherche d'enseignants</div>
+          <p class="text-gray-700 text-base">
+            Les utilisateurs peuvent rechercher des enseignants en fonction de
+            leur domaine d'expertise, de leur niveau d'enseignement, de leur
+            localisation, de leurs disponibilités, etc.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/user.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">
+            Profils d'écoles et d'enseignants
+          </div>
+          <p class="text-gray-700 text-base">
+            Les écoles et les enseignants peuvent avoir des profils détaillés
+            qui fournissent des informations telles que leur expérience, leurs
+            qualifications, leurs réalisations, leurs compétences, leurs
+            horaires, etc.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/email.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">Messagerie</div>
+          <p class="text-gray-700 text-base">
+            Les utilisateurs peuvent communiquer directement avec les écoles et
+            les enseignants par le biais d'une fonctionnalité de messagerie
+            intégrée, ce qui facilite les échanges d'informations et les
+            discussions sur les détails spécifiques.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/check-list.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">Avis et évaluations</div>
+          <p class="text-gray-700 text-base">
+            Les utilisateurs peuvent laisser des avis et des évaluations sur les
+            écoles et les enseignants qu'ils ont fréquentés ou avec lesquels ils
+            ont interagi. Cela peut aider les autres utilisateurs à prendre des
+            décisions éclairées.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/filter.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">Fonctionnalités de filtrage</div>
+          <p class="text-gray-700 text-base">
+            Les utilisateurs peuvent appliquer des filtres pour affiner leur
+            recherche d'écoles ou d'enseignants en fonction de leurs préférences
+            spécifiques.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/confimation.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">
+            Confirmation de la préinscription
+          </div>
+          <p class="text-gray-700 text-base">
+            Une fois que la préinscription est soumise, Afridemia peut envoyer
+            une confirmation aux utilisateurs pour leur indiquer que leur
+            demande de préinscription a été enregistrée avec succès.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/message.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">
+            Communication avec l'école/enseignant
+          </div>
+          <p class="text-gray-700 text-base">
+            Afridemia peut faciliter la communication entre les utilisateurs et
+            l'école/enseignant concerné. Cela peut se faire par le biais de la
+            messagerie intégrée, où les utilisateurs peuvent poser des questions
+            supplémentaires, demander des informations supplémentaires ou
+            discuter des modalités d'inscription définitive.
+          </p>
+        </div>
+      </div>
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/notification.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">
+            Notification de disponibilité
+          </div>
+          <p class="text-gray-700 text-base">
+            Si l'école ou l'enseignant dispose de places limitées, Afridemia
+            peut envoyer des notifications aux utilisateurs préinscrits pour les
+            informer de la disponibilité des places et leur donner la
+            possibilité de finaliser leur inscription.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="w-full rounded overflow-hidden shadow-lg"
+        style="text-align: -webkit-center"
+      >
+        <img
+          class="w-32"
+          src="{% static 'assets/icons/infos.png' %}"
+          alt="Description de l'image"
+        />
+        <div class="px-6 py-4 text-center">
+          <div class="font-bold text-xl mb-2">
+            Suivi de l'état de préinscription
+          </div>
+          <p class="text-gray-700 text-base">
+            Les utilisateurs peuvent avoir accès à un tableau de bord ou à une
+            section de leur compte où ils peuvent suivre l'état de leur
+            préinscription. Cela leur permet de savoir si leur demande est en
+            cours de traitement, si elle a été acceptée ou si d'autres actions
+            sont nécessaires.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

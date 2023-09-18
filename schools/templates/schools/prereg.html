@@ -1,0 +1,190 @@
+{% extends 'main.html' %} {% load static %} {% block content %}
+<div class="px-8 w-full max-w-[1350px] mx-auto">
+  <!--------------------------------------- mini navbar --------------------------------------->
+  <nav
+    class="mb-4 mx-auto py-2 flex justify-between items-center gap-2 items-center text-xs w-full max-w-[1350px]"
+  >
+    <div class="flex gap-4 items-center">
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'home' %}"
+        ><i class="fa-solid fa-house"></i>
+      </a>
+      /
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'schools' %}"
+        >Ecoles</a
+      >
+      / {% if curr_obj %}
+      <a
+        class="hover:text-green-400 transition ease-in duration-300"
+        href="{% url 'school' curr_obj.school.id %}"
+        >{{curr_obj.school.name}}</a
+      >
+      /
+      <span class="hidden md:inline text-blue-950 font-black">
+        {{curr_obj.last_name}} {{curr_obj.first_name}}</span
+      >
+      {% else %}
+      <span>Nouvelle Préinscription</span>
+      {% endif %}
+    </div>
+  </nav>
+
+  {% if not form %}
+  <!--------------------------------------- prereg layout --------------------------------------->
+
+  <div class="my-4 flex flex-col lg:flex-row justify-between items-start gap-8">
+    <!--------------------- current prereg -------------------------->
+
+    <div class="relative flex flex-col w-full overflow-hidden">
+      {% if curr_obj.user == user or user.is_superuser %}
+      <a
+        class="absolute top-4 right-4 px-3 py-2 bg-green-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+        href="{% url 'edit_prereg' curr_obj.id %}"
+        ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+      ></a>
+      {% endif %}
+      <!--  -->
+      <img
+        class="h-80 w-full rounded-md object-cover"
+        src="{% static 'vectors/preregs.png' %}"
+        alt="image"
+      />
+      <div class="py-4 flex flex-col gap-2 text-gray-700">
+        <h4 class="text-3xl text-black font-bold">
+          {{curr_obj.last_name}} {{curr_obj.first_name}}
+          <!--  -->
+          {% if curr_obj.gender == 'M' %}
+          <i class="fa-solid fa-mars text-blue-500"></i>
+          {% else %}
+          <i class="fa-solid fa-venus text-rose-500"></i>
+          {% endif %}
+        </h4>
+
+        <p>
+          Sexe :
+          <span class="font-bold">{{curr_obj.get_gender_display}}</span>
+        </p>
+        <p>
+          Derniere école :
+          <span class="font-bold">{{curr_obj.last_school}}</span>
+        </p>
+        <p>
+          Classe :
+          <span class="font-bold">{{curr_obj.classroom}}</span>
+        </p>
+        <p>
+          Commentaire :
+          <span class="font-bold">{{curr_obj.comment}}</span>
+        </p>
+      </div>
+    </div>
+
+    <!--------------------------------------- relative preregs --------------------------------------->
+
+    <div class="w-full lg:w-[400px]">
+      <div
+        class="flex flex-col md:grid grid-cols-2 lg:grid-cols-1 justify-between gap-8 w-full"
+      >
+        {% for obj in rel_preregs %}
+        <div
+          class="relative w-full flex flex-col bg-gray-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+        >
+          {% if obj.user == user or user.is_superuser %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 bg-green-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+            href="{% url 'edit_prereg' obj.id %}"
+            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+          ></a>
+          {% endif %}
+          <a href="{% url 'prereg' obj.id  %}">
+            <img
+              class="h-20 w-full object-cover"
+              src="{% static 'vectors/preregs.png' %}"
+              alt="image"
+            />
+            <div class="p-4 flex flex-col gap-2 text-gray-700 text-sm">
+              <h4 class="text-lg text-black font-bold">
+                {{curr_obj.last_name}} {{curr_obj.first_name}}
+                <span class="text-green-400"
+                  >{{curr_obj.get_gender_display}}</span
+                >
+              </h4>
+              <p>
+                Derniere école :
+                <span class="font-bold">{{curr_obj.last_school}}</span>
+              </p>
+              <p>
+                Classe :
+                <span class="font-bold">{{curr_obj.classroom}}</span>
+              </p>
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!--------------------------------------- prereg form --------------------------------------->
+  {% else %}
+
+  <p class="my-4 w-full lg:max-w-3xl">
+    Faire une préinscription dans cet etablissement
+    <span class="font-bold text-green-500 text-2xl">({{school.name}})</span>.
+  </p>
+
+  <div class="mb-8 mx-auto rounded grid md:grid-cols-2 gap-8">
+    <div class="p-8 bg-green-100 rounded-md">
+      {% if curr_obj %}
+      <h3 class="mb-4 text-black text-2xl font-bold">
+        Modifier cette préinscription
+      </h3>
+      {% else %}
+      <h3 class="mb-4 text-black text-2xl font-bold">
+        Ajouter une préinscription
+      </h3>
+      {% endif %}
+
+      <div class="mx-auto w-full rounded-md">
+        <form
+          class="w-full"
+          method="POST"
+          action=""
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {% for field in form %}
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{field.label}}</h3>
+            {{field}}
+          </div>
+          {% endfor %}
+          <div class="mt-4 flex gap-4 items-end">
+            <input
+              class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
+              type="submit"
+              value="Enregistrer"
+            />
+            <a
+              class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+              href="{{request.META.HTTP_REFERER}}"
+            >
+              Annuler
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+    <img
+      class="w-full h-full rounded-md object-cover"
+      src="{% static 'vectors/preregs.png' %}"
+      alt="image"
+    />
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

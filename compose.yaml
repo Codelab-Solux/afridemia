@@ -1,0 +1,40 @@
+services:
+# -----------------------afridemia web app setup---------------------
+  web:
+    build: 
+      context: .
+    restart: always
+    volumes:
+      - ./static:/static
+    env_file:
+      - ./env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+# -----------------------NGINX setup---------------------
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./media:/media
+    ports:
+      - "1234:80"
+    depends_on:
+      - web
+# -----------------------afridemia datatbase setup---------------------
+  db:
+    image: postgres:15-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=afridemia
+    ports:
+      - 8432:5432
+
+volumes:
+  static:
+  media:
+  postgres_data: 
