@@ -96,7 +96,7 @@
       <i class="fa-solid fa-spinner md:ml-2"></i>
     </span>
     {% else %}
-    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-sky-500 text-white text-sm">
+    <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-green-500 text-white text-sm">
       <span class="hidden md:inline">
         Vérifiée 
               
@@ -113,7 +113,7 @@
     />
     {% else %}
     <img
-      class="w-full h-[500px] rounded-md object-cover"
+      class="w-full h-[300px] rounded-md object-contain"
       src="{% static 'vectors/school.png' %}"
       alt="image"
     />
@@ -216,17 +216,17 @@
               {% endfor %}
             </ul>
           </article>
-          {% if user.is_authenticated %}
+          {% if user.is_authenticated and review_form %}
           <form id="review_form" class="p-6 bg-white w-full  rounded-md " action="{% url 'review_school' school.id %}" method="POST">
             {% csrf_token %}
             <h3 class="mb-4 text-black text-xl font-bold">Annoter cet etablissement</h3>
             <!--  -->
             <!-- <div class="rating my-4 flex gap-2">
-              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-1" value="1"></i>
-              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-2" value="2"></i>
-              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-3" value="3"></i>
-              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-4" value="4"></i>
-              <i class="rating_star fa-regular fa-star text-sky-400 cursor-pointer" id="star-5" value="5"></i>
+              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-1" value="1"></i>
+              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-2" value="2"></i>
+              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-3" value="3"></i>
+              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-4" value="4"></i>
+              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-5" value="5"></i>
             </div> -->
             <div>
               <h3 class="mb-1">{{review_form.rating.label}}</h3>
@@ -238,7 +238,7 @@
             </div>
             <button
             type="submit"
-            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-sky-500 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-green-500 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
             >
               Enregistrer
             </button>
@@ -328,13 +328,6 @@
           <i class="fab fa-whatsapp"></i>
         </a>
         <a
-          href="https://tel.me/{{school.telegram}}"
-          class="mt-4 px-4 py-3 rounded-md text-white hover:text-white bg-sky-500 hover:bg-sky-700"
-          target="_blank"
-        >
-          <i class="fa fa-paper-plane"></i>
-        </a>
-        <a
           href="tel:{{school.tel}}"
           class="mt-4 px-4 py-3 rounded-md text-white hover:text-white bg-blue-900 hover:bg-blue-950"
           target="_blank"
@@ -347,7 +340,7 @@
 
   <!--------------------------------------- tabs section --------------------------------------->
 
-  <section class="my-8 p-4 bg-sky-200 rounded-md tab flex flex-wrap gap-4 justify-between items-center w-full mx-auto text-gray-700">
+  <section class="my-8 p-4 bg-green-200 rounded-md tab flex flex-wrap gap-4 justify-between items-center w-full mx-auto text-gray-700">
     <button
       class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
       onclick="openTab(event, 'overview')"
@@ -397,12 +390,14 @@
     >
       Préinscription
     </button>
+    {% if review_form %}
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
-      onclick="openTab(event, 'reviews')"
+    class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+    onclick="openTab(event, 'reviews')"
     >
-      Annotations
-    </button>
+    Annotations
+  </button>
+  {% endif %}
   </section>
 
   <!--------------------------------------- more info --------------------------------------->
@@ -442,15 +437,15 @@
                 {{school.teacher_count}} Enseignants
               </li>
               <li>
-                <i class="fa fa-graduation-cap text-blue-950 mr-2"></i>
-                {{school.student_count}} Etudiants
+                <i class="fa fa-users text-blue-950 mr-2"></i>
+                {{school.student_count}} Effectif
               </li>
               <li>
                 <i class="fa fa-bookmark text-blue-950 mr-2"></i>
-                {{school.formation_count}} Parcours
+                {{school.formation_count}} Cursus
               </li>
               <li>
-                <i class="fa fa-users text-blue-950 mr-2"></i>
+                <i class="fa fa-graduation-cap text-blue-950 mr-2"></i>
                 {{school.faculties}} Filières
               </li>
               <li>
@@ -482,7 +477,7 @@
        {% if is_manager or user.is_supersuer %}
         <a
           href="{% url 'create_classroom' %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
@@ -536,7 +531,7 @@
         {% if is_manager %}
           <a
             href="{% url 'create_teacher' %}"
-            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
             ><i class="fa-solid fa-plus"></i
           ></a>
         {% endif %}
@@ -585,7 +580,7 @@
         {% if is_manager %}
         <a
           href="{% url 'create_structure' %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
@@ -614,7 +609,7 @@
             <h3 class="text-xl text-black font-bold" class="font-bold">
               {{obj.get_type_display}} {{obj.name}}
             </h>
-            <p class="mt-2 text-sm font-light"><i class="fa-solid fa-users text-sky-500"></i> {{obj.capacity}} personnes</p>
+            <p class="mt-2 text-sm font-light"><i class="fa-solid fa-users text-green-500"></i> {{obj.capacity}} personnes</p>
           </div>
         </a>
         {% endfor %}
@@ -633,7 +628,7 @@
         {% if is_manager %}
         <a
           href="{% url 'create_article' %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
@@ -683,7 +678,7 @@
         {% if is_manager %}
         <a
           href="{% url 'create_gallery' %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         {% endif %}
@@ -712,7 +707,7 @@
           {% if is_manager %}
           <a
             href="{% url 'create_performance' %}"
-            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
             ><i class="fa-solid fa-plus"></i
           ></a>
           {% endif %}
@@ -735,7 +730,7 @@
         
         <a
           href="{% url 'create_prereg' school.id %}"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
         
@@ -775,7 +770,7 @@
         <h3 class="pb-2 font-bold text-xl text-black">Annotations</h3>
         <a
           href="#review_form"
-          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-sky-200 hover:bg-blue-950"
+          class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
           ><i class="fa-solid fa-plus"></i
         ></a>
       </div>

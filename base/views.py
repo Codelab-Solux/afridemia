@@ -219,34 +219,30 @@ def tutors(req):
             is_tutor = True
     query = req.GET.get('query') if req.GET.get('query') != None else ''
     tutors = Tutor.objects.filter(
-        Q(subjects__icontains=query)
-        | Q(grades__icontains=query)
-        # | Q(years_of_experience__icontains=query)
-        | Q(user__first_name__icontains=query)
-        | Q(user__last_name__icontains=query)
+        Q(subjects__name__icontains=query)
+        | Q(levels__name__icontains=query)
+        | Q(first_name__icontains=query)
+        | Q(last_name__icontains=query)
     )
     subjects = Subject.objects.all().order_by('name')
-    # ordering = ['date_added']
 
     context = {
         "tutors_page": "active",
         'title': 'tutors',
         'tutors': tutors,
         'is_tutor': is_tutor,
-        # 'ordering': ordering,
         'subjects': subjects,
     }
     return render(req, 'base/tutors.html', context)
 
 
 def tutor(req, pk):
-    curr_tut = get_object_or_404(Tutor, id=pk)
-    curr_user = curr_tut.user
-    rel_articles = ForumArticle.objects.filter(author=curr_user)
+    curr_obj = get_object_or_404(Tutor, id=pk)
+    rel_articles = ForumArticle.objects.filter(author=curr_obj.user)
     context = {
         "tutor_page": "active",
         'title': 'tutor',
-        'curr_tut': curr_tut,
+        'curr_obj': curr_obj,
         'rel_articles': rel_articles,
 
     }

@@ -1,68 +1,80 @@
 {% load static %}
 <!--------------------------------------- levels --------------------------------------->
-
-{% if not levels %} {% include 'components/no_data.html' %}
-<!--    -->
-{% else %}
-<div class="stagerout grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-  <!--  -->
-  {% for obj in levels %}
-  <a href="{% url 'schools' %}?query={{obj.name}}">
-    <div
-      class="relative py-8 flex flex-col bg-white hover:shadow-md rounded-md hover:bg-blue-950 group transition duration-300 ease-in-out"
-    >
-      <span
-        class="absolute top-4 right-0 p-2 w-20 bg-green-200 rounded-l-md text-center text-black font-bold text-sm"
-      >
-        {% if obj.id == 1 %}
-        <!--  -->
-        {{ creche_count }}
-        <!--  -->
-        {% elif obj.id == 2 %}
-        <!--  -->
-        {{ kinder_count }}
-        <!--  -->
-        {% elif obj.id == 3 %}
-        <!--  -->
-        {{ prime_count }}
-        <!--  -->
-        {% elif obj.id == 4 %}
-        <!--  -->
-        {{ sec_count }}
-        <!--  -->
-        {% elif obj.id == 5 %}
-        <!--  -->
-        {{ uni_count }}
-        <!--  -->
-        {% elif obj.id == 6 %}
-        <!--  -->
-        {{ edu_count }}
-        <!--  -->
-        {% else %}
-        <!--  -->
-        {{ pro_count }}
-        <!--  -->
-        {% endif %}
-      </span>
-      <div class="p-4 rounded-full bg-white mx-auto">
-        {% if obj.image %}
-        <img
-          class="h-20 w-20 object-cover"
-          src="{{obj.image.url}}"
-          alt="{{level.name}} image"
-        />
-        {% else %}
-        <i class="fa-solid fa-graduation-cap text-3xl text-blue-950"></i>
-        {% endif %}
-      </div>
-      <h4
-        class="mt-4 text-blue-950 text-sm text-center font-bold group-hover:text-white"
-      >
-        {{obj.name}}
+<div class="bg-green-200 py-10 w-full">
+  <div class="px-8 mx-auto max-w-[1350px] flex flex-col">
+    <article class="mb-8">
+      <h4 class="mb-2 text-3xl text-black font-bold">
+        Le hub academique d'afrique
       </h4>
+      <p class="w-full max-w-lg text-lg">
+        Explorez un monde de connaissances regroupées en un seul endroit -
+        l'avenir de l'Afrique se construit ici, dans chaque discipline.
+      </p>
+    </article>
+    {% if not levels %} {% include 'components/no_data.html' %}
+    <!--    -->
+    {% else %}
+    <div class="stagerout grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <!--  -->
+      {% for obj in levels %}
+      <a href="{% url 'schools' %}?query={{obj.name}}">
+        <div
+          class="relative py-8 flex flex-col bg-white hover:shadow-md rounded-md hover:bg-blue-950 group transition duration-300 ease-in-out"
+        >
+          <span
+            class="absolute top-4 right-0 p-2 w-20 bg-green-200 rounded-l-md text-center text-black font-bold text-sm"
+          >
+            {% if obj.id == 1 %}
+            <!--  -->
+            {{ creche_count }}
+            <!--  -->
+            {% elif obj.id == 2 %}
+            <!--  -->
+            {{ kinder_count }}
+            <!--  -->
+            {% elif obj.id == 3 %}
+            <!--  -->
+            {{ prime_count }}
+            <!--  -->
+            {% elif obj.id == 4 %}
+            <!--  -->
+            {{ sec_count }}
+            <!--  -->
+            {% elif obj.id == 5 %}
+            <!--  -->
+            {{ uni_count }}
+            <!--  -->
+            {% elif obj.id == 6 %}
+            <!--  -->
+            {{ edu_count }}
+            <!--  -->
+            {% else %}
+            <!--  -->
+            {{ pro_count }}
+            <!--  -->
+            {% endif %}
+          </span>
+          <div class="p-4 rounded-full bg-white mx-auto">
+            {% if obj.image %}
+            <img
+              class="h-20 w-20 object-cover"
+              src="{{obj.image.url}}"
+              alt="{{level.name}} image"
+            />
+            {% else %}
+            <i class="fa-solid fa-graduation-cap text-3xl text-blue-950"></i>
+            {% endif %}
+          </div>
+          <h4
+            class="mt-4 text-blue-950 text-sm text-center font-bold group-hover:text-white"
+          >
+            {{obj.name}}
+          </h4>
+        </div>
+      </a>
+      {% endfor %}
+      <!--    -->
     </div>
-  </a>
-  {% endfor %}
-  <!--    -->
+    {% endif %}
+  </div>
 </div>
-{% endif %}

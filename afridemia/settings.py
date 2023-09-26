@@ -30,12 +30,13 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = eval(env('DEBUG'))
-# DEBUG = False
+# DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182','http://*', 'https://*',
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '62.72.19.182', 'http://*', 'https://*',
                  'afridemia.com', 'www.afridemia.com', 'afridemia.onrender.com', 'www.afridemia.onrender.com']
 
-CSRF_TRUSTED_ORIGINS = ['http://', 'https://','https://afridemia.onrender.com/*']
+CSRF_TRUSTED_ORIGINS = ['http://', 'https://',
+                        'https://afridemia.onrender.com/*']
 
 # Application definition
 
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
     'django_countries',
     'ckeditor',
     'gdstorage',
-    ]
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,15 +148,16 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static',]
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = BASE_DIR / 'media/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media/'
 
 # ---------------------------- static files in production----------------------------
 
 AWS_S3_CUSTOM_DOMAIN = 'https://drive.google.com/drive/folders/1BB3VywdKdZ6vcDRppKwdHwv1wktIGhfA?usp=drive_link'
 DEFAULT_FILE_STORAGE = 'storages.backends.google_drive.GoogleDriveStorage'
 GOOGLE_DRIVE_STORAGE_JSON_KEY_FILE = BASE_DIR / 'apikey.json'
-GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '1BB3VywdKdZ6vcDRppKwdHwv1wktIGhfA' # L'ID du dossier partagé
+# L'ID du dossier partagé
+GOOGLE_DRIVE_STORAGE_MEDIA_ROOT = '1BB3VywdKdZ6vcDRppKwdHwv1wktIGhfA'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

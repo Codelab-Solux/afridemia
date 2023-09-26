@@ -11,39 +11,16 @@ class TimeInput(forms.TimeInput):
     input_type = 'time'
 
 
-class CreateSchoolForm(forms.ModelForm):
-
-    class Meta:
-        model = School
-        fields = (
-            'country',
-            'name', 'levels', 'email', 'address', 'tel',
-        )
-        exclude = ('manager',)
-        labels = {
-            'country': 'Pays',
-            'name': "Raison social (Nom de l'institu)", 'levels': "Niveaux d'etude",
-            'email': 'Email', 'address': 'Adresse', 'tel': 'Telephone', }
-        widgets = {
-            'country': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'levels': forms.CheckboxSelectMultiple(attrs={'class': ""}),
-            'email': forms.EmailInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'address': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'tel': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-        }
-
-
-class EditSchoolForm(forms.ModelForm):
+class SchoolForm(forms.ModelForm):
 
     class Meta:
         model = School
         fields = ('__all__')
-        exclude = ('manager',)
+        exclude = ('manager','avg_rating')
         labels = {
             'country': 'Pays',
             'moto': "Slogan",
-            'name': "Raison social (Nom de l'institu)",
+            'name': "Raison social",
             'levels': "Niveaux d'etude",
             'email': 'Courier Electronique',
             'website': 'Site-web',
@@ -53,13 +30,12 @@ class EditSchoolForm(forms.ModelForm):
             'year_founded': 'Année de fondation',
             'history': 'Histoire',
             'pedagogy': "Pédagogie",
-            'resumption_date': 'Date de Rentrée',
-            'mgt_quote': 'Mot de la Direction',
+            # 'quote': 'Mot de la Direction',
             'ad_copy': "Phrase d'accueil",
             'opening_hour': "Heure d'ouverture",
             'closing_hour': "Heure de fermeture",
             'resumption_date': "Prochaine Rentrée",
-            'success_rate': "Taux de réussite (%)",
+            # 'success_rate': "Taux de réussite (%)",
             'teacher_count': "Effectif des enseignants",
             'student_count': "Effectif des élèves",
             'formation_count': "Nombre de cursus",
@@ -67,6 +43,8 @@ class EditSchoolForm(forms.ModelForm):
             'banner': "Image de page",
             'crest': "Logo de l'ecole",
             'certificate': "Agrément",
+            'is_verified': "Verifié",
+            'is_featured': "Vedette",
         }
         widgets = {
             'opening_hour': TimeInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
@@ -75,7 +53,7 @@ class EditSchoolForm(forms.ModelForm):
             'country': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'moto': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'mgt_quote': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            # 'quote': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'description': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'history': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'pedagogy': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
@@ -84,7 +62,7 @@ class EditSchoolForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'address': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'year_founded': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'success_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            # 'success_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'teacher_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'student_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'formation_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
@@ -92,7 +70,6 @@ class EditSchoolForm(forms.ModelForm):
             'cel': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'website': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
             'whatsapp': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'telegram': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
         }
 
 

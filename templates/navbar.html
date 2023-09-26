@@ -45,7 +45,7 @@
             >Informations<i class="fa-solid fa-caret-down ml-2"></i
           ></a>
           <div
-            class="hidden absolute top-10 z-100 bg-green-100 p-2 group-hover:flex group-hover:flex-col rounded-md"
+            class="hidden absolute top-10 overlay bg-green-200 p-2 group-hover:flex group-hover:flex-col rounded-md"
           >
             <a
               href="{% url 'pricing' %}"
@@ -180,7 +180,7 @@
         </button>
 
         <div
-          class="absolute lef-0 lg:right-0 top-10 origin-top-left z-30 my-2 p-2 bg-green-100 w-[200px] shadow-lg hidden rounded-lg flex flex-col"
+          class="absolute lef-0 lg:right-0 top-10 origin-top-left z-30 my-2 p-2 bg-green-200 w-[200px] shadow-lg hidden rounded-lg flex flex-col"
           role="menu"
           aria-orientation="vertical"
           aria-labelledby="user-menu-button"
@@ -195,15 +195,15 @@
             id="user-menu-item-0"
             ><i class="fa-solid fa-user mr-2"></i>Mon profile</a
           >
-          {% if user.is_staff %}
+          {% if user.is_superuser %}
           <a
-            href="{% url 'users' %}"
             class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
-            role="menuitem"
-            tabindex="-1"
-            id="user-menu-item-1"
-            ><i class="fa-solid fa-users mr-2"></i>Utilisateurs</a
+            href="{% url 'admin:index' %}"
+            ><i class="fa-solid fa-lock mr-2"></i>Super Admin</a
           >
+          {% endif %}
+          <!--  -->
+          {% if user.is_staff %}
           <a
             href="{% url 'dashboard' %}"
             class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
@@ -211,12 +211,6 @@
             tabindex="-1"
             id="user-menu-item-1"
             ><i class="fa-solid fa-bars-progress mr-2"></i>Tableau de bord</a
-          >
-          {% endif %} {% if user.is_superuser %}
-          <a
-            class="inline px-2 lg:px-4 py-2 text-sm text-gray-700 hover:bg-white rounded-md"
-            href="{% url 'admin:index' %}"
-            ><i class="fa-solid fa-lock mr-2"></i>Super Admin</a
           >
           {% endif %}
 

@@ -159,11 +159,11 @@ def create_school(req):
     user = req.user
     school = School.objects.filter(manager=user)
     if school:
-        return redirect('schools')
+        return redirect('my_school')
 
-    form = EditSchoolForm()
+    form = SchoolForm()
     if req.method == 'POST':
-        form = EditSchoolForm(req.POST, req.FILES)
+        form = SchoolForm(req.POST, req.FILES)
         form.instance.manager = user
         if form.is_valid():
             form.save()
@@ -180,9 +180,9 @@ def edit_school(req, pk):
     if not school:
         return redirect('schools')
 
-    form = EditSchoolForm(instance=school)
+    form = SchoolForm(instance=school)
     if req.method == 'POST':
-        form = EditSchoolForm(req.POST, req.FILES, instance=school)
+        form = SchoolForm(req.POST, req.FILES, instance=school)
         if form.is_valid():
             form.save()
             return redirect('my_school')

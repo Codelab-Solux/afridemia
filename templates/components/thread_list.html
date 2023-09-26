@@ -3,7 +3,13 @@
 <!--  -->
 {% if not threads %}
 <!--------------------------------------- No data placeholder --------------------------------------->
-{% include 'components/no_data.html' %} {% else %}
+<div class="py-20 flex-col text-center m-auto w-full">
+  <i class="fa-solid fa-folder"></i>
+  <p class="p-2 max-w-[400px] mx-auto">
+    Aucune discussion disponible pour le moment!!!
+  </p>
+</div>
+{% else %}
 <!--  -->
 {% for thread in threads %}
 <!--  -->

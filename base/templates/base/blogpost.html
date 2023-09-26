@@ -2,7 +2,7 @@
 <div class="pb-8 px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav
-    class="mb-4 mx-auto py-2 flex justify-between items-center gap-2 items-center text-xs w-full max-w-[1350px]"
+    class="mx-auto mb-4 w-full flex justify-between items-center gap-4 items-center text-xs"
   >
     <div class="flex gap-4 items-center">
       <a
@@ -33,9 +33,9 @@
     <!--------------------- current blogpost -------------------------->
 
     <div class="relative flex flex-col w-full overflow-hidden">
-      {% if user.role.sec_level >= 6 %}
+      {% if user.is_staff %}
       <a
-        class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+        class="absolute top-4 right-4 px-3 py-2 bg-green-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
         href="{% url 'edit_blogpost' curr_post.id %}"
         ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
       ></a>
@@ -43,7 +43,7 @@
       <!--  -->
       {% if not curr_post.image %}
       <img
-        class="h-80 w-full rounded-md object-cover"
+        class="h-80 w-full rounded-md object-contain"
         src="{% static 'vectors/article.png' %}"
         alt="blogpost image"
       />
@@ -54,24 +54,24 @@
         alt="blogpost image"
       />
       {% endif %}
-      <h4 class="mt-4 text-black text-3xl font-bold">{{curr_post.title}}</h4>
+      <h4 class="mt-4 text-black text-2xl font-bold">{{curr_post.title}}</h4>
       <!-- <p class="py-2 text-md">{{curr_post.subtitle}}</p> -->
-      <p class="py-1 text-lg text-gray-700">{{curr_post.content}}</p>
+      <p class="py-1 text-sm text-gray-700">{{curr_post.content|safe}}</p>
     </div>
 
     <!--------------------------------------- other blogposts --------------------------------------->
 
-    <div class="w-full lg:w-[400px]">
+    <div class="underlay w-full lg:w-[400px]">
       <div
-        class="flex flex-col md:grid grid-cols-2 lg:grid-cols-1 justify-between gap-8 w-full"
+        class="grid md:grid grid-cols-2 lg:grid-cols-1 justify-between gap-8 w-full"
       >
         {% for item in blogposts %}
         <div
           class="relative w-full flex flex-col bg-gray-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
-          {% if user.role.sec_level >= 6 %}
+          {% if user.is_staff %}
           <a
-            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+            class="absolute top-4 right-4 px-3 py-2 bg-green-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
             href="{% url 'edit_blogpost' item.id %}"
             ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
           ></a>
@@ -91,11 +91,11 @@
             />
             {% endif %}
             <div class="p-4 flex flex-col justify-between">
-              <h4 class="text-black font-bold">
+              <h4 class="text-black text-sm font-bold">
                 {{item.title|truncatechars:30}}
               </h4>
-              <p class="py-2 text-sm text-gray-800">
-                {{item.content|truncatechars:100}}
+              <p class="py-2 text-xs text-gray-800">
+                {{item.content|safe|truncatechars:100}}
               </p>
             </div>
           </a>
@@ -108,13 +108,22 @@
   <!--------------------------------------- blog form --------------------------------------->
 
   {% else %}
-  <p class="mb-4 w-full max-w-lg">
-    Partagez vos connaissances et perspectives éducatives. Contribuez au savoir
-    collectif en ajoutant un article à notre blog.
-  </p>
+  <div
+    class="p-8 bg-blue-950 rounded-md w-full flex flex-col md:flex-row gap-4 items-center"
+  >
+    <p class="my-4 w-full text-lg text-white">
+      Partagez vos connaissances et perspectives éducatives. Contribuez au
+      savoir collectif en ajoutant un article à notre blog.
+    </p>
+    <img
+      class="w-full h-[300px] rounded-md object-contain"
+      src="{% static 'vectors/article.png' %}"
+      alt="image"
+    />
+  </div>
 
-  <div class="mx-auto grid md:grid-cols-2 gap-8">
-    <article class="p-8 border-2 hover:border-green-300 rounded-md">
+  <div class="mt-8 mx-auto lg:flex flex-row gap-8">
+    <article class="p-8 border-2 hover:border-blue-950 rounded-md">
       {% if curr_ad %}
       <h3 class="mb-4 text-black text-2xl font-bold">Modifier Cet Article</h3>
       {% else %}
@@ -130,28 +139,29 @@
         >
           {% csrf_token %} {{form.media}} {{form.as_p}}
           <div class="mt-4 flex gap-4 items-end">
-            <input
-              class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
-              type="submit"
-              value="Enregistrer"
-            />
             <a
               class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
               href="{{request.META.HTTP_REFERER}}"
             >
               Annuler
             </a>
+
+            <input
+              class="px-4 py-2 bg-blue-950 hover:bg-green-600 text-white rounded-md cursor-pointer"
+              type="submit"
+              value="Enregistrer"
+            />
           </div>
         </form>
       </div>
     </article>
     <img
-      class="w-full h-full rounded-md object-cover"
+      class="hidden lg:inline w-80 h-80 rounded-md object-cover"
       src="{% static 'vectors/article.png' %}"
       alt="curr_ad image"
     />
   </div>
-  {%endif%}
+  {% endif %}
 </div>
 
 {% endblock %}

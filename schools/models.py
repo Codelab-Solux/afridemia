@@ -72,32 +72,31 @@ class School(models.Model):
     country = CountryField(
         blank_label="", blank=True, null=True)
     moto = models.CharField(max_length=255, blank=True, null=True)
-    name = models.CharField(max_length=255, blank=False, default='',)
-    levels = models.ManyToManyField(EducationLevel, blank=True,)
+    name = models.CharField(max_length=255,)
+    levels = models.ManyToManyField(EducationLevel)
     email = models.EmailField(blank=True, null=True)
     website = models.CharField(max_length=255, blank=True, null=True)
-    address = models.CharField(max_length=255, default='',)
-    tel = models.CharField(max_length=255, default='',)
-    cel = models.CharField(max_length=255, default='', blank=True, null=True)
-    whatsapp = models.CharField(
-        max_length=255, default='', blank=True, null=True)
-    telegram = models.CharField(
-        max_length=255, default='', blank=True, null=True)
+    address = models.CharField(max_length=255)
+    tel = models.CharField(max_length=255)
+    cel = models.CharField(max_length=255, blank=True, null=True)
+    whatsapp = models.CharField(max_length=255, blank=True, null=True)
     year_founded = models.IntegerField(blank=True, null=True)
-    mgt_quote = models.TextField(blank=True, null=True)
+    # 
+    # quote = models.TextField(blank=True, null=True)
     history = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     pedagogy = models.TextField(blank=True, null=True)
     ad_copy = models.TextField(blank=True, null=True)
+    # 
     resumption_date = models.DateField(blank=True, null=True)
     opening_hour = models.TimeField(blank=True, null=True)
     closing_hour = models.TimeField(blank=True, null=True)
+    # 
     is_verified = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
     avg_rating = models.FloatField(default=0.0)
-
     # academia
-    success_rate = models.IntegerField(default='0', blank=True, null=True)
+    # success_rate = models.IntegerField(default='0', blank=True, null=True)
     teacher_count = models.IntegerField(default='0', blank=True, null=True)
     student_count = models.IntegerField(default='0', blank=True, null=True)
     formation_count = models.IntegerField(default='0', blank=True, null=True)
@@ -111,6 +110,7 @@ class School(models.Model):
         upload_to='schools/crests', blank=True, null=True, storage=gd_storage)
     certificate = models.FileField(
         upload_to='schools/cerificate', blank=True, null=True, storage=gd_storage)
+    # 
     date_added = models.DateTimeField(auto_now=True)
 
     def update_avg_rating(self):

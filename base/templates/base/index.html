@@ -1,7 +1,7 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
 <!--------------------------------------- hero section --------------------------------------->
 
-<section>
+<section class="bg-blue-950 py-10">
   <div
     class="px-8 flex gap-4 justify-between items-center w-full max-w-[1350px] mx-auto"
   >
@@ -10,14 +10,14 @@
       {% for obj in levels %}
       <a
         href="{% url 'schools' %}?query={{obj.name}}"
-        class="px-4 py-2 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-black transition duration-300 ease-in-out"
+        class="px-4 py-2 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:text-black transition duration-300 ease-in-out"
       >
         <img
           class="h-7 xl:h-10 object-contain"
           src="{{obj.image.url}}"
           alt="image"
         />
-        <span class="md:hidden lg:inline">{{obj.name}}</span>
+        <span class="text:xs md:hidden lg:inline">{{obj.name}}</span>
       </a>
       <!--  -->
       {% endfor %}
@@ -86,9 +86,9 @@
       <!--  -->
       <a
         href="{% url 'tutors' %}?query={{obj.name}}"
-        class="px-4 py-1 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-gray-200 hover:text-black transition duration-300 ease-in-out"
+        class="px-4 py-1 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:text-black transition duration-300 ease-in-out"
       >
-        <span class="md:hidden lg:inline">{{obj.name}}</span>
+        <span class="text:xs md:hidden lg:inline">{{obj.name}}</span>
         <img
           class="h-7 xl:h-10 object-contain"
           src="{{obj.image.url}}"
@@ -182,63 +182,52 @@
 
 <!--------------------------------------- explore --------------------------------------->
 
-<div class="bg-green-200 py-10 w-full">
-  <div class="px-8 mx-auto max-w-[1350px] flex flex-col">
-    <article class="slideout mb-8">
-      <h4 class="mb-2 text-3xl text-black font-bold">
-        Le hub academique d'afrique
-      </h4>
-      <p class="w-full max-w-lg text-lg">
-        Explorez un monde de connaissances regroupées en un seul endroit -
-        l'avenir de l'Afrique se construit ici, dans chaque discipline.
-      </p>
-    </article>
+{% include 'components/levels.html' %}
 
-    {% include 'components/levels.html' %}
-  </div>
-</div>
 <!--------------------------------------- latest blogposts --------------------------------------->
 
 {% include 'components/top_posts.html' %}
 
 <!---------------------------------------------  CTA --------------------------------------------->
+
 <!----------------------- newsletter ------------------------->
-<div
-  class="slideout px-8 py-20 w-full max-w-xl mx-auto flex flex-col items-center bg-gray-100 rounded"
->
-  <h2 class="text-2xl text-black font-bold mb-4 text-center mx-auto">
-    Inscrivez vous à notre Newsletter
-  </h2>
-  <p class="mb-4 w-full max-w-xl mx-auto text-center">
-    Recevez l'inspiration directement dans votre boîte de réception.
-    Abonnez-vous à notre newsletter et restez connecté à un monde
-    d'apprentissage en constante évolution.
-  </p>
-  <form
-    id="search_box"
-    class="p-1 w-full max-w-lg flex flex-row justify-between"
-  >
-    <input
-      type="text"
-      name="query"
-      id="querier"
-      required
-      class="px-4 py-2 bg-white text-black text-xs w-full rounded-l-md outline-none"
-      placeholder="Votre adresse e-mail..."
-    />
-    <button
-      class="group px-4 py-2 text-sm bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-r-md transition duration-300 ease-in-out"
-      type="submit"
+<div class="bg-gray-200 py-10 w-full">
+  <div class="px-8 mx-auto max-w-[1350px] flex flex-col">
+    <h2 class="text-2xl text-black font-bold mb-4 text-center mx-auto">
+      Inscrivez vous à notre Newsletter
+    </h2>
+    <p class="mb-4 w-full max-w-xl mx-auto text-center">
+      Recevez l'inspiration directement dans votre boîte de réception.
+      Abonnez-vous à notre newsletter et restez connecté à un monde
+      d'apprentissage en constante évolution.
+    </p>
+    <form
+      id="search_box"
+      class="p-1 w-full mx-auto max-w-lg flex flex-row justify-between"
     >
-      S'inscrire
-    </button>
-  </form>
+      <input
+        type="text"
+        name="query"
+        id="querier"
+        required
+        class="px-4 py-2 bg-white text-black text-xs w-full rounded-l-md outline-none"
+        placeholder="Votre adresse e-mail..."
+      />
+      <button
+        class="group px-4 py-2 text-sm bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-r-md transition duration-300 ease-in-out"
+        type="submit"
+      >
+        S'inscrire
+      </button>
+    </form>
+  </div>
 </div>
 
 <!----------------------- contact ------------------------->
 
+{% if not user.is_authenticated %}
 <section class="bg-white py-8">
-  <div class="fadeout max-w-6xl mx-auto m-8 px-8">
+  <div class="fadeout flex flex-col items-center max-w-6xl mx-auto m-8 px-8">
     <h2
       class="w-full my-2 text-4xl font-bold leading-tight text-center text-black"
     >
@@ -251,21 +240,13 @@
       d'enseignement enrichissante, Afridemia est là pour vous offrir une
       expérience fluide et personnalisée.
     </p>
-    <div class="grid mt-10 gap-8 bg-green-200 rounded-md">
-      <div class="text-center mt-12 mb-12">
-        <h3 style="font-size: 18px; padding: 31px">
-          N'hésitez pas à nous contacter pour toute question ou suggestion. Nous
-          sommes impatients de partager cette aventure littéraire avec vous !
-        </h3>
-
-        <button
-          class="bg-blue-950 hover:bg-green-600 text-white py-2 px-4 rounded-md"
-        >
-          Contactez nous
-        </button>
-      </div>
-    </div>
+    <a
+      class="px-4 py-2 mx-auto rounded-lg border border-2 border-white bg-blue-950 hover:bg-green-300 text-white hover:text-black transition ease-in duration-200"
+      href="{% url 'login' %}"
+      >Connexion</a
+    >
   </div>
 </section>
-
+{% endif %}
+<!--  -->
 {% endblock %}

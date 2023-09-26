@@ -2,7 +2,7 @@
 <div class="px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav
-    class="mx-auto py-2 flex justify-between items-center gap-4 items-center text-xs w-full max-w-[1350px]"
+    class="mx-auto mb-4 w-full flex justify-between items-center gap-4 items-center text-xs"
   >
     <div class="flex items-center gap-4">
       <a
@@ -16,14 +16,19 @@
         href="{% url 'tutors' %}"
         >Enseignants</a
       >
-      /
+      / {% if curr_obj %}
       <span class="text-black font-black"
-        >{{curr_tut.user.last_name}} {{curr_tut.user.first_name}}</span
+        >{{curr_obj.user.last_name}} {{curr_obj.user.first_name}}</span
       >
+      {% else %}
+      <span class="text-black font-black"
+        >Créer un nouveau profil d'enseignant
+      </span>
+      {% endif %}
     </div>
-    {% if user == curr_tut.user %}
+    {% if user == curr_obj.user %}
     <a
-      href="{% url 'edit_tutor' curr_tut.id %}"
+      href="{% url 'edit_tutor' curr_obj.id %}"
       class="px-4 py-2 bg-black text-white hover:bg-green-400 hover:text-black rounded-md flex justify-between items-center transition duration-300 ease-in-out"
       >Modifier mon profile d'enseignant<i
         class="fa-solid fa-pen-to-square ml-4"
@@ -35,16 +40,16 @@
   {% if not form %}
   <!--------------------------------------- tutor layout --------------------------------------->
   <section class="mt-4 mb-8 flex flex-col lg:flex-row gap-4 w-full">
-    {% if not curr_tut.image %}
+    {% if not curr_obj.image %}
     <img
       class="h-80 w-full lg:max-w-[400px] border border-2 rounded-md object-cover"
-      src="{% static 'imgs/tutor.jpg' %}"
+      src="{% static 'vectors/classroom.png' %}"
       alt="image"
     />
     {% else %}
     <img
       class="h-80 w-full lg:max-w-[400px] border border-2 rounded-md object-cover"
-      src="{{curr_tut.image.url}}"
+      src="{{curr_obj.image.url}}"
       alt="image"
     />
     {% endif %}
@@ -53,39 +58,47 @@
       class="w-full bg-blue-950 text-gray-200 text-md p-6 xl:p-8 rounded-md flex flex-col"
     >
       <h4 class="text-white text-xl font-bold flex items-center">
-        {{curr_tut.civility}} {{curr_tut.user.last_name}}
-        {{curr_tut.user.first_name}}
-        <img class="mx-2 h-4" src="{{curr_tut.country.flag}}" />
-        ({{curr_tut.country}})
+        {{curr_obj.civility}} {{curr_obj.user.last_name}}
+        {{curr_obj.user.first_name}}
+        <img class="mx-2 h-4" src="{{curr_obj.country.flag}}" />
+        ({{curr_obj.country}})
       </h4>
 
-      <p class="py-2 text-lg">{{curr_tut.bio}}</p>
+      <p class="py-2 text-lg">{{curr_obj.bio}}</p>
 
       <div class="flex flex-col md:flex-row justify-between gap-4">
         <div class="flex flex-col">
           <h4 class="mb-2 text-white text-lg font-bold">Contacts</h4>
           <div class="py-2 flex flex-wrap gap-4 items-center">
+            {% if user == curr_obj.user %}
             <a
-              href="{% url 'chat_page' curr_tut.user.id %}"
+              href="{% url 'edit_tutor' curr_obj.id %}"
+              class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
+              >Modifier<i class="fa-solid fa-pen-to-square ml-2"></i
+            ></a>
+            {% else %}
+            <a
+              href="{% url 'chat_page' curr_obj.user.id %}"
               class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
               >Contacter<i class="fa-solid fa-message ml-2"></i
             ></a>
+            {% endif %}
             <a
-              href="tel:{{curr_tut.cel}}"
+              href="tel:{{curr_obj.cel}}"
               target="_blank"
               class="rounded-full bg-transparent hover:text-cyan-300"
             >
               <i class="fa-solid fa-mobile text-2xl"></i>
             </a>
             <a
-              href="{{curr_tut.facebook_link}}"
+              href="{{curr_obj.facebook_link}}"
               target="_blank"
               class="hover:text-cyan-300"
             >
               <i class="fa-brands fa-facebook text-2xl"></i>
             </a>
             <a
-              href="{{curr_tut.linkedin_link}}"
+              href="{{curr_obj.linkedin_link}}"
               target="_blank"
               class="hover:text-cyan-300"
             >
@@ -95,9 +108,9 @@
         </div>
         <div>
           <h4 class="mb-2 text-white text-lg font-bold">Diplomes</h4>
-          <p class="text-sm">{{curr_tut.qualifications}}</p>
+          <p class="text-sm">{{curr_obj.qualifications}}</p>
           <h5 class="text-cyan-300 text-md">
-            {{curr_tut.years_of_experience}} an(s) d'experience
+            {{curr_obj.experience}} an(s) d'experience
           </h5>
         </div>
       </div>
@@ -110,14 +123,23 @@
       class="p-6 bg-blue-50 w-full lg:max-w-[400px] rounded-md flex flex-col justify-"
     >
       <h4 class="text-black text-xl font-bold">Matieres</h4>
-      <p class="py-1">{{curr_tut.subjects}}</p>
+      <p class="py-1">{{curr_obj.subjects}}</p>
       <h4 class="text-black text-xl font-bold">Classes</h4>
-      <p class="py-1">{{curr_tut.grades}}</p>
+      <p class="py-1">{{curr_obj.grades}}</p>
     </div>
     <div class="w-full rounded-md">
-      <h4 class="text-black text-xl mb-4 font-bold">
-        Articles postés dans le forum
-      </h4>
+      <div class="flex justify-between">
+        <h4 class="text-black text-xl mb-4 font-bold">
+          Articles postés dans le forum
+        </h4>
+        {% if user == curr_obj.user %}
+        <a
+          href="{% url 'create_forum_article' %}"
+          class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
+          ><i class="fa-solid fa-plus"></i
+        ></a>
+        {% endif %}
+      </div>
 
       {% if not rel_articles %}
       <!--  -->
@@ -155,52 +177,105 @@
     </div>
   </section>
   {% else %}
-  <section class="my-4 w-full mx-auto rounded-md">
-    <div class="grid md:grid-cols-2 gap-8">
-      <article>
-        <h3 class="mb-1 text-bold text-black">Enseignants</h3>
-        <p class="mb-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
-          sint inventore fugiat eum vel. Accusamus excepturi eos harum at quidem
-          perspiciatis vitae, doloremque voluptate sunt ad fugit beatae
-          repellat! Suscipit.
-        </p>
-
-        <form
-          class="w-full p-8 border-2 hover:border-green-400 rounded-md"
-          method="POST"
-          action=""
-          enctype="multipart/form-data"
-        >
-          {% csrf_token %}
-          <!--  -->
-          {% for field in form %}
-          <div>
-            <h3 class="mb-1 text-bold text-black">{{field.label}}</h3>
-            {{field}}
-          </div>
-          {% endfor %}
-          <div class="my-4 flex gap-4 items-end">
-            <input
-              class="px-8 py-2 bg-gray-700 hover:bg-blue-700 text-white rounded-md cursor-pointer"
-              type="submit"
-              value="Enregistrer"
-            />
-            <a
-              class="bg-white px-8 py-2 rounded-md hover:bg-red-600 hover:text-white"
-              href="{{request.META.HTTP_REFERER}}"
-            >
-              Annuler
-            </a>
-          </div>
-        </form>
-      </article>
+  <section class="w-full mx-auto rounded-md">
+    <div
+      class="p-8 bg-blue-950 rounded-md w-full flex flex-col md:flex-row gap-4 items-center"
+    >
+      <p class="my-4 w-full text-lg text-white">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem sint
+        inventore fugiat eum vel. Accusamus excepturi eos harum at quidem
+        perspiciatis vitae, doloremque voluptate sunt ad fugit beatae repellat!
+        Suscipit.
+      </p>
       <img
-        class="w-full h-full rounded-md object-cover"
-        src="{% static 'vectors/teacher.png' %}"
-        alt="curr_ad image"
+        class="w-full h-[300px] rounded-md object-cover"
+        src="{% static 'images/4.png' %}"
+        alt="image"
       />
     </div>
+
+    <form
+      class="w-full p-8 my-8 border-2 hover:border-blue-950 rounded-md"
+      method="POST"
+      action=""
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}
+      <div class="mb-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.last_name.label}}</h3>
+          {{form.last_name}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.first_name.label}}</h3>
+          {{form.first_name}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.civility.label}}</h3>
+          {{form.civility}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.title.label}}</h3>
+          {{form.title}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.country.label}}</h3>
+          {{form.country}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.phone.label}}</h3>
+          {{form.phone}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.subjects.label}}</h3>
+          {{form.subjects}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.levels.label}}</h3>
+          {{form.levels}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">
+            {{form.qualification.label}}
+          </h3>
+          {{form.qualification}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.experience.label}}</h3>
+          {{form.experience}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">
+            {{form.facebook_link.label}}
+          </h3>
+          {{form.facebook_link}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">
+            {{form.linkedin_link.label}}
+          </h3>
+          {{form.linkedin_link}}
+        </div>
+      </div>
+      <div>
+        <h3 class="mb-1 text-black font-bold">{{form.bio.label}}</h3>
+        {{form.bio}}
+      </div>
+      <div class="my-4 flex gap-4 items-end">
+        <a
+          class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+          href="{{request.META.HTTP_REFERER}}"
+        >
+          Annuler
+        </a>
+
+        <input
+          class="px-4 py-2 bg-blue-950 hover:bg-green-600 text-white rounded-md cursor-pointer"
+          type="submit"
+          value="Enregistrer"
+        />
+      </div>
+    </form>
   </section>
   {% endif %}
 </div>

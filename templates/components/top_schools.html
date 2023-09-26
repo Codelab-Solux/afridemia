@@ -2,26 +2,29 @@
 <!--------------------------------------- schools --------------------------------------->
 <section id="schools" class="bg-white w-full">
   <div class="p-8 py-10 w-full max-w-[1350px] mx-auto text-left">
-    <div class="slideout">
-      <div class="w-full my-2 flex justify-between items-center">
-        <h3 class="text-3xl text-black font-bold">
-          Etablissements recommandés
-        </h3>
-        <a
-          class="hidden md:inline text-black px-4 py-2 rounded-md group"
-          href="{% url 'schools' %}"
-          ><i
-            class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
-          ></i>
-        </a>
-      </div>
-      <p class="mb-4 w-full max-w-lg text-lg">
-        Découvrez votre chemin vers l'excellence éducative avec nos écoles
-        recommandées, où chaque avenir trouve sa voie.
+    <div class="w-full my-2 flex justify-between items-center">
+      <h3 class="text-3xl text-black font-bold">Etablissements recommandés</h3>
+      <a
+        class="hidden md:inline text-black px-4 py-2 rounded-md group"
+        href="{% url 'schools' %}"
+        ><i
+          class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
+        ></i>
+      </a>
+    </div>
+    <p class="mb-4 w-full max-w-lg text-lg">
+      Découvrez votre chemin vers l'excellence éducative avec nos écoles
+      recommandées, où chaque avenir trouve sa voie.
+    </p>
+
+    {% if not schools %}
+    <div class="py-20 flex-col text-center m-auto w-full">
+      <i class="fa-solid fa-folder"></i>
+      <p class="p-2 max-w-[400px] mx-auto">
+        Aucune écoles disponible pour le moment!!!
       </p>
     </div>
-
-    {% if not schools %} {% include 'components/no_data.html' %} {% else %}
+    {% else %}
     <div
       class="fadeout grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
     >

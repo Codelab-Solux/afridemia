@@ -39,52 +39,27 @@
       <i class="fa-solid fa-chalkboard-user lg:mr-2"></i>
       <span class="hidden lg:inline lg:text-xs xl:text-base">Enseignants</span>
     </a>
-    <!--  -->
     <a
       class="mb-2 lg:px-3 py-2 text-center lg:text-left rounded-md hover:bg-white hover:text-black transition ease-in duration-200 w-full {{dash_forum_page}}"
       href="{% url 'dash_forum' %}"
     >
       <i class="fa-solid fa-newspaper text-sm lg:mr-2"></i>
-      <span class="hidden lg:inline lg:text-xs xl:text-base">Articles</span>
+      <span class="hidden lg:inline lg:text-xs xl:text-base">Articles du Forum</span>
     </a>
-    <!--  -->
-    <!-- <a
-      class="mb-2 lg:px-3 py-2 text-center lg:text-left rounded-md hover:bg-white hover:text-black transition ease-in duration-200 w-full {{chats_page}}"
-      href="{% url 'home' %}"
-    >
-      <i class="fa-solid fa-comments text-sm lg:mr-2"></i>
-      <span class="hidden lg:inline lg:text-xs xl:text-base"> Messages </span>
-    </a> -->
-    <!--  -->
-    <!-- <a
-      class="relative mb-2 lg:px-3 py-2 text-center lg:text-left rounded-md hover:bg-white hover:text-black transition ease-in duration-200 w-full {{notifications_page}}"
-      href="{% url 'home' %}"
-    >
-      <i class="text-sm fa-solid fa-bell text-sm lg:mr-2"></i>
-      <span class="hidden lg:inline lg:text-xs xl:text-base">
-        Notifications
-      </span>
-      {% if notifications %}
-      <span
-        id="notifier"
-        class="absolute top-2 right-2 h-2 w-2 rounded-full bg-amber-500 animate-pulse"
-      >
-        <tt id="count_badge"></tt>
-      </span>
-      {% endif %}
-    </a> -->
-    <!--  -->
-    <!-- {% if user.is_superuser %}
     <a
-      class="mb-2 lg:px-3 py-2 text-center lg:text-left rounded-md hover:bg-white hover:text-black transition ease-in duration-200 w-full"
-      href="{% url 'admin:index' %}"
-      ><i class="fa-solid fa-lock text-sm lg:mr-2"></i>
-      <span class="hidden lg:inline lg:text-xs xl:text-base">
-        Admin Dashboard
-      </span>
+      class="mb-2 lg:px-3 py-2 text-center lg:text-left rounded-md hover:bg-white hover:text-black transition ease-in duration-200 w-full {{dash_forum_page}}"
+      href="{% url 'dash_forum' %}"
+    >
+      <i class="fa-solid fa-file-text text-sm lg:mr-2"></i>
+      <span class="hidden lg:inline lg:text-xs xl:text-base">Articles du Blog</span>
     </a>
-    {% endif %} -->
-
+    <a
+      class="mb-2 lg:px-3 py-2 text-center lg:text-left rounded-md hover:bg-white hover:text-black transition ease-in duration-200 w-full {{dash_forum_page}}"
+      href="{% url 'users' %}"
+    >
+      <i class="fa-solid fa-users text-sm lg:mr-2"></i>
+      <span class="hidden lg:inline lg:text-xs xl:text-base">Utilisateurs</span>
+    </a>
     <div
       class="px-1 py-2 lg:p-2 bg-white flex flex-col lg:flex-row items-center gap-1 lg:gap-2 mb-2 sm:text-sm lg:text-md rounded-md cursor-pointer w-full"
     >

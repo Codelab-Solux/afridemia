@@ -3,6 +3,7 @@
 *.pyc
 .env
 .conf
+.docx
 apikey.json
 venv/
 __pycache__

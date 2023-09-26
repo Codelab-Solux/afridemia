@@ -5,6 +5,8 @@ from django_countries.fields import CountryField
 from ckeditor.fields import RichTextField
 from gdstorage.storage import GoogleDriveStorage
 
+from schools.models import EducationLevel
+
 # Define Google Drive Storage
 gd_storage = GoogleDriveStorage()
 
@@ -57,7 +59,8 @@ class Blogpost(models.Model):
     title = models.CharField(max_length=255, default='')
     subtitle = models.CharField(max_length=255, blank=True, null=True)
     content = RichTextField(blank=True, default='')
-    image = models.ImageField(upload_to='blogposts', blank=True, null=True, storage=gd_storage)
+    image = models.ImageField(upload_to='blogposts',
+                              blank=True, null=True, storage=gd_storage)
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -86,36 +89,57 @@ class Advert(models.Model):
         return reverse('advert', kwargs={'pk': self.pk})
 
 
-civ_titles = (
-    ('Prof.', 'Prof.'),
-    ('Doc.', 'Doc.'),
+titles = (
     ('M.', 'M.'),
-    ('Mme.', "Mme"),
-    ('Mlle.', "Mlle"),
+    ('Mme.', "Mme."),
+    ('Mlle.', "Mlle."),
+)
+
+civilities = (
+    ('Doc.', 'Docteur'),
+    ('Ing.', 'Ingenieur'),
+    ('Prof.', 'Proffesseur'),
+)
+qualifications = (
+    ('BAC', 'BAC'),
+    ('BAC + 1', 'BAC + 1'),
+    ('BAC + 2', 'BAC + 2'),
+    ('BAC + 3', 'BAC + 3'),
+    ('BAC + 4', 'BAC + 4'),
+    ('BAC + 5', 'BAC + 5'),
+    ('BAC + 6', 'BAC + 6'),
+    ('BAC + 7', 'BAC + 7'),
 )
 
 
 class Tutor(models.Model):
     user = models.OneToOneField(
         CustomUser, unique=True, on_delete=models.CASCADE)
-    civility = models.CharField(max_length=50, default='', choices=civ_titles)
+    last_name = models.CharField(
+        max_length=255, default='', blank=True, null=True)
+    first_name = models.CharField(
+        max_length=255, default='', blank=True, null=True)
+    civility = models.CharField(max_length=50, default='', choices=civilities)
+    title = models.CharField(max_length=50, default='', choices=titles)
     country = CountryField(
         blank_label="", blank=True, null=True)
-    tel = models.CharField(max_length=255, default='',)
-    cel = models.CharField(max_length=255, default='', blank=True, null=True)
-    # address = models.CharField(max_length=255, default='',)
+    phone = models.CharField(max_length=255, default='',)
+    qualification = models.CharField(
+        max_length=50, default='BAC', choices=qualifications)
     bio = models.TextField(blank=True, null=True)
-    subjects = models.TextField(blank=True, null=True)
-    grades = models.TextField(blank=True, null=True)
+    subjects = models.ManyToManyField("Subject")
+    levels = models.ManyToManyField(EducationLevel)
     is_verified = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
-    years_of_experience = models.IntegerField(default='0')
-    qualifications = models.CharField(max_length=255, blank=True, null=True)
+    experience = models.IntegerField(default='0')
     facebook_link = models.CharField(
         max_length=255, blank=True, null=True)
     linkedin_link = models.CharField(
         max_length=255, blank=True, null=True)
-    image = models.ImageField(upload_to='tutors', blank=True, null=True, storage=gd_storage)
+    certificate = models.ImageField(
+        upload_to='tutors', blank=True, null=True, storage=gd_storage)
+    image = models.ImageField(
+        upload_to='tutors', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.user.last_name} - {self.user.first_name}'
@@ -127,7 +151,8 @@ class Tutor(models.Model):
 class Subject(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='subjects', blank=True, null=True, storage=gd_storage)
+    image = models.ImageField(upload_to='subjects',
+                              blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return self.name

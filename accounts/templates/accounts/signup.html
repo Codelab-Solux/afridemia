@@ -1,14 +1,16 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
 <div
-  class="py-20 px-8 max-w-[1350px] h-full mx-auto flex flex-col md:flex-row gap-x-8 items-center justify-between"
+  class="py-20 px-8 max-w-[1350px] h-full mx-auto flex flex-col md:flex-row justify-between"
 >
   <img
-    class="h-full max-w-[400px] rounded-lg object-cover"
-    src="{% static 'imgs/sch-2.jpg' %}"
+    class="h-[480px] w-full max-w-[440px] rounded-l-md object-cover"
+    src="{% static 'images/2.png' %}"
     alt="signup image"
   />
-  <div class="flex flex-col w-[350px]">
-    <h1 class="mb-4 text-black text-3xl font-bold">Inscrivez vous ici</h1>
+  <div
+    class="bg-gray-100 rounded-r-md px-8 flex-col h-[480px] w-full md:w-[440px]"
+  >
+    <h1 class="mt-4 text-black text-3xl font-bold">Inscrivez vous</h1>
     <form
       class="w-full text-sm"
       method="POST"
@@ -18,18 +20,18 @@
       {% csrf_token %} {% for field in form %}
       <div>
         <h3 class="mb-1">{{field.label}}</h3>
-        {% if field.label == role %} none {% endif %} {{field}}
+        {{field}}
       </div>
       {% endfor %}
 
       <input
-        class="mt-4 px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
+        class="mt-2 px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
         type="submit"
         value="Inscription"
       />
     </form>
 
-    <p class="login-wrapper-footer-text mt-4">
+    <p class="login-wrapper-footer-text mt-2">
       Vous avez un compte?
       <a href="{% url 'login' %}" class="text-green-400">Cliquez ici</a>
     </p>

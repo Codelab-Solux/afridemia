@@ -19,37 +19,35 @@ body {
 }
 
 .db-table tbody tr:nth-of-type(even) {
-  background-color: #e0e7ff;
+  background-color: #e7e7e7;
 }
 
 /* tabs---------------------------------------------------------------------------------------------------- */
-.active {
+/* .active {
   color: #22c55e;
-}
+} */
 
 .dashactive {
   color: #22c55e;
   background-color: white;
 }
 
-/* tabs---------------------------------------------------------------------------------------------------- */
-
-/* Create an active/current tablink class */
-.tab button.active {
+.customtab button.active {
+  border-radius: 0.5em;
   background-color: #172554;
   color: white;
 }
 
-/* Style the tab content */
-/* .tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #eee;
-  border-top: none;
-} */
+.underlay {
+  z-index: -1;
+}
+.overlay {
+  z-index: 100;
+}
 
 /* carousel---------------------------------------------------------------------------------------------------- */
 .carousel {
+  z-index: 0;
   position: relative;
   width: 100%;
   max-width: 800px;

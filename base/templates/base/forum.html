@@ -2,7 +2,7 @@
 <div class="px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav
-    class="mb-4 mx-auto py-2 flex justify-between items-center gap-4 items-center text-xs w-full max-w-[1350px]"
+    class="mx-auto mb-4 w-full flex justify-between items-center gap-4 items-center text-xs"
   >
     <div class="flex items-center gap-4">
       <a
@@ -21,19 +21,27 @@
       {% if user.is_authenticated %}
       <a
         href="{% url 'create_forum_article' %}"
-        class="px-4 py-3 bg-sky-100 text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
+        class="px-4 py-3 bg-green-100 text-black hover:bg-green-300 rounded-md transition duration-300 ease-in-out"
         >Nouvel article<i class="fa-solid fa-plus ml-2"></i
       ></a>
       {% endif %}
     </div>
   </nav>
-
-  <p class="mb-4 w-full max-w-lg text-lg">
-    Un espace pour partager, discuter et apprendre ensemble. Rejoignez notre
-    communauté et participez aux conversations éducatives passionnantes.
-  </p>
+  <div
+    class="p-8 bg-blue-950 rounded-md w-full flex flex-col md:flex-row gap-4 items-center"
+  >
+    <p class="my-4 w-full text-lg text-white">
+      Un espace pour partager, discuter et apprendre ensemble. Rejoignez notre
+      communauté et participez aux conversations éducatives passionnantes.
+    </p>
+    <img
+      class="w-full h-[300px] rounded-md object-cover"
+      src="{% static 'images/3.png' %}"
+      alt="image"
+    />
+  </div>
   <!--------------------------------------- articles --------------------------------------->
-  <section id="articles" class="w-full text-left">
+  <section id="articles" class="my-8 w-full text-left">
     <div class="w-full mx-auto flex flex-col-reverse lg:flex-row gap-8">
       <div class="w-full">
         {% for obj in articles %}

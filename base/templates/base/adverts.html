@@ -2,7 +2,7 @@
 <div class="px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav
-    class="mx-auto py-2 flex justify-between items-center gap-4 items-center text-xs w-full max-w-[1350px]"
+    class="mx-auto mb-4 w-full flex justify-between items-center gap-4 items-center text-xs"
   >
     <div class="flex items-center gap-4">
       <a
@@ -21,19 +21,28 @@
       {% if user.is_authenticated %}
       <a
         href="{% url 'create_advert' %}"
-        class="px-4 py-3 bg-sky-100 text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in-out"
+        class="px-4 py-3 bg-green-100 text-black hover:bg-green-300 rounded-md transition duration-300 ease-in-out"
         >Nouvelle Annonce<i class="fa-solid fa-plus ml-2"></i
       ></a>
       {% endif %}
     </div>
   </nav>
 
-  <p class="my-4 w-full max-w-lg text-lg">
-    Restez à la pointe des dernières nouvelles et opportunités éducatives grâce
-    à nos annonces récentes. Votre prochaine étape commence ici.
-  </p>
+  <div
+    class="p-8 bg-blue-950 rounded-md w-full flex flex-col md:flex-row gap-4 items-center"
+  >
+    <p class="my-4 w-full text-lg text-white">
+      Restez à la pointe des dernières nouvelles et opportunités éducatives
+      grâce à nos annonces récentes. Votre prochaine étape commence ici.
+    </p>
+    <img
+      class="w-full h-[300px] rounded-md object-cover"
+      src="{% static 'images/3.png' %}"
+      alt="image"
+    />
+  </div>
 
-  <div class="mb-8 tab flex gap-4 max-w-[300px] mx-auto text-sm text-gray-700">
+  <div class="my-8 tab flex gap-4 max-w-[300px] mx-auto text-sm text-gray-700">
     <button
       class="tablinks px-4 py-2 bg-gray-100 hover:bg-blue-950 hover:text-white rounded-md"
       onclick="openTab(event, 'adverts')"
@@ -65,16 +74,13 @@
         >
           {% if obj.author == user %}
           <a
-            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
+            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-green-300 z-30 rounded-full transition duration-300 ease-in-out"
             href="{% url 'edit_advert' obj.id %}"
             ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
           ></a>
           {% endif %}
           <a href="{% url 'advert' obj.id  %}">
             <div class="p-4 flex flex-col justify-between group">
-              <i
-                class="mb-2 fa-solid fa-bullhorn text-gray-300 text-4xl group-hover:text-sky-300"
-              ></i>
               <h4 class="text-black font-bold">
                 {{obj.title|truncatechars:50}}
               </h4>
@@ -88,8 +94,12 @@
       </div>
     </div>
   </section>
+
   <!--------------------------------------- offers --------------------------------------->
-  <section id="offers" class="tabcontent hidden mb-8 bg-white w-full text-left">
+  <section
+    id="offers"
+    class="hidden tabcontent hidden mb-8 bg-white w-full text-left"
+  >
     <div class="w-full mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {% for obj in offers %}
@@ -98,16 +108,13 @@
         >
           {% if obj.author == user %}
           <a
-            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-sky-300 z-30 rounded-full transition duration-300 ease-in-out"
+            class="absolute top-4 right-4 px-3 py-2 bg-gray-300 hover:bg-green-300 z-30 rounded-full transition duration-300 ease-in-out"
             href="{% url 'edit_advert' obj.id %}"
             ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
           ></a>
           {% endif %}
           <a href="{% url 'advert' obj.id  %}">
             <div class="p-4 flex flex-col justify-between group">
-              <i
-                class="mb-2 fa-solid fa-bullhorn text-gray-300 text-4xl group-hover:text-sky-300"
-              ></i>
               <h4 class="text-black font-bold">
                 {{obj.title|truncatechars:50}}
               </h4>
@@ -123,7 +130,10 @@
   </section>
 
   <!--------------------------------------- demands --------------------------------------->
-  <section id="demands" class="tabcontent mb-8 bg-white w-full text-left">
+  <section
+    id="demands"
+    class="hidden tabcontent mb-8 bg-white w-full text-left"
+  >
     <div class="w-full mx-auto">
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {% for obj in demands %}
@@ -139,9 +149,6 @@
           {% endif %}
           <a href="{% url 'advert' obj.id  %}">
             <div class="p-4 flex flex-col justify-between group">
-              <i
-                class="mb-2 fa-solid fa-bullhorn text-gray-300 text-4xl group-hover:text-green-300"
-              ></i>
               <h4 class="text-black font-bold">
                 {{obj.title|truncatechars:50}}
               </h4>

@@ -4,25 +4,30 @@
   id="rec_posts"
   class="px-8 py-10 w-full max-w-[1350px] mx-auto bg-white w-full text-left"
 >
-  <div class="slideout">
-    <div class="w-full my-2 flex justify-between items-center">
-      <h3 class="text-3xl text-black font-bold">Articles récents</h3>
-      <a
-        class="hidden md:inline text-black px-4 py-2 rounded-md group"
-        href="{% url 'blog' %}"
-        ><i
-          class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
-        ></i>
-      </a>
-    </div>
-
-    <p class="my-4 w-full max-w-lg text-lg">
-      Explorez des perspectives éducatives captivantes grâce à nos articles
-      récents. Apprenez, grandissez et évoluez avec nous.
-    </p>
+  <div class="w-full my-2 flex justify-between items-center">
+    <h3 class="text-3xl text-black font-bold">Articles récents</h3>
+    <a
+      class="hidden md:inline text-black px-4 py-2 rounded-md group"
+      href="{% url 'blog' %}"
+      ><i
+        class="fa-solid fa-arrow-up text-lg group-hover:rotate-90 transition duration-300 ease-in-out"
+      ></i>
+    </a>
   </div>
 
-  {% if not rec_posts %} {% include 'components/no_data.html' %} {% else %}
+  <p class="my-4 w-full max-w-lg text-lg">
+    Explorez des perspectives éducatives captivantes grâce à nos articles
+    récents. Apprenez, grandissez et évoluez avec nous.
+  </p>
+
+  {% if not rec_posts %}
+  <div class="py-20 flex-col text-center m-auto w-full">
+    <i class="fa-solid fa-folder"></i>
+    <p class="p-2 max-w-[400px] mx-auto">
+      Aucun article disponible pour le moment!!!
+    </p>
+  </div>
+  {% else %}
 
   <div class="fadeout grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
     {% for item in rec_posts %}
@@ -53,9 +58,11 @@
           {% endif %}
         </div>
         <div class="p-4 flex flex-col justify-between">
-          <h4 class="text-black font-bold">{{item.title|truncatechars:30}}</h4>
-          <p class="py-2 text-sm text-gray-800">
-            {{item.content|truncatechars:50}}
+          <h4 class="text-black text-lg font-bold">
+            {{item.title|truncatechars:30}}
+          </h4>
+          <p class="py-2 text-gray-700">
+            {{item.content|safe|truncatechars:50}}
           </p>
         </div>
       </a>
