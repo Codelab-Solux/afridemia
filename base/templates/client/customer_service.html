@@ -9,8 +9,8 @@
             <img
               src="{% static 'assets/client.png' %}"
               alt=""
-              class="rounded-t-lg w-full"
-              id="cat_img"
+              class="h-80"
+              id="image"
             />
           </div>
         </div>
@@ -35,30 +35,20 @@
   <section class="bg-white py-8">
     <div class="container max-w-6xl mx-auto m-8 px-8">
       <div class="grid lg:grid-cols-2 md:grid-cols-2 gap-10">
-        <div class="">
-          <p
-            class="text-md"
-            style="margin-top: 230px; font-size: 20px; font-family: poppins"
-          >
-            Chez Afridemia, nous attachons une grande importance à la
-            satisfaction de nos utilisateurs et à la qualité de notre service
-            clientèle. Notre équipe de service client est dédiée à répondre à
-            vos questions, à résoudre les problèmes éventuels et à vous offrir
-            une assistance personnalisée tout au long de votre expérience avec
-            Afridemia.
-          </p>
-          <br />
-        </div>
-        <div class="mt-4 rounded-md sm:ml-4 md:ml-4 lg:ml-0">
-          <div class="w-full overflow-hidden">
-            <img
-              src="{% static 'assets/services.jpg' %}"
-              alt=""
-              class="h-80 rounded-lg w-full"
-              id="cat_img"
-            />
-          </div>
-        </div>
+        <p class="text-xl">
+          Chez Afridemia, nous attachons une grande importance à la satisfaction
+          de nos utilisateurs et à la qualité de notre service clientèle. Notre
+          équipe de service client est dédiée à répondre à vos questions, à
+          résoudre les problèmes éventuels et à vous offrir une assistance
+          personnalisée tout au long de votre expérience avec Afridemia.
+        </p>
+
+        <img
+          src="{% static 'assets/services.jpg' %}"
+          alt=""
+          class="h-80 rounded-lg w-full object-cover"
+          id="image"
+        />
       </div>
     </div>
   </section>

@@ -1,9 +1,9 @@
 {% load static %}
 <!--------------------------------------- recent ads --------------------------------------->
-<section id="rec_ads" class="py-10 w-full bg-blue-950">
+<section id="rec_ads" class="py-20 w-full bg-blue-950">
   <div class="px-8 w-full max-w-[1350px] mx-auto w-full">
     <div class="w-full flex justify-between items-center">
-      <h3 class="text-3xl text-white font-bold">Demandes et Offres récentes</h3>
+      <h3 class="text-2xl text-white font-bold">Demandes et Offres récentes</h3>
       <a
         class="hidden md:inline text-white px-4 py-2 rounded-md group"
         href="{% url 'adverts' %}"
@@ -12,10 +12,12 @@
         ></i>
       </a>
     </div>
-    <p class="mb-4 w-full text-gray-300 max-w-lg text-lg">
+
+    <p class="mb-4 w-full text-gray-300 max-w-lg">
       Restez à la pointe des dernières nouvelles et opportunités éducatives
       grâce à nos annonces récentes. Votre prochaine étape commence ici.
     </p>
+
     {% if not rec_ads %}
     <div class="fadeout py-20 flex-col text-gray-200 text-center m-auto w-full">
       <i class="fa-solid fa-folder"></i>

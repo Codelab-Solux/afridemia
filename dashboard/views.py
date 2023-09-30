@@ -104,12 +104,11 @@ def dash_tutors(req):
 
     query = req.GET.get('query') if req.GET.get('query') != None else ''
     tutors = Tutor.objects.filter(
-        Q(subjects__icontains=query)
-        | Q(grades__icontains=query)
-        # | Q(years_of_experience__icontains=query)
+        Q(subjects__name__icontains=query)
+        | Q(levels__name__icontains=query)
         | Q(user__first_name__icontains=query)
         | Q(user__last_name__icontains=query)
-    )
+    ).distinct()
     subjects = Subject.objects.all().order_by('name')
 
     context = {

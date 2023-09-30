@@ -1,5 +1,5 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
-
+<script src="repeat.min.js"></script>
 <div class="px-8 w-full max-w-[1350px] mx-auto">
   <!--------------------------------------- mini navbar --------------------------------------->
 
@@ -13,7 +13,7 @@
       </a>
       /
       <a
-        class="hover:text-green-400 transition ease-in duration-300"
+        class= "hover:text-green-400 transition ease-in duration-300"
         href="{% url 'schools' %}"
         >Ecoles</a
       >
@@ -28,25 +28,25 @@
         <!--  -->
         {% if not school.is_verified %}
           <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-            <span class="hidden md:inline">
-              
-              Vérifier
-            </span>
-            <i class="fa-solid fa-certificate md:ml-2"></i>
+      type="submit"
+      class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+      >
+      <span class="hidden md:inline">
+        
+        Vérifier
+      </span>
+      <i class="fa-solid fa-certificate md:ml-2"></i>
         </button>
           {% else %}
           <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-            <span class="hidden md:inline">
-              
-              Revoquer la vérification
-            </span>
-            <i class="fa-solid fa-certificate md:ml-2"></i>
+      type="submit"
+      class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+      >
+      <span class="hidden md:inline">
+        
+        Revoquer la vérification
+      </span>
+      <i class="fa-solid fa-certificate md:ml-2"></i>
         </button>
         {% endif %}
       </form>
@@ -58,25 +58,25 @@
           <!--  -->
         {% if not school.is_featured %}
           <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-            <span class="hidden md:inline">
+      type="submit"
+      class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+      >
+      <span class="hidden md:inline">
 
-              Mettre en vedette
-            </span>
-            <i class="fa-solid fa-bullhorn md:ml-2"></i>
+        Mettre en vedette
+      </span>
+      <i class="fa-solid fa-bullhorn md:ml-2"></i>
         </button>
           {% else %}
           <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-            <span class="hidden md:inline">
-              
-              Retirer des vedettes
-            </span>
-            <i class="fa-solid fa-bullhorn md:ml-2"></i>
+      type="submit"
+      class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+      >
+      <span class="hidden md:inline">
+        
+        Retirer des vedettes
+      </span>
+      <i class="fa-solid fa-bullhorn md:ml-2"></i>
         </button>
         {% endif %}
       </form>
@@ -91,16 +91,16 @@
     <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-red-700 text-white text-sm">
       <span class="hidden md:inline">
         En cours de vérification 
-              
-            </span>
+        
+      </span>
       <i class="fa-solid fa-spinner md:ml-2"></i>
     </span>
     {% else %}
     <span class="px-4 py-2 rounded-md absolute top-8 right-8 bg-green-500 text-white text-sm">
       <span class="hidden md:inline">
         Vérifiée 
-              
-            </span>
+        
+      </span>
       <i class="fa-solid fa-certificate md:ml-2"></i>
     </span>
     {% endif %}
@@ -131,38 +131,38 @@
       <div class="flex justify-between items-center w-full">
         <div class="flex items-center gap-4">
           <div>
-            {% if school.crest %}
-            <img
-              class="w-full h-20 rounded-full object-cover"
-              src="{{school.crest.url}}"
-              alt="image"
-            />
-            {% else %}
-            <img
-              class="w-full h-20 rounded-full object-cover"
-              src="{% static 'imgs/crest.jpg' %}"
-              alt="image"
-            />
-            {% endif %}
+      {% if school.crest %}
+      <img
+        class="w-full h-20 rounded-full object-cover"
+        src="{{school.crest.url}}"
+        alt="image"
+      />
+      {% else %}
+      <img
+        class="w-full h-20 rounded-full object-cover"
+        src="{% static 'imgs/crest.jpg' %}"
+        alt="image"
+      />
+      {% endif %}
           </div>
           <div class="flex-col gap-4">
-            <h2 class="mb-2 text-3xl text-black font-bold">{{school.name}} </h2>
-            <p>
-              <i class="fa fa-bullhorn mr-2 text-black"></i>
-              <em class="text-green-500 font-bold">"{{school.moto|title}}" </em>
-            </p>
-            <p>
-              <i class="fa fa-trowel-bricks mr-2 text-black"></i>
-              Fondée en {{school.year_founded}}
-            </p>
-            <p class="text-sm">
-              <i class="fa fa-clock mr-2 text-black"></i>
-              Ouvert de {{school.opening_hour}} à {{school.closing_hour}}
-            </p>
-            <p class="text-sm">
-              <i class="fa fa-star mr-2 text-black"></i>
-              {{school.avg_rating}} / 5
-            </p>
+      <h2 class="mb-2 text-3xl text-black font-bold">{{school.name}} </h2>
+      <p>
+        <i class="fa fa-bullhorn mr-2 text-black"></i>
+        <em class="text-green-500 font-bold">"{{school.moto|title}}" </em>
+      </p>
+      <p>
+        <i class="fa fa-trowel-bricks mr-2 text-black"></i>
+        Fondée en {{school.year_founded}}
+      </p>
+      <p class="text-sm">
+        <i class="fa fa-clock mr-2 text-black"></i>
+        Ouvert de {{school.opening_hour}} à {{school.closing_hour}}
+      </p>
+      <p class="text-sm">
+        <i class="fa fa-star mr-2 text-black"></i>
+        {{school.avg_rating}} / 5
+      </p>
           </div>
         </div>
         
@@ -171,25 +171,25 @@
         <!--  -->
         {% if not is_following %}
           <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-            <span class="hidden md:inline">
-              
-              Suivre
-            </span>
-            <i class="fa-solid fa-bell md:ml-2"></i>
+      type="submit"
+      class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+      >
+      <span class="hidden md:inline">
+        
+        Suivre
+      </span>
+      <i class="fa-solid fa-bell md:ml-2"></i>
         </button>
           {% else %}
           <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-            <span class="hidden md:inline">
-              
-              Ne plus suivre
-            </span>
-            <i class="fa-solid fa-bell-slash md:ml-2"></i>
+      type="submit"
+      class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+      >
+      <span class="hidden md:inline">
+        
+        Ne plus suivre
+      </span>
+      <i class="fa-solid fa-bell-slash md:ml-2"></i>
         </button>
         {% endif %}
       </form>
@@ -204,107 +204,54 @@
       <div class="my-4 grid md:grid-cols-2 gap-6 w-full">
         <div class="p-6 lg:p-8 bg-blue-950 flex flex-col justify-between rounded-md w-full">
           <article>
-
             <p class="text-white text-xl font-bold">Niveaux d'Education</p>
             <ul class="my-4 flex flex-wrap gap-4">
               {% for obj in school.levels.all %}
               <!--  -->
-              <li class="px-4 py-2 rounded-md bg-white text-black">
-                {{obj.name|title}}
+              <li class="px-4 py-3 flex items-center gap-2 rounded-md bg-white text-black">
+                <img
+              class="h-10 w-10 object-contain"
+              src="{{obj.image.url}}"
+              alt="{{level.name}} image"
+            />
+               
+
+                 {{obj.name|title}}
+               
               </li>
               <!--  -->
               {% endfor %}
             </ul>
           </article>
-          {% if user.is_authenticated and review_form %}
-          <form id="review_form" class="p-6 bg-white w-full  rounded-md " action="{% url 'review_school' school.id %}" method="POST">
-            {% csrf_token %}
-            <h3 class="mb-4 text-black text-xl font-bold">Annoter cet etablissement</h3>
-            <!--  -->
-            <!-- <div class="rating my-4 flex gap-2">
-              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-1" value="1"></i>
-              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-2" value="2"></i>
-              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-3" value="3"></i>
-              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-4" value="4"></i>
-              <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-5" value="5"></i>
-            </div> -->
-            <div>
-              <h3 class="mb-1">{{review_form.rating.label}}</h3>
-              {{review_form.rating}}
-            </div>
-            <div>
-              <h3 class="mb-1">{{review_form.comment.label}}</h3>
-              {{review_form.comment}}
-            </div>
-            <button
-            type="submit"
-            class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-green-500 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
-            >
-              Enregistrer
-            </button>
-        </form>
-        {% endif %}
         </div>
-        {% if user.is_authenticated and prereg_form %}
-        <div id="prereg_form" class="p-6 lg:p-8 bg-green-100 rounded-md w-full">
-          <h3 class="mb-4 text-black text-xl font-bold">
-            Formulaire de Préinscription
-          </h3>
-
-          <form
-            class="w-full flex flex-col justify-between gap-2 text-sm"
-            method="POST"
-            action=""
-            enctype="multipart/form-data"
-          >
-            {% csrf_token %}
-            <!--  -->
-            <div class="flex flex-col md:grid grid-cols-2 flex-wrap gap-4">
-              <div>
-                <h3 class="mb-1">{{prereg_form.last_school.label}}</h3>
-                {{prereg_form.last_school}}
-              </div>
-              <div>
-                <h3 class="mb-1">{{prereg_form.classroom.label}}</h3>
-                {{prereg_form.classroom}}
-              </div>
-              <div>
-                <h3 class="mb-1">{{prereg_form.last_name.label}}</h3>
-                {{prereg_form.last_name}}
-              </div>
-              <div>
-                <h3 class="mb-1">{{prereg_form.first_name.label}}</h3>
-                {{prereg_form.first_name}}
-              </div>
-              <div>
-                <h3 class="mb-1">{{prereg_form.phone.label}}</h3>
-                {{prereg_form.phone}}
-              </div>
-              <div>
-                <h3 class="mb-1">{{prereg_form.email.label}}</h3>
-                {{prereg_form.email}}
-              </div>
-            </div>
-            <div>
-              <h3 class="mb-1">{{prereg_form.comment.label}}</h3>
-              {{prereg_form.comment}}
-            </div>
-            <div class="flex gap-4 items-end">
-              <input
-                class="px-8 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md cursor-pointer"
-                type="submit"
-                value="Enregistrer"
-              />
-              <a
-                class="bg-white px-8 py-3 rounded-md hover:bg-red-700 hover:text-white"
-                href="{{request.META.HTTP_REFERER}}"
-              >
-                Annuler
-              </a>
-            </div>
-          </form>
+      {% if user.is_authenticated and review_form %}
+      <form id="review_form" class="p-6 bg-gray-100 w-full  rounded-md " action="{% url 'review_school' school.id %}" method="POST">
+        {% csrf_token %}
+        <h3 class="mb-4 text-black text-xl font-bold">Annoter cet etablissement</h3>
+        <!--  -->
+        <!-- <div class="rating my-4 flex gap-2">
+          <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-1" value="1"></i>
+          <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-2" value="2"></i>
+          <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-3" value="3"></i>
+          <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-4" value="4"></i>
+          <i class="rating_star fa-regular fa-star text-green-400 cursor-pointer" id="star-5" value="5"></i>
+        </div> -->
+        <div>
+          <h3 class="mb-1">{{review_form.rating.label}}</h3>
+          {{review_form.rating}}
         </div>
-        {% endif %}
+        <div>
+          <h3 class="mb-1">{{review_form.comment.label}}</h3>
+          {{review_form.comment}}
+        </div>
+        <button
+        type="submit"
+        class="px-4 py-3 bg-blue-950 text-white text-sm hover:bg-green-500 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+        >
+          Voter
+        </button>
+      </form>
+      {% endif %}
       </div>
       <!--  -->
       <div class="flex gap-2 w-full">
@@ -315,7 +262,7 @@
           ><i class="fa-solid fa-pen-to-square"></i
         ></a>
         {% endif %}
-            <a href="{% url 'chat_page' school.manager.id %}"
+      <a href="{% url 'chat_page' school.manager.id %}"
 
           class="mt-4 px-4 py-3 rounded-md flex justify-between items-center text-black hover:text-white bg-green-200 hover:bg-green-600"
           ><i class="fa-solid fa-message"></i
@@ -340,62 +287,98 @@
 
   <!--------------------------------------- tabs section --------------------------------------->
 
-  <section class="my-8 p-4 bg-green-200 rounded-md tab flex flex-wrap gap-4 justify-between items-center w-full mx-auto text-gray-700">
+  <section  class="my-4 mx-auto flex justify-center flex-wrap gap-2">
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'overview')"
       id="defaultOpen"
     >
-      Aperçue
+      <i class="fa-solid fa-eye mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Aperçue
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'academia')"
     >
-      Académie
+      <i class="fa-solid fa-school mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Académie
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'teachers')"
     >
-      Enseignants
+      <i class="fa-solid fa-chalkboard-user mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Enseignants
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
+      onclick="openTab(event, 'classrooms')"
+    >
+      <i class="fa-solid fa-graduation-cap mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Classes
+      </span>
+    </button>
+    <button
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'structures')"
     >
-      Structures
+      <i class="fa-solid fa-building mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Structures
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'articles')"
     >
-      Articles
+      <i class="fa-solid fa-newspaper mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Articles
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'gallery')"
     >
-      Gallerie
+      <i class="fa-solid fa-images mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Gallerie
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'performance')"
     >
-      Performance
+      <i class="fa-solid fa-chart-pie mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Performance
+      </span>
     </button>
     <button
-      class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+      class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
       onclick="openTab(event, 'preregs')"
     >
-      Préinscription
+      <i class="fa-solid fa-id-card mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Préinscription
+      </span>
     </button>
     {% if review_form %}
     <button
-    class="tablinks px-4 py-2 bg-gray-50 hover:bg-blue-950 hover:text-white rounded-md transition duration-300 ease-in-out"
+    class="tablinks px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
     onclick="openTab(event, 'reviews')"
     >
-    Annotations
+      <i class="fa-solid fa-star mr-2 text-2xl group-hover:text-green-400"></i>
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        Annotations
+      </span>
   </button>
   {% endif %}
   </section>
@@ -412,52 +395,52 @@
           <h2 class="pb-2 font-bold text-xl text-black">Historique</h2>
           <p class="mb-4 p-4 bg-gray-50 rounded-md">{{school.history}}</p>
           <h2 class="pb-2 font-bold text-xl text-black">
-            Message de la direction
+      Message de la direction
           </h2>
           <p class="mb-4 p-4 bg-gray-50 rounded-md">{{school.mgt_quote}}</p>
         </div>
         <div class="w-full lg:max-w-[400px] grid md:grid-cols-2 lg:grid-cols-1 gap-8">
           <div class="p-8 bg-blue-50 rounded-md">
-            <h2 class="pb-2 font-bold text-xl text-black">Informations</h2>
-            <ul class="flex flex-col gap-2">
-              <li>
-                <i class="fa fa-phone text-blue-950 mr-2"></i>
-                {{school.tel}}
-              </li>
-              <!-- <li>
-                <i class="fa fa-phone text-blue-950 mr-2"></i>
-                {{school.cel}}
-              </li> -->
-              <li>
-                <i class="fa fa-paper-plane text-blue-950 mr-2"></i>
-                {{school.email}}
-              </li>
-              <li>
-                <i class="fa fa-chalkboard-user text-blue-950 mr-2"></i>
-                {{school.teacher_count}} Enseignants
-              </li>
-              <li>
-                <i class="fa fa-users text-blue-950 mr-2"></i>
-                {{school.student_count}} Effectif
-              </li>
-              <li>
-                <i class="fa fa-bookmark text-blue-950 mr-2"></i>
-                {{school.formation_count}} Cursus
-              </li>
-              <li>
-                <i class="fa fa-graduation-cap text-blue-950 mr-2"></i>
-                {{school.faculties}} Filières
-              </li>
-              <li>
-                <i class="fa fa-map-marker-alt text-blue-950 mr-2"></i
-                >{{school.address}}
-              </li>
-            </ul>
+      <h2 class="pb-2 font-bold text-xl text-black">Informations</h2>
+      <ul class="flex flex-col gap-2">
+        <li>
+          <i class="fa fa-phone text-blue-950 mr-2"></i>
+          {{school.tel}}
+        </li>
+        <!-- <li>
+          <i class="fa fa-phone text-blue-950 mr-2"></i>
+          {{school.cel}}
+        </li> -->
+        <li>
+          <i class="fa fa-paper-plane text-blue-950 mr-2"></i>
+          {{school.email}}
+        </li>
+        <li>
+          <i class="fa fa-chalkboard-user text-blue-950 mr-2"></i>
+          {{school.teacher_count}} Enseignants
+        </li>
+        <li>
+          <i class="fa fa-users text-blue-950 mr-2"></i>
+          {{school.student_count}} Effectif
+        </li>
+        <li>
+          <i class="fa fa-bookmark text-blue-950 mr-2"></i>
+          {{school.formation_count}} Cursus
+        </li>
+        <li>
+          <i class="fa fa-graduation-cap text-blue-950 mr-2"></i>
+          {{school.faculties}} Filières
+        </li>
+        <li>
+          <i class="fa fa-map-marker-alt text-blue-950 mr-2"></i
+          >{{school.address}}
+        </li>
+      </ul>
           </div>
           <!--  -->
           <div class="p-8 bg-blue-50 rounded-md">
-            <h2 class="pb-2 font-bold text-xl text-black">Description</h2>
-            <p class="text-sm">{{school.description}}</p>
+      <h2 class="pb-2 font-bold text-xl text-black">Description</h2>
+      <p class="text-sm">{{school.description}}</p>
           </div>
         </div>
       </div>
@@ -471,7 +454,17 @@
     >
       <h3 class="pb-2 font-bold text-xl text-black">Pédaogie</h3>
    
-    <p class="my-4 bg-gray-50 p-4 rounded-md">{{school.pedagogy}}</p>
+    
+      <p class="my-4 bg-gray-50 p-4 rounded-md">{{school.pedagogy}}</p>
+    </div>
+    
+  <!------------------------------------ classrooms section ------------------------------------------>
+
+    <div
+      id="classrooms"
+      class="tabcontent hidden lg:p-8 lg:border lg:hover:border-blue-950 transition duration-300 ease-in-out rounded-md"
+    >
+     
     <div class="mb-4 flex justify-between items-center">
       <h3 class="pb-2 font-bold text-xl text-black">Salles de classes</h3>
        {% if is_manager or user.is_supersuer %}
@@ -491,28 +484,28 @@
         >
           {% if obj.image %}
           <img
-            class="w-full h-40 object-cover"
-            src="{{obj.image.url}}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{{obj.image.url}}"
+      alt="image"
           />
           {% else %}
           <img
-            class="w-full h-40 object-cover"
-            src="{% static 'vectors/classroom.png' %}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{% static 'vectors/classroom.png' %}"
+      alt="image"
           />
           {% endif %}
           <div class="p-4 flex flex-col gap-2 text-gray-700">
-            <h4 class="text-xl text-black font-bold">
-              {{obj.name}} {% if obj.serie %}
-              <span class="text-green-400">{{obj.serie}}</span>
-              {% endif %}
-            </h4>
+      <h4 class="text-xl text-black font-bold">
+        {{obj.name}} {% if obj.serie %}
+        <span class="text-green-400">{{obj.serie}}</span>
+        {% endif %}
+      </h4>
 
-            <p>Effectif : <span class="font-bold">{{obj.size}}</span></p>
-            <p>
-              Frais de Scolarité : <span class="font-bold">{{obj.fees}}</span>
-            </p>
+      <p>Effectif : <span class="font-bold">{{obj.size}}</span></p>
+      <p>
+        Frais de Scolarité : <span class="font-bold">{{obj.fees}}</span>
+      </p>
           </div>
         </a>
         {% endfor %}
@@ -530,9 +523,9 @@
         <h3 class="pb-2 font-bold text-xl text-black">Enseignants</h3>
         {% if is_manager %}
           <a
-            href="{% url 'create_teacher' %}"
-            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
-            ><i class="fa-solid fa-plus"></i
+      href="{% url 'create_teacher' %}"
+      class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
+      ><i class="fa-solid fa-plus"></i
           ></a>
         {% endif %}
       </div>
@@ -545,23 +538,23 @@
         >
           {% if obj.image %}
           <img
-            class="w-full h-40 object-cover"
-            src="{{obj.image.url}}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{{obj.image.url}}"
+      alt="image"
           />
           {% else %}
           <img
-            class="w-full h-40 object-cover"
-            src="{% static 'vectors/teacher.png' %}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{% static 'vectors/teacher.png' %}"
+      alt="image"
           />
           {% endif %}
           <div class="p-4 flex flex-col gap-2 text-gray-700">
-            <h2 class="text-xl text-black font-bold" class="font-bold">
-              {{obj.designation}} {{obj.fullname}}
-            </h2>
-            <p>Martières : <span class="font-bold">{{obj.subjects}}</span></p>
-            <p>{{obj.overview}}</p>
+      <h2 class="text-xl text-black font-bold" class="font-bold">
+        {{obj.designation}} {{obj.fullname}}
+      </h2>
+      <p>Martières : <span class="font-bold">{{obj.subjects}}</span></p>
+      <p>{{obj.overview}}</p>
           </div>
         </a>
         {% endfor %}
@@ -594,22 +587,22 @@
         >
           {% if obj.image %}
           <img
-            class="w-full h-40 object-cover"
-            src="{{obj.image.url}}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{{obj.image.url}}"
+      alt="image"
           />
           {% else %}
           <img
-            class="w-full h-40 object-cover"
-            src="{% static 'vectors/library.png' %}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{% static 'vectors/library.png' %}"
+      alt="image"
           />
           {% endif %}
           <div class="p-4 flex flex-col gap-2 text-gray-700">
-            <h3 class="text-xl text-black font-bold" class="font-bold">
-              {{obj.get_type_display}} {{obj.name}}
-            </h>
-            <p class="mt-2 text-sm font-light"><i class="fa-solid fa-users text-green-500"></i> {{obj.capacity}} personnes</p>
+      <h3 class="text-xl text-black font-bold" class="font-bold">
+        {{obj.get_type_display}} {{obj.name}}
+      </h>
+      <p class="mt-2 text-sm font-light"><i class="fa-solid fa-users text-green-500"></i> {{obj.capacity}} personnes</p>
           </div>
         </a>
         {% endfor %}
@@ -643,23 +636,23 @@
         >
           {% if obj.image %}
           <img
-            class="w-full h-40 object-cover"
-            src="{{obj.image.url}}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{{obj.image.url}}"
+      alt="image"
           />
           {% else %}
           <img
-            class="w-full h-40 object-cover"
-            src="{% static 'vectors/article.png' %}"
-            alt="image"
+      class="w-full h-40 object-cover"
+      src="{% static 'vectors/article.png' %}"
+      alt="image"
           />
           {% endif %}
           <div class="p-4 flex flex-col gap-2 text-gray-700">
-            <h3 class="text-xl text-black font-bold" class="font-bold">
-              {{obj.title}}
-            </h3>
-            {% if obj.subtitle %} <p>{{obj.subtitle}}</p> {% endif %}
-            <p>{{obj.content|truncatechars:100}}</p>
+      <h3 class="text-xl text-black font-bold" class="font-bold">
+        {{obj.title}}
+      </h3>
+      {% if obj.subtitle %} <p>{{obj.subtitle}}</p> {% endif %}
+      <p>{{obj.content|truncatechars:100}}</p>
           </div>
         </a>
         {% endfor %}
@@ -687,9 +680,9 @@
       <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {% for obj in galleries %}
           <img
-            class="w-full h-60 object-cover rounded-md"
-            src="{{obj.image.url}}"
-            alt="image"
+      class="w-full h-60 object-cover rounded-md"
+      src="{{obj.image.url}}"
+      alt="image"
           />
         {% endfor %}
       </div>
@@ -706,9 +699,9 @@
         <h3 class="pb-2 font-bold text-xl text-black">Examens</h3>
           {% if is_manager %}
           <a
-            href="{% url 'create_performance' %}"
-            class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
-            ><i class="fa-solid fa-plus"></i
+      href="{% url 'create_performance' %}"
+      class="mt-4 px-4 py-3 rounded-md text-black hover:text-white bg-green-200 hover:bg-blue-950"
+      ><i class="fa-solid fa-plus"></i
           ></a>
           {% endif %}
       </div>
@@ -743,17 +736,17 @@
           class="bg-gray-100 hover:bg-white hover:shadow-md rounded-md overflow-hidden transition duration-300 ease-in-out group"
         >
         <div class="p-4 flex flex-col gap-2 group-hover:text-black">
-            <i class="fa-solid fa-graduation-cap group-hover:text-green-400 text-5xl"></i>
-            <h3 class="text-xl font-bold" class="font-bold">
-              {{obj.last_name}} {{obj.first_name}} 
-              {% if obj.gender == 'M' %}
-              <i class="fa-solid fa-mars text-blue-500"></i>
-              {% else %}
-              <i class="fa-solid fa-venus text-rose-500"></i>
-              {% endif %}
-            </h3>
-            <p>{{obj.classroom}}</p>
-            <p>{{obj.last_school}}</p>
+      <i class="fa-solid fa-graduation-cap group text-2xl-group-hover:text-green-400 text-5xl"></i>
+      <h3 class="text-xl font-bold" class="font-bold">
+        {{obj.last_name}} {{obj.first_name}} 
+        {% if obj.gender == 'M' %}
+        <i class="fa-solid fa-mars text-blue-500"></i>
+        {% else %}
+        <i class="fa-solid fa-venus text-rose-500"></i>
+        {% endif %}
+      </h3>
+      <p>{{obj.classroom}}</p>
+      <p>{{obj.last_school}}</p>
           </div>
         </a>
         {% endfor %}
@@ -778,13 +771,14 @@
       <div class="flex flex-col gap-4">
         {% for obj in reviews %}
         <div class="p-4 lg:p-8 border flex flex-col gap-2">
-          <h3>
-            <i class="fa-solid fa-star text-green-400 text-xl"></i>
-            {{obj.rating}}
-          </h3>
-          <h3 class="text-xl font-bold" class="font-bold">
-            @{{obj.user.first_name}}
-          </h3>
+          <div class="flex justify-between items-center">
+      <h3 class="text-xl font-bold" class="font-bold">
+        @{{obj.user.first_name}}
+      </h3>
+      <span class="flex gap-1">
+        <i class="fa-solid fa-star text-green-400 text-xl"></i> 
+      </span>
+          </div>
           <p>{{obj.comment}}</p>
           <p>{{obj.date.date}}</p>
         </div>

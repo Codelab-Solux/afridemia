@@ -71,7 +71,7 @@ def school(req, pk):
 
     if user.is_authenticated:
         preregs = school.preregistration_set.filter(user=user)
-        is_following = Follow.objects.filter(
+        is_following = FollowSchool.objects.filter(
             user=user, school=school, status=True).first()
     else:
         preregs = None
@@ -280,14 +280,15 @@ def review_school(req, pk):
 def follow_school(req, pk):
     user = req.user
     obj = get_object_or_404(School, id=pk)
-    already_following = Follow.objects.filter(user=user, school=obj).first()
+    already_following = FollowSchool.objects.filter(
+        user=user, school=obj).first()
 
     if req.method == 'POST':
         if not already_following:
-            Follow.objects.create(
+            FollowSchool.objects.create(
                 user=user, school=obj, status=True)
         else:
-            Follow.objects.filter(id=pk).update(
+            FollowSchool.objects.filter(id=pk).update(
                 user=user, school=obj, status=False)
 
         return redirect(req.META.get('HTTP_REFERER', '/'))
@@ -325,7 +326,12 @@ def create_classroom(req):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/classroom/{id}'.format(id=instance.id))
     context = {
-        "classroom_create_page": "active", "title": 'add classroom', "user": user, "form": form}
+        "classroom_create_page": "active",
+        "title": 'add classroom',
+        "school": school,
+        "user": user,
+        "form": form,
+    }
     return render(req, 'schools/classroom.html', context)
 
 
@@ -391,7 +397,12 @@ def create_teacher(req):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/teacher/{id}'.format(id=instance.id))
     context = {
-        "teacher_create_page": "active", "title": 'add teacher', "user": user, "form": form}
+        "teacher_create_page": "active",
+        "title": 'add teacher',
+        "user": user,
+        "school": school,
+        "form": form,
+    }
     return render(req, 'schools/teacher.html', context)
 
 
@@ -456,7 +467,12 @@ def create_structure(req):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/structure/{id}'.format(id=instance.id))
     context = {
-        "structure_create_page": "active", "title": 'add structure', "user": user, "form": form}
+        "structure_create_page": "active",
+        "title": 'add structure',
+        "user": user,
+        "school": school,
+        "form": form,
+    }
     return render(req, 'schools/structure.html', context)
 
 
@@ -477,7 +493,12 @@ def edit_structure(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/structure/{id}'.format(id=pk))
     context = {
-        "structure_edit_page": "active", "curr_obj": curr_obj, "title": 'edit structure', "user": user, "form": form}
+        "structure_edit_page": "active",
+        "curr_obj": curr_obj,
+        "title": 'edit structure',
+        "user": user,
+        "form": form,
+    }
     return render(req, 'schools/structure.html', context)
 
 
@@ -521,7 +542,12 @@ def create_article(req):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/article/{id}'.format(id=instance.id))
     context = {
-        "article_create_page": "active", "title": 'add article', "user": user, "form": form}
+        "article_create_page": "active",
+        "title": 'add article',
+        "user": user,
+        "school": school,
+        "form": form,
+    }
     return render(req, 'schools/article.html', context)
 
 
@@ -587,7 +613,12 @@ def create_gallery(req):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/gallery/{id}'.format(id=instance.id))
     context = {
-        "Gallery_create_page": "active", "title": 'add gallery', "user": user, "form": form}
+        "Gallery_create_page": "active",
+        "title": 'add gallery',
+        "user": user,
+        "school": school,
+        "form": form,
+    }
     return render(req, 'schools/gallery.html', context)
 
 
@@ -654,7 +685,12 @@ def create_performance(req):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/performance/{id}'.format(id=instance.id))
     context = {
-        "Performance_create_page": "active", "title": 'add performance', "user": user, "form": form}
+        "Performance_create_page": "active",
+        "title": 'add performance',
+        "user": user,
+        "school": school,
+        "form": form,
+    }
     return render(req, 'schools/performance.html', context)
 
 
@@ -717,7 +753,12 @@ def create_prereg(req, pk):
             messages.success(req, "Success")
             return HttpResponseRedirect('/schools/prereg/{id}'.format(id=instance.id))
     context = {
-        "PreRegistration_create_page": "active", "title": 'add PreRegistration', "school": school, "user": user, "form": form}
+        "PreRegistration_create_page": "active",
+        "title": 'add PreRegistration',
+        "school": school,
+        "user": user,
+        "form": form,
+    }
     return render(req, 'schools/prereg.html', context)
 
 

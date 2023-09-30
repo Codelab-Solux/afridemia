@@ -1,44 +1,24 @@
 {% extends 'main.html' %} {% load static %} {% block content %}
 <!--------------------------------------- hero section --------------------------------------->
 
-<section class="bg-blue-950 py-10">
+<section class="bg-blue-950 py-8">
   <div
-    class="px-8 flex gap-4 justify-between items-center w-full max-w-[1350px] mx-auto"
+    class="px-8 w-full max-w-[1350px] mx-auto flex flex-col md:flex-row gap-4 items-center"
   >
-    <!--------------------------------------- levels --------------------------------------->
-    <div class="flex flex-col gap-2 w-full md:w-20 lg:w-80">
-      {% for obj in levels %}
-      <a
-        href="{% url 'schools' %}?query={{obj.name}}"
-        class="px-4 py-2 flex items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:text-black transition duration-300 ease-in-out"
-      >
-        <img
-          class="h-7 xl:h-10 object-contain"
-          src="{{obj.image.url}}"
-          alt="image"
-        />
-        <span class="text:xs md:hidden lg:inline">{{obj.name}}</span>
-      </a>
-      <!--  -->
-      {% endfor %}
-    </div>
-
-    <!-- <img
-      class=" md:inline w-full md:max-w-[400px] lg:max-w-[800px] xl:max-w-[860px] rounded-md object-contain"
-      src="{% static 'icons/1.png' %}"
-      alt="image"
-    /> -->
-
+    <p class="my-4 w-full text-lg text-white">
+      Donnez vie à l'apprentissage avec nos enseignants dévoués. Rencontrez des
+      guides passionnés pour votre parcours éducatif.
+    </p>
     <div class="carousel hidden md:block">
       <!-- carousel slider -->
       <div class="carousel-slider">
-        <img class="w-full" src="{% static 'images/1.png' %}" alt="image" />
+        <img src="{% static 'images/1.jpg' %}" alt="image" />
         <img src="{% static 'images/2.png' %}" alt="image" />
         <img src="{% static 'images/3.png' %}" alt="image" />
         <img src="{% static 'images/4.png' %}" alt="image" />
         <img src="{% static 'images/5.png' %}" alt="image" />
-        <img src="{% static 'images/6.png' %}" alt="image" />
-        <img src="{% static 'images/7.png' %}" alt="image" />
+        <!-- <img src="{% static 'images/6.png' %}" alt="image" />
+          <img src="{% static 'images/7.png' %}" alt="image" /> -->
       </div>
       <!-- carousel controls -->
       <div>
@@ -65,41 +45,45 @@
         <li class="dot" onclick="currentSlide(7)"></li>
       </ul>
     </div>
-
-    <!-- <article
-      class="mb-2 mx-auto w-full max-w-[500px] flex flex-col items-center text-center"
-    >
-      <h1 class="mb-4 text-3xl font-light">
-        Trouvez
-        <span class="text-blue-950 font-black"> l'institut idéal </span>
-        pour vos études et formations.
-      </h1>
-      <p>
-        Donnez à vos enfants un avenir brillant en choisissant parmi notre
-        sélection d'écoles et d'enseignants particuliers hautement qualifiés, le
-        tout à portée de main.
-      </p>
-    </article> -->
-    <!--------------------------------------- subjects --------------------------------------->
-    <div class="flex flex-col gap-2 w-full md:w-20 lg:w-80">
-      {% for obj in subjects %}
-      <!--  -->
-      <a
-        href="{% url 'tutors' %}?query={{obj.name}}"
-        class="px-4 py-1 flex justify-end items-center gap-4 rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:text-black transition duration-300 ease-in-out"
-      >
-        <span class="text:xs md:hidden lg:inline">{{obj.name}}</span>
-        <img
-          class="h-7 xl:h-10 object-contain"
-          src="{{obj.image.url}}"
-          alt="image"
-        />
-      </a>
-      <!--  -->
-      {% endfor %}
-    </div>
   </div>
 </section>
+
+<div
+  class="p-8 flex flex-col gap-2 justify-between items-center w-full max-w-[1350px] mx-auto"
+>
+  <!--------------------------------------- levels --------------------------------------->
+  <div class="mx-auto flex flex-wrap justify-center gap-2">
+    {% for obj in levels %}
+    <a
+      href="{% url 'schools' %}?query={{obj.name}}"
+      class="px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
+    >
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        {{obj.name}}
+      </span>
+      <img class="h-10 object-contain" src="{{obj.image.url}}" alt="image" />
+    </a>
+    <!--  -->
+    {% endfor %}
+  </div>
+
+  <!--------------------------------------- subjects --------------------------------------->
+  <div class="mx-auto flex flex-wrap justify-center gap-2">
+    {% for obj in subjects %}
+    <!--  -->
+    <a
+      href="{% url 'tutors' %}?query={{obj.name}}"
+      class="px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
+    >
+      <span class="hidden group-hover:inline transition duration-300 ease-in">
+        {{obj.name}}
+      </span>
+      <img class="h-10 object-contain" src="{{obj.image.url}}" alt="image" />
+    </a>
+    <!--  -->
+    {% endfor %}
+  </div>
+</div>
 <!--------------------------------------- clients [schools that have registered] --------------------------------------->
 
 <!-- <div class="py-10 bg-gray-50 w-full text-center">
@@ -109,7 +93,12 @@
 </div> -->
 
 <!--------------------------------------- featured schools --------------------------------------->
+
 {% include 'components/top_schools.html' %}
+
+<!--------------------------------------- why chosse afridemia --------------------------------------->
+
+{% include 'components/why.html' %}
 
 <!--------------------------------------- why us ? --------------------------------------->
 
@@ -192,59 +181,79 @@
 
 <!----------------------- newsletter ------------------------->
 <div class="bg-gray-200 py-10 w-full">
-  <div class="px-8 mx-auto max-w-[1350px] flex flex-col">
-    <h2 class="text-2xl text-black font-bold mb-4 text-center mx-auto">
-      Inscrivez vous à notre Newsletter
-    </h2>
-    <p class="mb-4 w-full max-w-xl mx-auto text-center">
-      Recevez l'inspiration directement dans votre boîte de réception.
-      Abonnez-vous à notre newsletter et restez connecté à un monde
-      d'apprentissage en constante évolution.
-    </p>
-    <form
-      id="search_box"
-      class="p-1 w-full mx-auto max-w-lg flex flex-row justify-between"
-    >
-      <input
-        type="text"
-        name="query"
-        id="querier"
-        required
-        class="px-4 py-2 bg-white text-black text-xs w-full rounded-l-md outline-none"
-        placeholder="Votre adresse e-mail..."
-      />
-      <button
-        class="group px-4 py-2 text-sm bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-r-md transition duration-300 ease-in-out"
-        type="submit"
+  <div
+    class="px-8 mx-auto max-w-[1350px] flex flex-col lg:flex-row justify-center items-center gap-2"
+  >
+    <img
+      class="h-80 rounded-md object-contain"
+      src="{% static 'vectors/newsletter.png' %}"
+      alt="image"
+    />
+    <div class="flex flex-col items-center lg:items-start">
+      <h2
+        class="w-full mb-2 text-2xl font-bold text-center lg:text-left text-black"
       >
-        S'inscrire
-      </button>
-    </form>
+        Inscrivez vous à notre Newsletter
+      </h2>
+      <p class="mb-4 w-full max-w-xl mx-auto text-center lg:text-left">
+        Recevez l'inspiration directement dans votre boîte de réception.
+        Abonnez-vous à notre newsletter et restez connecté à un monde
+        d'apprentissage en constante évolution.
+      </p>
+      <form
+        id="search_box"
+        class="p-1 w-full mx-auto lg:mx-0 max-w-lg flex flex-row justify-between"
+      >
+        <input
+          type="text"
+          name="query"
+          id="querier"
+          required
+          class="px-4 py-2 bg-white text-black text-xs w-full rounded-l-md outline-none"
+          placeholder="Votre adresse e-mail..."
+        />
+        <button
+          class="group px-4 py-2 text-sm bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-r-md transition duration-300 ease-in-out"
+          type="submit"
+        >
+          S'inscrire
+        </button>
+      </form>
+    </div>
   </div>
 </div>
 
 <!----------------------- contact ------------------------->
 
 {% if not user.is_authenticated %}
-<section class="bg-white py-8">
-  <div class="fadeout flex flex-col items-center max-w-6xl mx-auto m-8 px-8">
-    <h2
-      class="w-full my-2 text-4xl font-bold leading-tight text-center text-black"
-    >
-      Nous rejoindre
-    </h2>
-    <p class="text-center mt-4">
-      Afridemia vise à être un carrefour de l'éducation, reliant les écoles et
-      les enseignants de manière efficace et transparente. Que vous soyez à la
-      recherche d'une école de qualité pour votre enfant ou d'une opportunité
-      d'enseignement enrichissante, Afridemia est là pour vous offrir une
-      expérience fluide et personnalisée.
-    </p>
-    <a
-      class="px-4 py-2 mx-auto rounded-lg border border-2 border-white bg-blue-950 hover:bg-green-300 text-white hover:text-black transition ease-in duration-200"
-      href="{% url 'login' %}"
-      >Connexion</a
-    >
+<section class="bg-white py-10">
+  <div
+    class="fadeout px-8 mx-auto max-w-[1350px] flex flex-col lg:flex-row items-center justify-center max-w-6xl mx-auto m-8 px-8"
+  >
+    <div class="flex flex-col items-center lg:items-start">
+      <h2
+        class="w-full mb-2 text-2xl font-bold text-center lg:text-left text-black"
+      >
+        Nous rejoindre
+      </h2>
+      <p class="mb-4 w-full max-w-xl mx-auto text-center lg:text-left">
+        Afridemia vise à être un carrefour de l'éducation, reliant les écoles et
+        les enseignants de manière efficace et transparente. Que vous soyez à la
+        recherche d'une école de qualité pour votre enfant ou d'une opportunité
+        d'enseignement enrichissante, Afridemia est là pour vous offrir une
+        expérience fluide et personnalisée.
+      </p>
+      <a
+        class="px-4 py-2 mx-auto lg:mx-0 rounded-lg border border-2 border-white bg-blue-950 hover:bg-green-300 text-white hover:text-black transition ease-in duration-200"
+        href="{% url 'login' %}"
+        >Connexion</a
+      >
+    </div>
+    <img
+      class="h-80 rounded-md object-contain"
+      src="{% static 'vectors/join-us.png' %}"
+      alt="image"
+    />
   </div>
 </section>
 {% endif %}

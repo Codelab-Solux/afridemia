@@ -68,7 +68,6 @@ class TutortForm(forms.ModelForm):
             'last_name': 'Nom',
             'first_name': 'Prénoms',
             'civility': 'Civilité',
-            'title': 'Titre',
             'country': 'Pays de residence',
             'phone': 'Téléphone',
             'levels': 'Niveaux',
@@ -78,12 +77,12 @@ class TutortForm(forms.ModelForm):
             'qualification': 'Niveau Scolaire',
             'facebook_link': 'Lien Facebook',
             'linkedin_link': 'Lien LinkedIn',
+            'certificate': 'Justifs',
         }
         widgets = {
             'last_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring-2 focus:ring-green-300 w-full"}),
             'first_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring-2 focus:ring-green-300 w-full"}),
             'civility': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring-2 focus:ring-green-300 w-full"}),
-            'title': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring-2 focus:ring-green-300 w-full"}),
             'country': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring-2 focus:ring-green-300 w-full"}),
             'phone': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 border-gray-200 focus:border-none focus:outline-none focus:ring-2 focus:ring-green-300 w-full"}),
             'levels': forms.CheckboxSelectMultiple(attrs={'class': ""}),

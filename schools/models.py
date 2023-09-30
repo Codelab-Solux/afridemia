@@ -15,7 +15,7 @@ class EducationLevel(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='levels', blank=True, null=True, storage=gd_storage)
+        upload_to='levels', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return self.name
@@ -36,6 +36,7 @@ class Serie(models.Model):
 
 
 infrastructures = (
+    ('-----', '-----'),
     ('canteen', 'Cantine'),
     ('gym', 'Espace de sport'),
     ('laboratory', 'Laboratoire'),
@@ -45,13 +46,23 @@ infrastructures = (
     ('infirmary', 'Infirmerie'),
 )
 
-designations = (
-    ('Prof.', 'Prof.'),
-    ('Doc.', 'Doc.'),
-    ('Mr.', 'M.'),
-    ('Mrs.', "Mme"),
-    ('Ms.', "Mlle"),
+civilities = (
+    ('M.', 'M.'),
+    ('Mme.', "Mme."),
+    ('Mlle.', "Mlle."),
 )
+
+qualifications = (
+    ('BAC', 'BAC'),
+    ('BAC + 1', 'BAC + 1'),
+    ('BAC + 2', 'BAC + 2'),
+    ('BAC + 3', 'BAC + 3'),
+    ('BAC + 4', 'BAC + 4'),
+    ('BAC + 5', 'BAC + 5'),
+    ('BAC + 6', 'BAC + 6'),
+    ('BAC + 7', 'BAC + 7'),
+)
+
 gender_list = (
     ('M', 'Masculin'),
     ('F', 'Féminin'),
@@ -70,28 +81,30 @@ class School(models.Model):
     manager = models.OneToOneField(
         CustomUser, unique=True, on_delete=models.CASCADE)
     country = CountryField(
-        blank_label="", blank=True, null=True)
-    moto = models.CharField(max_length=255, blank=True, null=True)
+        blank_label="", default='', blank=True, null=True)
+    moto = models.CharField(max_length=255, default='', blank=True, null=True)
     name = models.CharField(max_length=255,)
     levels = models.ManyToManyField(EducationLevel)
     email = models.EmailField(blank=True, null=True)
-    website = models.CharField(max_length=255, blank=True, null=True)
+    website = models.CharField(
+        max_length=255, default='', blank=True, null=True)
     address = models.CharField(max_length=255)
     tel = models.CharField(max_length=255)
-    cel = models.CharField(max_length=255, blank=True, null=True)
-    whatsapp = models.CharField(max_length=255, blank=True, null=True)
+    cel = models.CharField(max_length=255, default='', blank=True, null=True)
+    whatsapp = models.CharField(
+        max_length=255, default='', blank=True, null=True)
     year_founded = models.IntegerField(blank=True, null=True)
-    # 
+    #
     # quote = models.TextField(blank=True, null=True)
     history = models.TextField(blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     pedagogy = models.TextField(blank=True, null=True)
     ad_copy = models.TextField(blank=True, null=True)
-    # 
+    #
     resumption_date = models.DateField(blank=True, null=True)
     opening_hour = models.TimeField(blank=True, null=True)
     closing_hour = models.TimeField(blank=True, null=True)
-    # 
+    #
     is_verified = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
     avg_rating = models.FloatField(default=0.0)
@@ -103,14 +116,14 @@ class School(models.Model):
 
     # files
     thumbnail = models.ImageField(
-        upload_to='schools/thumbnails', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/thumbnails', default='', blank=True, null=True, storage=gd_storage)
     banner = models.ImageField(
-        upload_to='schools/banners', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/banners', default='', blank=True, null=True, storage=gd_storage)
     crest = models.ImageField(
-        upload_to='schools/crests', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/crests', default='', blank=True, null=True, storage=gd_storage)
     certificate = models.FileField(
-        upload_to='schools/cerificate', blank=True, null=True, storage=gd_storage)
-    # 
+        upload_to='schools/cerificate', default='', blank=True, null=True, storage=gd_storage)
+    #
     date_added = models.DateTimeField(auto_now=True)
 
     def update_avg_rating(self):
@@ -134,7 +147,8 @@ class Review(models.Model):
         CustomUser, on_delete=models.CASCADE)
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
-    comment = models.TextField(max_length=3000, blank=True, null=True)
+    comment = models.TextField(
+        max_length=3000, default='', blank=True, null=True)
     date = models.DateTimeField(auto_now=True)
     rating = models.CharField(max_length=10, choices=ratings_list)
 
@@ -145,7 +159,7 @@ class Review(models.Model):
         return reverse('review', kwargs={'pk': self.pk})
 
 
-class Follow(models.Model):
+class FollowSchool(models.Model):
     user = models.OneToOneField(
         CustomUser, on_delete=models.CASCADE)
     school = models.ForeignKey(
@@ -156,30 +170,28 @@ class Follow(models.Model):
         return f'{self.user} - {self.school}'
 
     def get_absolute_url(self):
-        return reverse('follow', kwargs={'pk': self.pk})
+        return reverse('follow_school', kwargs={'pk': self.pk})
 
 
 class Teacher(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
-    image = models.ImageField(
-        upload_to='schools/teachers', blank=True, null=True, storage=gd_storage)
-    fullname = models.CharField(max_length=255)
-    designation = models.CharField(
-        max_length=50, default='', choices=designations)
+    civility = models.CharField(
+        max_length=50, default='', choices=civilities)
+    full_name = models.CharField(max_length=255)
     subjects = models.CharField(max_length=255)
-    cv = models.TextField(null=True, blank=True)
-    xp = models.IntegerField(default='0')
-    qualifications = models.CharField(max_length=255, blank=True, null=True)
-    facebook_link = models.CharField(
-        max_length=255, blank=True, null=True)
-    twitter_link = models.CharField(
-        max_length=255, blank=True, null=True)
+    levels = models.ManyToManyField(EducationLevel)
+    experience = models.IntegerField(default='0')
+    qualification = models.CharField(
+        max_length=50, default='BAC', choices=qualifications)
+    curriculum_vitae = models.TextField(default='', blank=True, null=True,)
     linkedin_link = models.CharField(
-        max_length=255, blank=True, null=True)
+        max_length=255, default='', blank=True, null=True)
+    image = models.ImageField(
+        upload_to='schools/teachers', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
-        return self.fullname
+        return self.full_name
 
     def get_absolute_url(self):
         return reverse('teacher', kwargs={'pk': self.pk})
@@ -227,14 +239,14 @@ class Department(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
     faculty = models.ForeignKey(
-        Serie, on_delete=models.CASCADE, blank=True, null=True)
+        Serie, on_delete=models.CASCADE, default='', blank=True, null=True)
     name = models.CharField(max_length=128)
     description = models.TextField(blank=True, null=True)
     schoolfees = models.IntegerField(default='0', blank=True, null=True)
     staff_number = models.IntegerField(default='0', blank=True, null=True)
     students_number = models.IntegerField(default='0', blank=True, null=True)
     image = models.ImageField(
-        upload_to='schools/departments', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/departments', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.name} - {self.school}'
@@ -247,13 +259,13 @@ class Classroom(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
     serie = models.ForeignKey(
-        Serie, on_delete=models.SET_NULL, blank=True, null=True)
+        Serie, on_delete=models.SET_NULL, default='', blank=True, null=True)
     name = models.CharField(max_length=255, default='')
     fees = models.IntegerField(default='0', blank=True, null=True)
     size = models.IntegerField(default='0', blank=True, null=True)
     overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='schools/classrooms', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/classrooms', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.name} - {self.school}'
@@ -271,7 +283,7 @@ class Structure(models.Model):
     capacity = models.IntegerField(default='0')
     overview = models.TextField(blank=True, null=True)
     image = models.ImageField(
-        upload_to='schools/structures', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/structures', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.type} {self.name} - {self.school}'
@@ -287,7 +299,7 @@ class SchoolArticle(models.Model):
     content = RichTextField(blank=True, default='')
     date = models.DateTimeField(auto_now=True)
     image = models.ImageField(
-        upload_to='schools/school_articles', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/school_articles', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.title} - {self.school}'
@@ -299,17 +311,21 @@ class SchoolArticle(models.Model):
 class Gallery(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
+    event = models.CharField(max_length=255)
+    year = models.CharField(max_length=4, default='year')
     images = models.FileField(
-        upload_to='schools/gallerie', blank=True, null=True, storage=gd_storage)
+        upload_to='schools/gallerie', default='', blank=True, null=True, storage=gd_storage)
 
 
 class Performance(models.Model):
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
+    classroom = models.CharField(max_length=4)
     exam = models.CharField(max_length=255)
     candidates = models.IntegerField(default='0')
     pass_rate = models.IntegerField(default='0')
-    fail_rate = models.IntegerField(default='0')
+    highest = models.FloatField(default='0')
+    lowest = models.FloatField(default='0')
     year = models.CharField(max_length=4, default='year')
 
     def __str__(self):
@@ -324,13 +340,15 @@ class PreRegistration(models.Model):
         CustomUser, on_delete=models.CASCADE)
     school = models.ForeignKey(
         School, on_delete=models.CASCADE)
-    classroom = models.CharField(max_length=255, blank=True, null=True)
+    classroom = models.CharField(
+        max_length=255, default='', blank=True, null=True)
     last_name = models.CharField(max_length=255)
     first_name = models.CharField(max_length=255)
     gender = models.CharField(max_length=10, choices=gender_list)
-    last_school = models.CharField(max_length=255, blank=True, null=True)
-    email = models.CharField(max_length=255, blank=True, null=True)
-    phone = models.CharField(max_length=255, blank=True, null=True)
+    last_school = models.CharField(
+        max_length=255, default='', blank=True, null=True)
+    email = models.CharField(max_length=255, default='', blank=True, null=True)
+    phone = models.CharField(max_length=255, default='', blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now=True)
 

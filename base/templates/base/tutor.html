@@ -29,11 +29,61 @@
     {% if user == curr_obj.user %}
     <a
       href="{% url 'edit_tutor' curr_obj.id %}"
-      class="px-4 py-2 bg-black text-white hover:bg-green-400 hover:text-black rounded-md flex justify-between items-center transition duration-300 ease-in-out"
-      >Modifier mon profile d'enseignant<i
-        class="fa-solid fa-pen-to-square ml-4"
-      ></i
+      class="px-4 py-3 bg-green-100 text-black hover:bg-green-300 rounded-md flex justify-between items-center transition duration-300 ease-in-out"
+    >
+      <span class="hidden lg:inline">Modifier mon profile d'enseignant</span>
+      <i class="fa-solid fa-pen-to-square lg:ml-4"></i
     ></a>
+    {% endif %}
+    <!--  -->
+    {% if user.is_staff and curr_obj %}
+    <div class="flex gap-2">
+      <form action="{% url 'verify_tutor' curr_obj.id %}" method="POST">
+        {% csrf_token %}
+        <!--  -->
+        {% if not curr_obj.is_verified %}
+        <button
+          type="submit"
+          class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+        >
+          <span class="hidden md:inline"> Vérifier </span>
+          <i class="fa-solid fa-certificate md:ml-2"></i>
+        </button>
+        {% else %}
+        <button
+          type="submit"
+          class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+        >
+          <span class="hidden md:inline"> Revoquer la vérification </span>
+          <i class="fa-solid fa-certificate md:ml-2"></i>
+        </button>
+        {% endif %}
+      </form>
+
+      <!--  -->
+
+      <form action="{% url 'feature_tutor' curr_obj.id %}" method="POST">
+        {% csrf_token %}
+        <!--  -->
+        {% if not curr_obj.is_featured %}
+        <button
+          type="submit"
+          class="px-4 py-3 bg-blue-950 text-white hover:bg-green-600 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+        >
+          <span class="hidden md:inline"> Mettre en vedette </span>
+          <i class="fa-solid fa-bullhorn md:ml-2"></i>
+        </button>
+        {% else %}
+        <button
+          type="submit"
+          class="px-4 py-3 bg-blue-950 text-white hover:bg-red-700 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+        >
+          <span class="hidden md:inline"> Retirer des vedettes </span>
+          <i class="fa-solid fa-bullhorn md:ml-2"></i>
+        </button>
+        {% endif %}
+      </form>
+    </div>
     {% endif %}
   </nav>
 
@@ -67,51 +117,64 @@
       <p class="py-2 text-lg">{{curr_obj.bio}}</p>
 
       <div class="flex flex-col md:flex-row justify-between gap-4">
-        <div class="flex flex-col">
-          <h4 class="mb-2 text-white text-lg font-bold">Contacts</h4>
-          <div class="py-2 flex flex-wrap gap-4 items-center">
-            {% if user == curr_obj.user %}
-            <a
-              href="{% url 'edit_tutor' curr_obj.id %}"
-              class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
-              >Modifier<i class="fa-solid fa-pen-to-square ml-2"></i
-            ></a>
+        <div class="py-2 flex flex-wrap gap-4 items-center">
+          {% if user != curr_obj.user %}
+          <a
+            href="{% url 'chat_page' curr_obj.user.id %}"
+            class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black text-sm"
+            >Contacter<i class="fa-solid fa-message ml-2"></i
+          ></a>
+          {% endif %}
+          <form action="{% url 'follow_tutor' curr_obj.id %}" method="POST">
+            {% csrf_token %}
+            <!--  -->
+            {% if not is_following %}
+            <button
+              type="submit"
+              class="px-4 py-2 bg-gray-100 text-black text-sm hover:bg-gray-300 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+              <span class="hidden md:inline text-sm"> Suivre </span>
+              <i class="fa-solid fa-bell md:ml-2"></i>
+            </button>
             {% else %}
-            <a
-              href="{% url 'chat_page' curr_obj.user.id %}"
-              class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
-              >Contacter<i class="fa-solid fa-message ml-2"></i
-            ></a>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-gray-100 text-black text-sm hover:bg-red-300 rounded-md flex justify-between items-center transition duration-300 ease-in-out cursor-pointer"
+            >
+              <span class="hidden md:inline text-sm"> Ne plus suivre </span>
+              <i class="fa-solid fa-bell-slash md:ml-2"></i>
+            </button>
             {% endif %}
-            <a
-              href="tel:{{curr_obj.cel}}"
-              target="_blank"
-              class="rounded-full bg-transparent hover:text-cyan-300"
-            >
-              <i class="fa-solid fa-mobile text-2xl"></i>
-            </a>
-            <a
-              href="{{curr_obj.facebook_link}}"
-              target="_blank"
-              class="hover:text-cyan-300"
-            >
-              <i class="fa-brands fa-facebook text-2xl"></i>
-            </a>
-            <a
-              href="{{curr_obj.linkedin_link}}"
-              target="_blank"
-              class="hover:text-cyan-300"
-            >
-              <i class="fa-brands fa-linkedin-in text-2xl"></i>
-            </a>
-          </div>
+          </form>
+          <!-- <a
+            href="tel:{{curr_obj.cel}}"
+            target="_blank"
+            class="rounded-full bg-transparent hover:text-cyan-300"
+          >
+            <i class="fa-solid fa-mobile text-2xl"></i>
+          </a>
+          <a
+            href="{{curr_obj.facebook_link}}"
+            target="_blank"
+            class="hover:text-cyan-300"
+          >
+            <i class="fa-brands fa-facebook text-2xl"></i>
+          </a>
+          <a
+            href="{{curr_obj.linkedin_link}}"
+            target="_blank"
+            class="hover:text-cyan-300"
+          >
+            <i class="fa-brands fa-linkedin-in text-2xl"></i>
+          </a> -->
         </div>
         <div>
-          <h4 class="mb-2 text-white text-lg font-bold">Diplomes</h4>
-          <p class="text-sm">{{curr_obj.qualifications}}</p>
-          <h5 class="text-cyan-300 text-md">
+          <p class="mb- text-white text-lg font-bold">
+            {{curr_obj.qualification}}
+          </p>
+          <p class="text-gray-300 text-sm">
             {{curr_obj.experience}} an(s) d'experience
-          </h5>
+          </p>
         </div>
       </div>
     </div>
@@ -120,31 +183,68 @@
   <!--------------------------------------- more info --------------------------------------->
   <section class="mt-4 mb-8 flex flex-col md:flex-row gap-4 w-full">
     <div
-      class="p-6 bg-blue-50 w-full lg:max-w-[400px] rounded-md flex flex-col justify-"
+      class="p-6 bg-gray-100 w-full lg:max-w-[400px] rounded-md flex flex-col justify-"
     >
-      <h4 class="text-black text-xl font-bold">Matieres</h4>
-      <p class="py-1">{{curr_obj.subjects}}</p>
-      <h4 class="text-black text-xl font-bold">Classes</h4>
-      <p class="py-1">{{curr_obj.grades}}</p>
+      <h4 class="mb-2 text-black text-xl font-bold">Matieres</h4>
+
+      <!--------------------------------------- subjects --------------------------------------->
+      <div class="grid grid-cols-2 gap-2">
+        {% for obj in curr_obj.subjects.all %}
+        <!--  -->
+        <div
+          class="px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-white hover:shadow-md transition duration-300 ease-in group"
+        >
+          {{obj.name}}
+
+          <img
+            class="h-10 object-contain"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+        </div>
+        <!--  -->
+        {% endfor %}
+      </div>
+      <h4 class="mt-4 mb-2 text-black text-xl font-bold">Niveaux</h4>
+      <!--------------------------------------- levels --------------------------------------->
+      <div class="grid grid-cols-2 gap-2">
+        {% for obj in curr_obj.levels.all %}
+        <div
+          class="px-4 py-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-white hover:shadow-md transition duration-300 ease-in group"
+        >
+          {{obj.name}}
+
+          <img
+            class="h-10 object-contain"
+            src="{{obj.image.url}}"
+            alt="image"
+          />
+        </div>
+        <!--  -->
+        {% endfor %}
+      </div>
     </div>
     <div class="w-full rounded-md">
       <div class="flex justify-between">
-        <h4 class="text-black text-xl mb-4 font-bold">
-          Articles postés dans le forum
-        </h4>
+        <h4 class="text-black text-xl mb-4 font-bold">Articles</h4>
         {% if user == curr_obj.user %}
         <a
           href="{% url 'create_forum_article' %}"
           class="px-4 py-2 rounded-md flex justify-between items-center bg-green-100 hover:bg-green-300 text-black"
-          ><i class="fa-solid fa-plus"></i
+        >
+          <span class="hidden lg:inline">Poster un article</span>
+          <i class="fa-solid fa-plus lg:ml-4"></i
         ></a>
         {% endif %}
       </div>
 
       {% if not rel_articles %}
-      <!--  -->
-      {% include 'components/no_data.html' %}
-      <!--  -->
+      <div class="py-20 flex-col text-center m-auto w-full">
+        <i class="fa-solid fa-folder"></i>
+        <p class="p-2 max-w-[400px] mx-auto">
+          Aucun article disponible pour le moment
+        </p>
+      </div>
       {% else %}
 
       <div class="w-full">
@@ -167,7 +267,7 @@
             />
             <div class="p-4 flex flex-col justify-between">
               <h4 class="text-black text-2xl font-bold">{{obj.title}}</h4>
-              <p class="pt-2 text-sm">{{obj.content|truncatechars:300}}</p>
+              <p class="pt-2 text-sm">{{obj.content|safe|truncatechars:300}}</p>
             </div>
           </a>
         </div>
@@ -195,13 +295,13 @@
     </div>
 
     <form
-      class="w-full p-8 my-8 border-2 hover:border-blue-950 rounded-md"
+      class="w-full p-8 my-8 border hover:border-blue-950 rounded-md max-w-3xl mx-auto"
       method="POST"
       action=""
       enctype="multipart/form-data"
     >
       {% csrf_token %}
-      <div class="mb-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="mb-8 grid md:grid-cols-2 gap-4">
         <div>
           <h3 class="mb-1 text-black font-bold">{{form.last_name.label}}</h3>
           {{form.last_name}}
@@ -215,10 +315,6 @@
           {{form.civility}}
         </div>
         <div>
-          <h3 class="mb-1 text-black font-bold">{{form.title.label}}</h3>
-          {{form.title}}
-        </div>
-        <div>
           <h3 class="mb-1 text-black font-bold">{{form.country.label}}</h3>
           {{form.country}}
         </div>
@@ -227,18 +323,18 @@
           {{form.phone}}
         </div>
         <div>
-          <h3 class="mb-1 text-black font-bold">{{form.subjects.label}}</h3>
-          {{form.subjects}}
+          <h3 class="mb-1 text-black font-bold">
+            {{form.qualification.label}}
+          </h3>
+          {{form.qualification}}
         </div>
         <div>
           <h3 class="mb-1 text-black font-bold">{{form.levels.label}}</h3>
           {{form.levels}}
         </div>
         <div>
-          <h3 class="mb-1 text-black font-bold">
-            {{form.qualification.label}}
-          </h3>
-          {{form.qualification}}
+          <h3 class="mb-1 text-black font-bold">{{form.subjects.label}}</h3>
+          {{form.subjects}}
         </div>
         <div>
           <h3 class="mb-1 text-black font-bold">{{form.experience.label}}</h3>
@@ -250,16 +346,28 @@
           </h3>
           {{form.facebook_link}}
         </div>
-        <div>
-          <h3 class="mb-1 text-black font-bold">
-            {{form.linkedin_link.label}}
-          </h3>
-          {{form.linkedin_link}}
+        <div class="flex flex-col gap-2">
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.linkedin_link.label}}
+            </h3>
+            {{form.linkedin_link}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.image.label}}</h3>
+            {{form.image}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.certificate.label}}
+            </h3>
+            {{form.certificate}}
+          </div>
         </div>
-      </div>
-      <div>
-        <h3 class="mb-1 text-black font-bold">{{form.bio.label}}</h3>
-        {{form.bio}}
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.bio.label}}</h3>
+          {{form.bio}}
+        </div>
       </div>
       <div class="my-4 flex gap-4 items-end">
         <a

@@ -1,0 +1,109 @@
+<style>
+  /* Styles pour l'anneau */
+  .portion {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    transform-origin: 100% 50%;
+    cursor: pointer;
+  }
+
+  /* Positionnement des portions */
+  .sec1 {
+    transform: rotate(0deg);
+  }
+
+  .sec2 {
+    transform: rotate(90deg);
+  }
+
+  .sec3 {
+    transform: rotate(180deg);
+  }
+
+  .sec4 {
+    transform: rotate(270deg);
+  }
+
+  /* Style de l'image au milieu */
+  .center-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: calc(50% - 50px);
+    left: calc(50% - 50px);
+    z-index: 2;
+  }
+
+  /* Style du texte à droite */
+  #text-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: large;
+  }
+</style>
+
+<div class="py-8 w-full bg-gray-50">
+  <div
+    class="px-8 w-full max-w-[1350px] mx-auto flex justify-between items-center h-[800px]"
+  >
+    <!-- Conteneur de l'anneau -->
+    <div class="w-1/2 h-96 relative">
+      <div
+        id="ring"
+        class="w-full h-full absolute transform rotate-0 transition-transform duration-500"
+      >
+        <!-- Première portion -->
+        <div class="portion rounded-l-full sec1 bg-blue-950 z-10"></div>
+        <!-- Deuxième portion -->
+        <div class="portion rounded-l-full sec2 bg-green-300 z-30"></div>
+        <!-- Troisième portion -->
+        <div class="portion rounded-l-full sec4 bg-green-500 z-30"></div>
+        <!-- Quatrième portion -->
+        <div class="portion rounded-l-full sec3 bg-blue-950 z-40"></div>
+      </div>
+      <!-- Image au milieu -->
+      <div class="center-circle"></div>
+    </div>
+
+    <!-- Conteneur du texte à droite -->
+    <div class="w-1/2 p-8">
+      <div id="text-container">
+        <!-- Texte affiché en fonction de la portion sélectionnée -->
+      </div>
+        
+    </div>
+  </div>
+</div>
+
+<script>
+  const ring = document.getElementById("ring");
+  const textContainer = document.getElementById("text-container");
+
+  // Tableau des descriptions de texte pour chaque portion
+  const descriptions = [
+    "Éveillez le potentiel de vos enfants en les inscrivant dans des écoles de qualité et en les accompagnant avec des enseignants particuliers dévoués, grâce à notre application innovante.",
+    "Du sur-mesure pour l'avenir de vos enfants : découvrez un assortiment d'écoles exceptionnelles et de tuteurs expérimentés via notre plateforme intuitive.",
+    "Créez un parcours éducatif unique pour vos enfants grâce à notre application révolutionnaire, reliant parents, écoles et enseignants particuliers en un seul endroit.",
+    "Investissez dans l'éducation de vos enfants de manière intelligente. Parcourez notre sélection d'écoles et de professeurs particuliers pour un apprentissage personnalisé.",
+  ];
+
+  let currentPortion = 0;
+
+  function rotateRing() {
+    currentPortion = (currentPortion + 1) % 4;
+    const angle = currentPortion * 90;
+    ring.style.transform = `rotate(${angle}deg)`;
+    textContainer.textContent = descriptions[currentPortion];
+  }
+
+  // Appel initial de la fonction pour afficher la première portion
+  rotateRing();
+
+  // Ajoutez un événement de clic pour faire tourner l'anneau
+  ring.addEventListener("click", rotateRing);
+</script>

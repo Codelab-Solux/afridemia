@@ -21,29 +21,69 @@
         <i name="menu" onclick="toggleMenu(this)" class="fa-solid fa-bars"></i>
       </span>
     </div>
-    <div class="hidden lg:flex lg:mt-0 items-center" id="navlinks">
+    <div class="hidden lg:flex gap-4 lg:mt-0 items-center" id="navlinks">
       <ul
         class="flex flex-col lg:flex-row gap-4 justify-between menu-list text-sm"
       >
         <a
           href="{% url 'home' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{home_page}}"
-          >Accueil</a
-        >
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 flex items-center group {{home_page}}"
+          ><i class="lg:hidden xl:inline fa-solid fa-home mr-2 text-xl"></i>
+          <span
+            class="hidden group-hover:inline transition duration-300 ease-in"
+          >
+            Accueil
+          </span>
+        </a>
         <a
           href="{% url 'schools' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{schools_page}}"
-          >Ecoles</a
-        >
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 flex items-center group {{schools_page}}"
+          ><i
+            class="lg:hidden xl:inline fa-solid fa-graduation-cap mr-2 text-xl"
+          ></i>
+          <span
+            class="hidden group-hover:inline transition duration-300 ease-in"
+          >
+            Ecoles
+          </span>
+        </a>
         <a
           href="{% url 'tutors' %}"
-          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 {{tutors_page}}"
-          >Enseignants</a
-        >
-        <div class="relative flex flex-col items-center group">
-          <a class="mt-4 flex items-center hover:text-green-500 cursor-pointer"
-            >Informations<i class="fa-solid fa-caret-down ml-2"></i
-          ></a>
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 flex items-center group {{tutors_page}}"
+          ><i
+            class="lg:hidden xl:inline fa-solid fa-chalkboard-user mr-2 text-xl"
+          ></i>
+          <span
+            class="hidden group-hover:inline transition duration-300 ease-in"
+          >
+            Enseignants
+          </span>
+        </a>
+        <a
+          href="{% url 'adverts' %}"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 flex items-center group {{tutors_page}}"
+          ><i class="lg:hidden xl:inline fa-solid fa-bullhorn mr-2 text-xl"></i>
+          <span
+            class="hidden group-hover:inline transition duration-300 ease-in"
+          >
+            Annonces
+          </span>
+        </a>
+        <a
+          href="{% url 'forum' %}"
+          class="hover:text-green-500 px-3 py-2 my-2 w-full transition ease-in duration-200 flex items-center group {{tutors_page}}"
+          ><i class="lg:hidden xl:inline fa-solid fa-comments mr-2 text-xl"></i>
+          <span
+            class="hidden group-hover:inline transition duration-300 ease-in"
+          >
+            Forum
+          </span>
+        </a>
+        <!-- <div class="relative py-2 my-2 flex flex-col items-start group">
+          <a class="flex items-center hover:text-green-500 cursor-pointer">
+            <i class="fa-solid fa-caret-down mr-2"></i>
+            Informations
+          </a>
           <div
             class="hidden absolute top-10 overlay bg-green-200 p-2 group-hover:flex group-hover:flex-col rounded-md"
           >
@@ -57,31 +97,29 @@
               class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{blog_page}}"
               >Blog</a
             >
-            <a
-              href="{% url 'forum' %}"
-              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{forum_page}}"
-              >Forum</a
-            >
-            <a
-              href="{% url 'adverts' %}"
-              class="inline px-2 lg:px-4 py-1 text-sm text-black hover:bg-white rounded-md transition ease-in duration-200 {{adverts_page}}"
-              >Annonces</a
-            >
           </div>
-        </div>
+        </div> -->
       </ul>
 
       {% if user.is_authenticated %}
-      <a class="lg:ml-4" href="{% url 'chat_page' user.id %}">
+      <a
+        class="hover:text-green-500 group px-2"
+        href="{% url 'chat_page' user.id %}"
+      >
         <i
-          class="fa-solid fa-message text-xl hover:text-green-500 text-2xl ml-6 lg:ml-4 transition ease-in duration-200"
+          class="fa-solid fa-message text-xl text-xl ml-6 lg:ml-4 transition ease-in duration-200"
         ></i>
+        <span
+          class="hidden ml-2 group-hover:inline transition duration-300 ease-in"
+        >
+          Messages
+        </span>
       </a>
       <!-- notification dropdown -->
-      <div class="relative lg:ml-4">
+      <div class="relative px-2">
         <button
           type="button"
-          class=""
+          class="group hover:text-green-500"
           name="bellBtn"
           id="bellBtn"
           aria-expanded="false"
@@ -89,8 +127,13 @@
           onclick="toggleNotifier(this)"
         >
           <i
-            class="fa-solid fa-bell text-xl hover:text-blue-950 text-2xl ml-6 lg:ml-4 transition ease-in duration-200"
+            class="fa-solid fa-bell text-xl text-xl ml-6 lg:ml-4 transition ease-in duration-200"
           ></i>
+          <span
+            class="hidden ml-2 group-hover:inline transition duration-300 ease-in"
+          >
+            Notifications
+          </span>
         </button>
         <!-- {% if notifications %}
         <span

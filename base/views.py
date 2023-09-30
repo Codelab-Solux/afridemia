@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from schools.models import *
@@ -223,7 +224,7 @@ def tutors(req):
         | Q(levels__name__icontains=query)
         | Q(first_name__icontains=query)
         | Q(last_name__icontains=query)
-    )
+    ).distinct()
     subjects = Subject.objects.all().order_by('name')
 
     context = {
@@ -234,6 +235,64 @@ def tutors(req):
         'subjects': subjects,
     }
     return render(req, 'base/tutors.html', context)
+
+
+@login_required(login_url='login')
+def verify_tutor(req, pk):
+    user = req.user
+    obj = get_object_or_404(Tutor, id=pk)
+    if not user.is_staff:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    if req.method == 'POST':
+        try:
+            if obj.is_verified == False:
+                Tutor.objects.filter(id=pk).update(is_verified=True)
+            else:
+                Tutor.objects.filter(id=pk).update(is_verified=False)
+        except Tutor.DoesNotExist:
+            return HttpResponse('Tutor not found', status=404)
+        except Exception:
+            return HttpResponse('Internal Error', status=500)
+    return redirect(req.META.get('HTTP_REFERER', '/'))
+
+
+@login_required(login_url='login')
+def feature_tutor(req, pk):
+    user = req.user
+    obj = get_object_or_404(Tutor, id=pk)
+    if not user.is_staff:
+        return redirect(req.META.get('HTTP_REFERER', '/'))
+
+    if req.method == 'POST':
+        try:
+            if obj.is_featured == False:
+                Tutor.objects.filter(id=pk).update(is_featured=True)
+            else:
+                Tutor.objects.filter(id=pk).update(is_featured=False)
+        except Tutor.DoesNotExist:
+            return HttpResponse('Tutor not found', status=404)
+        except Exception:
+            return HttpResponse('Internal Error', status=500)
+    return redirect(req.META.get('HTTP_REFERER', '/'))
+
+
+@login_required(login_url='login')
+def follow_tutor(req, pk):
+    user = req.user
+    obj = get_object_or_404(Tutor, id=pk)
+    already_following = FollowTutor.objects.filter(
+        user=user, Tutor=obj).first()
+
+    if req.method == 'POST':
+        if not already_following:
+            FollowTutor.objects.create(
+                user=user, Tutor=obj, status=True)
+        else:
+            FollowTutor.objects.filter(id=pk).update(
+                user=user, Tutor=obj, status=False)
+
+        return redirect(req.META.get('HTTP_REFERER', '/'))
 
 
 def tutor(req, pk):
@@ -272,9 +331,9 @@ def edit_tutor(req, pk):
     if curr_tut.user != user and not user.is_superuser:
         return redirect(req.META.get('HTTP_REFERER', '/'))
 
-    form = ForumArticleForm(instance=curr_tut)
+    form = TutortForm(instance=curr_tut)
     if req.method == 'POST':
-        form = ForumArticleForm(req.POST, instance=curr_tut)
+        form = TutortForm(req.POST, instance=curr_tut)
         if form.is_valid():
             form.save()
             return redirect('tutors')

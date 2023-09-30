@@ -63,21 +63,21 @@
             />
             <div class="p-4 flex flex-col justify-between">
               <h4 class="text-black text-2xl font-bold">{{obj.title}}</h4>
-              <p class="pt-2 text-sm">{{obj.content|truncatechars:200}}</p>
+              <p class="pt-2">{{obj.content|safe|truncatechars:200}}</p>
             </div>
           </a>
         </div>
         {% endfor %}
       </div>
 
-      <div class="bg-blue-50 p-6 w-full lg:max-w-[400px] rounded-md">
-        <h3 class="text-blue-950 font-bold">Matières</h3>
-        <div class="my-4 grid grid-cols-2 gap-2">
+      <div class="bg-gray-200 p-6 w-full lg:max-w-[400px] rounded-md">
+        <h3 class="text-black font-bold">Matières</h3>
+        <div class="my-4 grid gap-2">
           {% for obj in subjects %}
           <!--  -->
           <a
-            href="{% url 'tutors' %}?query={{obj.name}}"
-            class="px-4 py-2 flex justify-between items-center gap-4 rounded-md text-sm text-gray-700 bg-white hover:bg-blue-200 hover:text-black transition duration-300 ease-in-out"
+            href="{% url 'forum' %}?query={{obj.name}}"
+            class="px-4 py-2 flex justify-between items-center gap-4 rounded-md text-sm text-black bg-white hover:bg-gray-200 transition duration-300 ease-in-out"
           >
             {{obj.name}}
             <img

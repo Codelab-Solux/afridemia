@@ -16,13 +16,13 @@
         href="{% url 'schools' %}"
         >Ecoles</a
       >
-      / {% if curr_obj %}
+      /
       <a
         class="hover:text-green-400 transition ease-in duration-300"
-        href="{% url 'school' curr_obj.school.id %}"
-        >{{curr_obj.school.name}}</a
+        href="{% url 'school' school.id %}"
+        >{{school.name}}</a
       >
-      /
+      / {% if curr_obj %}
       <span class="hidden md:inline text-blue-950 font-black">
         {{curr_obj.name}} {% if curr_obj.serie %} {{curr_obj.serie}} {% endif %}
       </span>

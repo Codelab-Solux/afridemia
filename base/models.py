@@ -57,10 +57,11 @@ class Blogpost(models.Model):
 
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=255, default='')
-    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    subtitle = models.CharField(
+        max_length=255, default='', blank=True, null=True)
     content = RichTextField(blank=True, default='')
     image = models.ImageField(upload_to='blogposts',
-                              blank=True, null=True, storage=gd_storage)
+                              default='', blank=True, null=True, storage=gd_storage)
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -89,17 +90,12 @@ class Advert(models.Model):
         return reverse('advert', kwargs={'pk': self.pk})
 
 
-titles = (
+civilities = (
     ('M.', 'M.'),
     ('Mme.', "Mme."),
     ('Mlle.', "Mlle."),
 )
 
-civilities = (
-    ('Doc.', 'Docteur'),
-    ('Ing.', 'Ingenieur'),
-    ('Prof.', 'Proffesseur'),
-)
 qualifications = (
     ('BAC', 'BAC'),
     ('BAC + 1', 'BAC + 1'),
@@ -111,6 +107,11 @@ qualifications = (
     ('BAC + 7', 'BAC + 7'),
 )
 
+gender_list = (
+    ('M', 'Masculin'),
+    ('F', 'Féminin'),
+)
+
 
 class Tutor(models.Model):
     user = models.OneToOneField(
@@ -120,26 +121,26 @@ class Tutor(models.Model):
     first_name = models.CharField(
         max_length=255, default='', blank=True, null=True)
     civility = models.CharField(max_length=50, default='', choices=civilities)
-    title = models.CharField(max_length=50, default='', choices=titles)
     country = CountryField(
-        blank_label="", blank=True, null=True)
+        blank_label="", default='', blank=True, null=True)
     phone = models.CharField(max_length=255, default='',)
     qualification = models.CharField(
         max_length=50, default='BAC', choices=qualifications)
-    bio = models.TextField(blank=True, null=True)
+    gender = models.CharField(max_length=10, choices=gender_list)
+    bio = models.TextField(default='', blank=True, null=True)
     subjects = models.ManyToManyField("Subject")
     levels = models.ManyToManyField(EducationLevel)
     is_verified = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
     experience = models.IntegerField(default='0')
     facebook_link = models.CharField(
-        max_length=255, blank=True, null=True)
+        max_length=255, default='', blank=True, null=True)
     linkedin_link = models.CharField(
-        max_length=255, blank=True, null=True)
+        max_length=255, default='', blank=True, null=True)
     certificate = models.ImageField(
-        upload_to='tutors', blank=True, null=True, storage=gd_storage)
+        upload_to='tutors', default='', blank=True, null=True, storage=gd_storage)
     image = models.ImageField(
-        upload_to='tutors', blank=True, null=True, storage=gd_storage)
+        upload_to='tutors', default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return f'{self.user.last_name} - {self.user.first_name}'
@@ -148,11 +149,25 @@ class Tutor(models.Model):
         return reverse('tutor', kwargs={'pk': self.pk})
 
 
+class FollowTutor(models.Model):
+    user = models.OneToOneField(
+        CustomUser, on_delete=models.CASCADE)
+    tutor = models.ForeignKey(
+        Tutor, on_delete=models.CASCADE)
+    status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'{self.user} - {self.school}'
+
+    def get_absolute_url(self):
+        return reverse('follow_tutor', kwargs={'pk': self.pk})
+
+
 class Subject(models.Model):
     name = models.CharField(max_length=128)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField(default='', blank=True, null=True)
     image = models.ImageField(upload_to='subjects',
-                              blank=True, null=True, storage=gd_storage)
+                              default='', blank=True, null=True, storage=gd_storage)
 
     def __str__(self):
         return self.name
@@ -163,13 +178,14 @@ class Subject(models.Model):
 
 class ForumArticle(models.Model):
     author = models.ForeignKey(
-        CustomUser, on_delete=models.SET_NULL, blank=True, null=True)
+        CustomUser, on_delete=models.SET_NULL, default='', blank=True, null=True)
     subject = models.ForeignKey(
-        Subject, on_delete=models.SET_NULL, blank=True, null=True)
+        Subject, on_delete=models.SET_NULL, default='', blank=True, null=True)
     title = models.CharField(max_length=255, default='')
-    subtitle = models.CharField(max_length=255, blank=True, null=True)
+    subtitle = models.CharField(
+        max_length=255, default='', blank=True, null=True)
     content = RichTextField(blank=True, default='')
-    # image = models.ImageField(upload_to='blogposts', blank=True, null=True, storage=gd_storage)
+    # image = models.ImageField(upload_to='blogposts', default='', blank=True, null=True, storage=gd_storage)
     date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
@@ -177,3 +193,20 @@ class ForumArticle(models.Model):
 
     def get_absolute_url(self):
         return reverse('forum_article', kwargs={'pk': self.pk})
+
+
+class Publication(models.Model):
+    author = models.ForeignKey(
+        CustomUser, on_delete=models.SET_NULL, default='', blank=True, null=True)
+    title = models.CharField(max_length=255, default='')
+    subtitle = models.CharField(
+        max_length=255, default='', blank=True, null=True)
+    content = RichTextField(blank=True, default='')
+    # image = models.ImageField(upload_to='blogposts', default='', blank=True, null=True, storage=gd_storage)
+    date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f'{self.author.last_name} - {self.title}'
+
+    def get_absolute_url(self):
+        return reverse('publication', kwargs={'pk': self.pk})

@@ -41,7 +41,7 @@
     </div>
 
     <!--------------------------------------- subjects --------------------------------------->
-    <div class="my-4 mx-auto flex flex-wrap gap-2">
+    <div class="my-4 mx-auto flex flex-wrap justify-center gap-2">
       {% for obj in subjects %}
       <!--  -->
       <a
@@ -62,34 +62,56 @@
   <section id="tutors" class="mb-8 w-full text-left">
     <div class="w-full mx-auto">
       {% if not tutors %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {% for obj in tutors %}
         <div
-          class="flex flex-col bg-green-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+          class="relative flex flex-col bg-gray-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
+          {% if obj.user == user %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 text-black bg-gray-300 hover:bg-white z-30 rounded-full transition duration-300 ease-in-out"
+            href="{% url 'edit_tutor' obj.id %}"
+            ><i class="fa-solid fa-pen-to-square text-sm"></i
+          ></a>
+          {% endif %}
+          <!--  -->
+          {% if obj.is_verified %}
+          <span
+            class="absolute left-4 top-4 p-2 bg-sky-500 text-white text-xs rounded-md z-30"
+            ><i class="fa-solid fa-certificate"></i>
+          </span>
+          {% endif %}
           <a href="{% url 'tutor' obj.id  %}">
-            <div class="w-full max-h-40 overflow-hidden">
-              {% if not obj.image %}
+            <div class="w-full max-h-40 overflow-hidden text-center">
+              {% if obj.image %}
               <img
-                class="w-full h-40 max-h-40 object-cover transition duration-500 group-hover:scale-110"
-                src="{% static 'vectors/classroom.png' %}"
+                class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
+                src="{{obj.image.url}}"
                 alt="image"
               />
               {% else %}
               <img
-                class="w-full h-40 max-h-40 object-cover transition duration-500 group-hover:scale-110"
-                src="{{obj.image.url}}"
+                class="w-full h-40 object-cover transition duration-500 group-hover:scale-110"
+                src="{% static 'vectors/classroom.png' %}"
                 alt="image"
               />
               {% endif %}
             </div>
             <div class="p-4 flex flex-col justify-between">
               <h4 class="text-black text-md font-bold">
-                {{obj.title}} {{obj.user.last_name}} {{obj.user.first_name}}
+                {{obj.civility}} {{obj.user.last_name}} {{obj.user.first_name}}
               </h4>
-              <p class="py-2 text-sm text-gray-800">
-                {{obj.bio|truncatechars:40}}
-              </p>
+              <ul class="my-2 flex flex-wrap gap-2">
+                {% for subject in obj.subjects.all %}
+                <!--  -->
+                <li
+                  class="px-2 py-1 rounded-md text-xs text-black bg-green-200 transition duration-300 ease-in-out"
+                >
+                  {{subject.name|title}}
+                </li>
+                <!--  -->
+                {% endfor %}
+              </ul>
             </div>
           </a>
         </div>

@@ -16,15 +16,15 @@
         href="{% url 'schools' %}"
         >Ecoles</a
       >
-      / {% if curr_obj %}
+      /
       <a
         class="hover:text-green-400 transition ease-in duration-300"
-        href="{% url 'school' curr_obj.school.id %}"
-        >{{curr_obj.school.name}}</a
+        href="{% url 'school' school.id %}"
+        >{{school.name}}</a
       >
-      /
+      / {% if curr_obj %}
       <span class="hidden md:inline text-blue-950 font-black">
-        {{curr_obj.fullname}}
+        {{curr_obj.full_name}}
       </span>
       {% else %}
       <span>Nouvel Enseignant</span>
@@ -62,7 +62,7 @@
       {% endif %}
       <div class="py-4 flex flex-col gap-2 text-gray-700">
         <h4 class="text-3xl text-black font-bold">
-          {{curr_obj.designation}} {{curr_obj.fullname}}
+          {{curr_obj.designation}} {{curr_obj.full_name}}
         </h4>
 
         <p>
@@ -108,7 +108,7 @@
             {% endif %}
             <div class="p-4 flex flex-col gap-2 text-gray-700">
               <h4 class="text-lg text-black font-bold">
-                {{obj.designation}} {{obj.fullname}}
+                {{obj.designation}} {{obj.full_name}}
               </h4>
               <p>
                 Experience :
@@ -126,54 +126,89 @@
   <!--------------------------------------- teacher form --------------------------------------->
 
   {% else %}
-  <p class="my-4 w-full max-w-lg">
-    Ajoutez un nouvel enseignant a votre etablissement.
-  </p>
 
-  <div class="mb-8 mx-auto rounded grid md:grid-cols-2 gap-8">
-    <article class="p-8 bg-sky-100 rounded-md">
-      {% if curr_obj %}
-      <h3 class="mb-4 text-black text-2xl font-bold">
-        Modifier Cet Enseignant
-      </h3>
-      {% else %}
-      <h3 class="mb-4 text-black text-2xl font-bold">Ajouter Un Enseignant</h3>
-      {% endif %}
-
-      <div class="mx-auto w-full rounded-md">
-        <form
-          class="w-full"
-          method="POST"
-          action=""
-          enctype="multipart/form-data"
-        >
-          {% csrf_token %} {% for field in form %}
-          <div>
-            <h3 class="mb-1 text-black font-bold">{{field.label}}</h3>
-            {{field}}
-          </div>
-          {% endfor %}
-          <div class="mt-4 flex gap-4 items-end">
-            <input
-              class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
-              type="submit"
-              value="Enregistrer"
-            />
-            <a
-              class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
-              href="{{request.META.HTTP_REFERER}}"
-            >
-              Annuler
-            </a>
-          </div>
-        </form>
-      </div>
-    </article>
+  <div
+    class="p-8 bg-gray-200 rounded-md w-full flex flex-col md:flex-row md:justify-center gap-4 items-center"
+  >
+    {% if curr_obj %}
+    <h3 class="mb-4 text-black text-lg">Modifier cet enseignant</h3>
+    {% else %}
+    <h3 class="mb-4 text-black text-lg">
+      Ajouter un enseignant à votre etablissement
+    </h3>
+    {% endif %}
     <img
-      class="w-full h-full rounded-md object-cover"
+      class="h-[300px] rounded-md object-contain"
       src="{% static 'vectors/teacher.png' %}"
       alt="image"
     />
+  </div>
+
+  <div
+    class="my-8 mx-auto w-full max-w-3xl p-8 border hover:border-blue-950 rounded-md w-full flex flex-col gap-4 items-center"
+  >
+    <form class="w-full" method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-8 grid md:grid-cols-2 gap-y-2 gap-x-4">
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.civility.label}}</h3>
+          {{form.civility}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.full_name.label}}</h3>
+          {{form.full_name}}
+        </div>
+        <div class="grid">
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.subjects.label}}</h3>
+            {{form.subjects}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">
+              {{form.qualification.label}}
+            </h3>
+            {{form.qualification}}
+          </div>
+          <div>
+            <h3 class="mb-1 text-black font-bold">{{form.experience.label}}</h3>
+            {{form.experience}}
+          </div>
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.levels.label}}</h3>
+          {{form.levels}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">
+            {{form.linkedin_link.label}}
+          </h3>
+          {{form.linkedin_link}}
+        </div>
+        <div>
+          <h3 class="mb-1 text-black font-bold">{{form.image.label}}</h3>
+          {{form.image}}
+        </div>
+      </div>
+      <div>
+        <h3 class="mb-1 text-black font-bold">
+          {{form.curriculum_vitae.label}}
+        </h3>
+        {{form.curriculum_vitae}}
+      </div>
+      <div class="mt-4 flex gap-4 items-end">
+        <a
+          class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+          href="{{request.META.HTTP_REFERER}}"
+        >
+          Annuler
+        </a>
+        <input
+          class="px-4 py-2 bg-blue-950 hover:bg-green-300 text-white hover:text-black rounded-md cursor-pointer"
+          type="submit"
+          value="Enregistrer"
+        />
+      </div>
+    </form>
   </div>
   {% endif %}
 </div>

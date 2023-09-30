@@ -1,20 +1,26 @@
 {% extends 'dash_head.html' %} {% load static %} {% block content %}
 <div class="p-6 w-full max-w-[1350px] mx-auto">
-  {% include 'components/searchbar.html' %}
+  <div class="flex justify-between items-center">
+    {% include 'components/searchbar.html' %}
 
-  <!--------------------------------------- subjects --------------------------------------->
-  <div class="my-4 flex flex-wrap gap-2">
-    {% for obj in subjects %}
-    <!--  -->
-    <a
-      href="{% url 'tutors' %}?query={{obj.name}}"
-      class="px-3 py-1 flex justify-between items-center gap-4 rounded-md text-xs text-gray-700 bg-gray-100 hover:bg-green-200 hover:text-black transition duration-300 ease-in-out"
-    >
-      {{obj.name}}
-      <img class="h-7 object-contain" src="{{obj.image.url}}" alt="image" />
-    </a>
-    <!--  -->
-    {% endfor %}
+    <!--------------------------------------- subjects --------------------------------------->
+    <div class="my-4 flex flex-wrap gap-2">
+      {% for obj in subjects %}
+      <!--  -->
+      <a
+        href="{% url 'dash_tutors' %}?query={{obj.name}}"
+        class="p-2 flex justify-between items-center rounded-md text-sm text-gray-700 bg-gray-100 hover:bg-white hover:shadow-md transition duration-300 ease-in group"
+      >
+        <!-- <span
+          class="hidden group-hover:inline transition duration-300 ease-in text-sm"
+        >
+          {{obj.name}}
+        </span> -->
+        <img class="h-5 object-contain" src="{{obj.image.url}}" alt="image" />
+      </a>
+      <!--  -->
+      {% endfor %}
+    </div>
   </div>
 
   <!--------------------------------------- tutors --------------------------------------->
@@ -32,29 +38,24 @@
         </p>
       </div>
       {% else %}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {% for obj in tutors %}
         <div
-          class="flex flex-col bg-blue-50 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
+          class="flex flex-col bg-gray-100 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in-out overflow-hidden group"
         >
           <a href="{% url 'tutor' obj.id  %}">
             <div class="relative w-full max-h-40 overflow-hidden">
               {% if obj.is_verified %}
               <span
-                class="absolute z-30 text-xs text-white top-4 left-4 px-2 py-1 bg-green-500 rounded-md"
-                >Vérifié</span
-              >
-              {% else %}
-              <span
-                class="absolute z-30 text-xs text-white top-4 left-4 px-2 py-1 bg-sky-500 rounded-md"
-                >Non-vérifié</span
-              >
+                class="absolute left-4 top-4 p-2 bg-sky-500 text-white text-xs rounded-md z-30"
+                ><i class="fa-solid fa-certificate"></i>
+              </span>
               {% endif %}
               <!--  -->
               {% if not obj.image %}
               <img
                 class="w-full h-40 max-h-40 object-cover transition duration-500 group-hover:scale-110"
-                src="{% static 'imgs/tutor.jpg' %}"
+                src="{% static 'vectors/classroom.png' %}"
                 alt="image"
               />
               {% else %}
@@ -69,9 +70,17 @@
               <h4 class="text-black text-sm font-bold">
                 {{obj.civility}} {{obj.user.last_name}} {{obj.user.first_name}}
               </h4>
-              <p class="py-2 text-xs text-gray-800">
-                {{obj.bio|truncatechars:100}}
-              </p>
+              <ul class="my-2 flex flex-wrap gap-2">
+                {% for subject in obj.subjects.all %}
+                <!--  -->
+                <li
+                  class="px-2 py-1 rounded-md text-xs text-black bg-green-200 transition duration-300 ease-in-out"
+                >
+                  {{subject.name|title}}
+                </li>
+                <!--  -->
+                {% endfor %}
+              </ul>
             </div>
           </a>
         </div>

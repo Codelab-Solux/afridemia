@@ -16,15 +16,19 @@ urlpatterns = [
     #     path('adverts/<str:pk>/delete', delete_advert, name='delete_advert'),
     #
     path('tutors/', tutors, name='tutors'),
-    path('tutors/<str:pk>/', tutor, name='tutor'),
     path('tutors/create', create_tutor, name='create_tutor'),
+    path('tutors/<str:pk>/', tutor, name='tutor'),
     path('tutors/<str:pk>/edit', edit_tutor, name='edit_tutor'),
+    path('tutors/<str:pk>/follow', follow_tutor, name='follow_tutor'),
+    path('tutors/<str:pk>/verify', verify_tutor, name='verify_tutor'),
+    path('tutors/<str:pk>/feature', feature_tutor, name='feature_tutor'),
+
     #     path('tutors/<str:pk>/delete', delete_tutor, name='delete_tutor'),
     #
     path('forum/', forum, name='forum'),
-    path('forum/<str:pk>/', forum_article, name='forum_article'),
     path('forum/article/create', create_forum_article,
          name='create_forum_article'),
+    path('forum/<str:pk>/', forum_article, name='forum_article'),
     path('forum/article/<str:pk>/edit',
          edit_forum_article, name='edit_forum_article'),
     #     path('forum/article/<str:pk>/delete',

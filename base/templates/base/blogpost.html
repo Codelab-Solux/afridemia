@@ -108,58 +108,42 @@
   <!--------------------------------------- blog form --------------------------------------->
 
   {% else %}
-  <div
-    class="p-8 bg-blue-950 rounded-md w-full flex flex-col md:flex-row gap-4 items-center"
-  >
-    <p class="my-4 w-full text-lg text-white">
-      Partagez vos connaissances et perspectives éducatives. Contribuez au
-      savoir collectif en ajoutant un article à notre blog.
-    </p>
-    <img
-      class="w-full h-[300px] rounded-md object-contain"
-      src="{% static 'vectors/article.png' %}"
-      alt="image"
-    />
+  <div class="p-8 bg-blue-950 rounded-md">
+    <div
+      class="flex flex-col md:flex-row gap-4 items-center w-full max-w-3xl mx-auto"
+    >
+      <p class="my-4 w-full text-lg text-white">
+        Partagez vos connaissances et perspectives éducatives. Contribuez au
+        savoir collectif en ajoutant un article à notre blog.
+      </p>
+      <img
+        class="w-full h-[300px] rounded-md object-contain"
+        src="{% static 'vectors/article.png' %}"
+        alt="image"
+      />
+    </div>
   </div>
 
-  <div class="mt-8 mx-auto lg:flex flex-row gap-8">
-    <article class="p-8 border-2 hover:border-blue-950 rounded-md">
-      {% if curr_ad %}
-      <h3 class="mb-4 text-black text-2xl font-bold">Modifier Cet Article</h3>
-      {% else %}
-      <h3 class="mb-4 text-black text-2xl font-bold">Ajouter Un Article</h3>
-      {% endif %}
-
-      <div class="mx-auto w-full rounded-md">
-        <form
-          class="w-full"
-          method="POST"
-          action=""
-          enctype="multipart/form-data"
+  <div
+    class="my-8 mx-auto w-full max-w-3xl p-8 border hover:border-blue-950 rounded-md w-full flex flex-col gap-4 items-center"
+  >
+    <form class="w-full" method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %} {{form.media}} {{form.as_p}}
+      <div class="mt-4 flex gap-4 items-end">
+        <a
+          class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
+          href="{{request.META.HTTP_REFERER}}"
         >
-          {% csrf_token %} {{form.media}} {{form.as_p}}
-          <div class="mt-4 flex gap-4 items-end">
-            <a
-              class="bg-gray-100 px-4 py-2 rounded-md hover:bg-red-600 hover:text-white"
-              href="{{request.META.HTTP_REFERER}}"
-            >
-              Annuler
-            </a>
+          Annuler
+        </a>
 
-            <input
-              class="px-4 py-2 bg-blue-950 hover:bg-green-600 text-white rounded-md cursor-pointer"
-              type="submit"
-              value="Enregistrer"
-            />
-          </div>
-        </form>
+        <input
+          class="px-4 py-2 bg-blue-950 hover:bg-green-600 text-white rounded-md cursor-pointer"
+          type="submit"
+          value="Enregistrer"
+        />
       </div>
-    </article>
-    <img
-      class="hidden lg:inline w-80 h-80 rounded-md object-cover"
-      src="{% static 'vectors/article.png' %}"
-      alt="curr_ad image"
-    />
+    </form>
   </div>
   {% endif %}
 </div>

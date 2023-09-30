@@ -5,7 +5,7 @@
 <div class="px-8 w-full mx-auto max-w-[1350px]">
   <!--------------------------------------- mini navbar --------------------------------------->
   <nav class="mx-auto py-2 flex flex-col gap-4 text-xs w-full max-w-[1350px]">
-    <div class="flex items-center">
+    <div class="flex items-center gap-4">
       <a
         class="mr-2 hover:text-green-400 transition ease-in duration-300"
         href="{% url 'home' %}"
@@ -21,7 +21,7 @@
 
     <div class="flex flex-col gap-4 w-full">
       <div
-        class="p-8 bg-blue-950 rounded-md w-full flex flex-col md:flex-row gap-4 items-center"
+        class="p-8 bg-blue-950 rounded-md w-full flex flex-col-reverse lg:flex-row gap-4 items-center"
       >
         <p class="my-4 w-full text-lg text-white">
           Découvrez des écoles qui façonnent des futurs brillants. Trouvez votre
@@ -34,7 +34,7 @@
         />
       </div>
       <!--------------------------------------- levels --------------------------------------->
-      <div class="my-4 mx-auto flex flex-wrap gap-2">
+      <div class="my-4 mx-auto flex flex-wrap justify-center gap-2">
         {% for obj in levels %}
         <!--  -->
         <a
@@ -57,29 +57,19 @@
       </div>
 
       <div class="flex flex-col md:flex-row justify-between items-center gap-3">
-        <div class="flex gap-2">
-          {% if user.is_staff %}
-          <a
-            href="{% url 'dashboard' %}"
-            class="p-4 bg-green-100 flex items-center text-black hover:bg-green-200 rounded-md transition duration-300 ease-in"
-            >Tableau de bord<i class="fa-solid fa-dashboard ml-2"></i>
-          </a>
-          {% endif %}
-          <!--  -->
-          {% if has_school %}
-          <a
-            href="{% url 'my_school' %}"
-            class="p-4 bg-sky-100 text-black hover:bg-sky-300 rounded-md transition duration-300 ease-in"
-            ><i class="fa-solid fa-graduation-cap"></i>
-          </a>
-          {% else %}
-          <a
-            href="{% url 'create_school' %}"
-            class="p-4 bg-sky-100 flex items-center text-black hover:bg-sky-200 rounded-md transition duration-300 ease-in"
-            >Nouvelle école<i class="fa-solid fa-plus ml-2"></i>
-          </a>
-          {% endif %}
-        </div>
+        {% if has_school %}
+        <a
+          href="{% url 'my_school' %}"
+          class="p-4 bg-green-100 text-black hover:bg-green-300 rounded-md transition duration-300 ease-in"
+          >Mon école<i class="fa-solid fa-graduation-cap ml-2"></i>
+        </a>
+        {% else %}
+        <a
+          href="{% url 'create_school' %}"
+          class="p-4 bg-green-100 flex items-center text-black hover:bg-green-300 rounded-md transition duration-300 ease-in"
+          >Nouvelle école<i class="fa-solid fa-plus ml-2"></i>
+        </a>
+        {% endif %}
         <!------------------ search form ------------------->
         <form
           id="search_box"
@@ -125,23 +115,24 @@
   <section id="schools" class="py-10 bg-white w-full text-left">
     <div class="w-full mx-auto duration-300 ease-in">
       {% if not schools %} {% include 'components/no_data.html' %} {% else %}
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 xl:gap-8">
         {% for obj in schools %}
         <div
           class="relative flex flex-col bg-blue-50 hover:bg-white hover:shadow-md rounded-md transition duration-300 ease-in overflow-hidden group"
         >
+          {% if obj.manager == user %}
+          <a
+            class="absolute top-4 right-4 px-3 py-2 bg-white hover:bg-green-300 z-30 rounded-full transition duration-300 ease-in"
+            href="{% url 'edit_school' obj.id %}"
+            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
+          ></a>
+          {% endif %}
           <!--  -->
           {% if obj.is_verified %}
           <span
             class="absolute left-4 top-4 p-2 bg-sky-500 text-white text-xs rounded-md z-30"
             ><i class="fa-solid fa-certificate"></i
           ></span>
-          {% endif %} {% if obj.manager == user %}
-          <a
-            class="absolute top-4 right-4 px-3 py-2 bg-white hover:bg-green-300 z-30 rounded-full transition duration-300 ease-in"
-            href="{% url 'edit_school' obj.id %}"
-            ><i class="fa-solid fa-pen-to-square text-black text-sm"></i
-          ></a>
           {% endif %}
           <div
             class="absolute top-[124px] right-4 left-4 px-4 py-2 w flex bg-white text-black text-sm rounded-t-md justify-between items-center z-30"
@@ -188,7 +179,7 @@
                 {% for obj in obj.levels.all %}
                 <!--  -->
                 <li
-                  class="px-2 py-1 rounded-md text-sm text-gray-800 bg-blue-200 transition duration-300 ease-in"
+                  class="px-2 py-1 rounded-md text-sm text-black bg-sky-200 transition duration-300 ease-in"
                 >
                   {{obj.name|title}}
                 </li>

@@ -16,11 +16,11 @@ class SchoolForm(forms.ModelForm):
     class Meta:
         model = School
         fields = ('__all__')
-        exclude = ('manager','avg_rating')
+        exclude = ('manager', 'avg_rating')
         labels = {
             'country': 'Pays',
             'moto': "Slogan",
-            'name': "Raison social",
+            'name': "Raison sociale",
             'levels': "Niveaux d'etude",
             'email': 'Courier Electronique',
             'website': 'Site-web',
@@ -47,29 +47,29 @@ class SchoolForm(forms.ModelForm):
             'is_featured': "Vedette",
         }
         widgets = {
-            'opening_hour': TimeInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'closing_hour': TimeInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'resumption_date': DateInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'country': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'moto': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            # 'quote': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'description': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'history': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'pedagogy': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'ad_copy': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'opening_hour': TimeInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'closing_hour': TimeInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'resumption_date': DateInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'country': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'moto': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            # 'quote': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'description': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'history': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'pedagogy': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'ad_copy': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
             'levels': forms.CheckboxSelectMultiple(attrs={'class': ""}),
-            'email': forms.EmailInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'address': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'year_founded': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            # 'success_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'teacher_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'student_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'formation_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'tel': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'cel': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'website': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'whatsapp': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'email': forms.EmailInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'address': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'year_founded': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            # 'success_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'teacher_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'student_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'formation_count': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'tel': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'cel': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'website': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'whatsapp': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -80,8 +80,8 @@ class SerieForm(forms.ModelForm):
         fields = ('__all__')
         labels = {'name': "Nom de la série", }
         widgets = {
-            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'description': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'description': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -100,12 +100,12 @@ class ClassroomForm(forms.ModelForm):
             'overview': "Aperçu",
         }
         widgets = {
-            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'serie': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'fees': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'size': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'overview': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'serie': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'fees': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'size': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'overview': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -117,22 +117,26 @@ class TeacherForm(forms.ModelForm):
         exclude = ('school',)
         labels = {
             'school': "Ecole",
-            'fullname': "Nom et prenoms",
-            'xp': "Année d'experience",
-            'cv': "Curriculum Vitaee",
+            'civility': "Civilité",
+            'full_name': "Nom et prenoms",
             'subjects': "Matières",
+            'levels': "Niveaux",
+            'experience': "Année d'experience",
+            'qualification': "Diplome",
+            'curriculum_vitae': "Curriculum Vitae",
+            'linkedin_link': "Lien linkedin",
         }
         widgets = {
-            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'designation': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'fullname': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'xp': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'qualifications': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'subjects': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'cv': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'facebook_link': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'twitter_link': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'linkedin_link': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'civility': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'full_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'subjects': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'levels': forms.CheckboxSelectMultiple(attrs={'class': ""}),
+            'experience': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'qualification': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'subjects': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'curriculum_vitae': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'linkedin_link': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -150,11 +154,11 @@ class StructureForm(forms.ModelForm):
             'overview': "Aperçu",
         }
         widgets = {
-            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'type': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'capacity': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'overview': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'type': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'capacity': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'overview': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -171,9 +175,9 @@ class ArticleForm(forms.ModelForm):
             'content': 'Contenu',
         }
         widgets = {
-            'title': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'subtitle': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'content': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'title': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'subtitle': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'content': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -187,7 +191,7 @@ class GalleryForm(forms.ModelForm):
             'school': "Ecole",
         }
         widgets = {
-            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
             'images': forms.FileInput()
         }
 
@@ -207,12 +211,12 @@ class PerformanceForm(forms.ModelForm):
             'year': "Année",
         }
         widgets = {
-            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'exam': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'pass_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'fail_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'candidates': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'year': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'exam': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'pass_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'fail_rate': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'candidates': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'year': forms.NumberInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -233,15 +237,15 @@ class PreRegForm(forms.ModelForm):
             'phone': "Téléphone",
         }
         widgets = {
-            'gender': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'classroom': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'last_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'first_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'last_school': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'phone': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'email': forms.EmailInput(attrs={'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'comment': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
+            'gender': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'school': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'classroom': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'last_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'first_name': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'last_school': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'phone': forms.TextInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'email': forms.EmailInput(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'comment': forms.Textarea(attrs={"rows": "10", 'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
         }
 
 
@@ -256,6 +260,6 @@ class ReviewForm(forms.ModelForm):
             'comment': "Commentaire",
         }
         widgets = {
-            'rating': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border-2 focus:border-none focus:outline-none focus:ring focus:ring-green-300 w-full"}),
-            'comment': forms.Textarea(attrs={"rows": "3", 'class': "mb-2 p-4 rounded-md border-2  focus:border-none focus:outline-none focus:ring focus:ring-sky-300 w-full", "placeholder": "Ajouter un commentaire..."}),
+            'rating': forms.Select(attrs={'class': "mb-2 px-4 py-2 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full"}),
+            'comment': forms.Textarea(attrs={"rows": "3", 'class': "mb-2 p-4 rounded-md border focus:border-none focus:outline-none focus:ring-1 focus:ring-green-300 w-full", "placeholder": "Ajouter un commentaire..."}),
         }

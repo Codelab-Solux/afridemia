@@ -31,7 +31,9 @@
     <link href="{% static 'styles.css' %}" rel="stylesheet" />
     <title>afridemia</title>
   </head>
-  <body class="flex flex-col bg-white text-gray-700 max-w-full mx-auto">
+  <body
+    class="flex flex-col bg-white text-gray-700 max-w-full mx-auto font-light"
+  >
     {% if user.is_authenticated %}
     <input id="curr_user" type="hidden" value="{{user.id}}" />
     {% endif %}
@@ -58,6 +60,7 @@
       <i class="fa-solid fa-arrow-up text-xl"></i>
     </button>
     {% block content %} {% endblock %}
+
     <!--  -->
     {% include 'footer.html' %}
   </body>
